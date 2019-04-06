@@ -40,9 +40,13 @@ class MainTabBarController: UITabBarController {
 		let map = MapViewController()
 		map.tabBarItem = UITabBarItem(title: "Map", image: #imageLiteral(resourceName: "marker"), tag: 1)
 
+		let find = FindTableViewController()
+		find.tabBarItem = UITabBarItem(title: "Find", image: #imageLiteral(resourceName: "find"), tag: 2)
+
 		viewControllers = [
 			UINavigationController(rootViewController: home),
-			UINavigationController(rootViewController: map)
+			UINavigationController(rootViewController: map),
+			UINavigationController(rootViewController: find)
 		]
 	}
 }
