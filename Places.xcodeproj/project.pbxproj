@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		000EB0282259D245008D0DD1 /* String-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000EB0272259D245008D0DD1 /* String-Extension.swift */; };
+		000EB02B2259D426008D0DD1 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000EB02A2259D426008D0DD1 /* Coordinator.swift */; };
 		00A3F95A225962A6003EFD3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F959225962A6003EFD3B /* AppDelegate.swift */; };
 		00A3F961225962A7003EFD3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00A3F960225962A7003EFD3B /* Assets.xcassets */; };
 		00A3F964225962A7003EFD3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00A3F962225962A7003EFD3B /* LaunchScreen.storyboard */; };
 		00A3F96F225962A7003EFD3B /* PlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F96E225962A7003EFD3B /* PlacesTests.swift */; };
-		00A3F97A2259637F003EFD3B /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F9792259637F003EFD3B /* Protocols.swift */; };
 		00A3F97C225964D4003EFD3B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F97B225964D4003EFD3B /* HomeViewController.swift */; };
 		00A3F97E225964E4003EFD3B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F97D225964E4003EFD3B /* MapViewController.swift */; };
 		00E3F2D82259701400133301 /* FindTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E3F2D72259701400133301 /* FindTableViewController.swift */; };
@@ -30,6 +31,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		000EB0272259D245008D0DD1 /* String-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-Extension.swift"; sourceTree = "<group>"; };
+		000EB02A2259D426008D0DD1 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		00A3F956225962A6003EFD3B /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00A3F959225962A6003EFD3B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00A3F960225962A7003EFD3B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -38,7 +41,6 @@
 		00A3F96A225962A7003EFD3B /* PlacesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlacesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00A3F96E225962A7003EFD3B /* PlacesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesTests.swift; sourceTree = "<group>"; };
 		00A3F970225962A7003EFD3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00A3F9792259637F003EFD3B /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		00A3F97B225964D4003EFD3B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		00A3F97D225964E4003EFD3B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		00E3F2D72259701400133301 /* FindTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindTableViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +72,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		000EB0292259D40E008D0DD1 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				000EB0272259D245008D0DD1 /* String-Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		000EB02C2259D446008D0DD1 /* Find */ = {
+			isa = PBXGroup;
+			children = (
+				00E3F2D72259701400133301 /* FindTableViewController.swift */,
+			);
+			path = Find;
+			sourceTree = "<group>";
+		};
+		000EB02D2259D44F008D0DD1 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				00A3F97B225964D4003EFD3B /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		000EB02E2259D458008D0DD1 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				00A3F97D225964E4003EFD3B /* MapViewController.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
 		00A3F94D225962A6003EFD3B = {
 			isa = PBXGroup;
 			children = (
@@ -93,13 +127,14 @@
 		00A3F958225962A6003EFD3B /* Places */ = {
 			isa = PBXGroup;
 			children = (
-				00A3F959225962A6003EFD3B /* AppDelegate.swift */,
-				00A3F9792259637F003EFD3B /* Protocols.swift */,
-				00E3F2D72259701400133301 /* FindTableViewController.swift */,
-				00A3F97B225964D4003EFD3B /* HomeViewController.swift */,
-				00A3F97D225964E4003EFD3B /* MapViewController.swift */,
+				000EB02A2259D426008D0DD1 /* Coordinator.swift */,
+				000EB02D2259D44F008D0DD1 /* Home */,
+				000EB02E2259D458008D0DD1 /* Map */,
+				000EB02C2259D446008D0DD1 /* Find */,
+				000EB0292259D40E008D0DD1 /* Extensions */,
 				00A3F960225962A7003EFD3B /* Assets.xcassets */,
 				00A3F962225962A7003EFD3B /* LaunchScreen.storyboard */,
+				00A3F959225962A6003EFD3B /* AppDelegate.swift */,
 				00A3F965225962A7003EFD3B /* Info.plist */,
 			);
 			path = Places;
@@ -301,11 +336,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00A3F97A2259637F003EFD3B /* Protocols.swift in Sources */,
 				00A3F95A225962A6003EFD3B /* AppDelegate.swift in Sources */,
+				000EB0282259D245008D0DD1 /* String-Extension.swift in Sources */,
 				00A3F97E225964E4003EFD3B /* MapViewController.swift in Sources */,
 				00A3F97C225964D4003EFD3B /* HomeViewController.swift in Sources */,
 				00E3F2D82259701400133301 /* FindTableViewController.swift in Sources */,
+				000EB02B2259D426008D0DD1 /* Coordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

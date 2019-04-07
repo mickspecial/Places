@@ -1,5 +1,5 @@
 //
-//  Protocols.swift
+//  Coordinator.swift
 //  Places
 //
 //  Created by Michael Schembri on 7/4/19.
