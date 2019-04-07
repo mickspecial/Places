@@ -12,11 +12,16 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate {
 
 	var mapView: MKMapView!
+	var markers = [MKAnnotation]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		setUpView()
 		addMapToView()
+
+		let test = Place(name: "HERE", details: "A", lat: -28.0051447, long: 153.3507475, id: "1")
+		let test2 = Place(name: "Sharks", details: "CCCC", lat: -27.955567312387117, long: 153.3850246667862, id: "2")
+		markers = [test, test2]
     }
 
 	private func setUpView() {
@@ -32,10 +37,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		// test pin
-		let test = Place(name: "HERE", details: "A", lat: -28.0051447, long: 153.3507475, id: "1")
-		let test2 = Place(name: "Sharks", details: "CCCC", lat: -27.955567312387117, long: 153.3850246667862, id: "2")
-		mapView.addAnnotations([test, test2])
+		mapView.addAnnotations(markers)
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		mapView.showAnnotations(markers, animated: true)
 	}
 
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
