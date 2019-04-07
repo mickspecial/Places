@@ -38,7 +38,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		mapView.addAnnotations([test, test2])
 	}
 
-
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 		guard annotation is Place else { return nil }
 		let identifier = "Annotation"
