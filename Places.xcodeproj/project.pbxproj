@@ -12,6 +12,7 @@
 		006C7949225AA6C3002A586A /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C7948225AA6C3002A586A /* Place.swift */; };
 		006C794C225AA8A2002A586A /* UIView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C794B225AA8A2002A586A /* UIView-Extension.swift */; };
 		006C794E225AB6A0002A586A /* PinCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C794D225AB6A0002A586A /* PinCalloutView.swift */; };
+		00993F32225ABBC2006EDA83 /* PlacesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00993F31225ABBC2006EDA83 /* PlacesController.swift */; };
 		00A3F95A225962A6003EFD3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F959225962A6003EFD3B /* AppDelegate.swift */; };
 		00A3F961225962A7003EFD3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00A3F960225962A7003EFD3B /* Assets.xcassets */; };
 		00A3F964225962A7003EFD3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00A3F962225962A7003EFD3B /* LaunchScreen.storyboard */; };
@@ -39,6 +40,7 @@
 		006C7948225AA6C3002A586A /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		006C794B225AA8A2002A586A /* UIView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView-Extension.swift"; sourceTree = "<group>"; };
 		006C794D225AB6A0002A586A /* PinCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCalloutView.swift; sourceTree = "<group>"; };
+		00993F31225ABBC2006EDA83 /* PlacesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesController.swift; sourceTree = "<group>"; };
 		00A3F956225962A6003EFD3B /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00A3F959225962A6003EFD3B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00A3F960225962A7003EFD3B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 			isa = PBXGroup;
 			children = (
 				000EB02A2259D426008D0DD1 /* Coordinator.swift */,
+				00993F31225ABBC2006EDA83 /* PlacesController.swift */,
 				000EB02D2259D44F008D0DD1 /* Home */,
 				000EB02E2259D458008D0DD1 /* Map */,
 				000EB02C2259D446008D0DD1 /* Find */,
@@ -368,6 +371,7 @@
 				006C794C225AA8A2002A586A /* UIView-Extension.swift in Sources */,
 				00E3F2D82259701400133301 /* FindTableViewController.swift in Sources */,
 				006C7949225AA6C3002A586A /* Place.swift in Sources */,
+				00993F32225ABBC2006EDA83 /* PlacesController.swift in Sources */,
 				000EB02B2259D426008D0DD1 /* Coordinator.swift in Sources */,
 				006C794E225AB6A0002A586A /* PinCalloutView.swift in Sources */,
 			);

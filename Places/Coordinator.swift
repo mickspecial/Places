@@ -19,8 +19,11 @@ class MainCoordinator: Coordinator {
 	var navigationController: UINavigationController
 	var tabCtrl: UITabBarController!
 
+	var placesController: PlacesController!
+
 	init(navigationController: UINavigationController = UINavigationController()) {
 		self.navigationController = navigationController
+		self.placesController = PlacesController()
 	}
 
 	func start() { }
@@ -34,10 +37,10 @@ class MainTabBarController: UITabBarController {
 		super.viewDidLoad()
 		mainCoordinator.tabCtrl = self
 
-		let home = HomeViewController()
+		let home = HomeViewController(placesCtrl: mainCoordinator.placesController)
 		home.tabBarItem = UITabBarItem(title: "Places", image: #imageLiteral(resourceName: "list"), tag: 0)
 
-		let map = MapViewController()
+		let map = MapViewController(placesCtrl: mainCoordinator.placesController)
 		map.tabBarItem = UITabBarItem(title: "Map", image: #imageLiteral(resourceName: "marker"), tag: 1)
 
 		let find = FindTableViewController()

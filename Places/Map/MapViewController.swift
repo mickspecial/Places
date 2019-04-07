@@ -13,15 +13,22 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 	var mapView: MKMapView!
 	var markers = [MKAnnotation]()
+	let placesController: PlacesController!
+
+	init(placesCtrl: PlacesController) {
+		placesController = placesCtrl
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		setUpView()
 		addMapToView()
-
-		let test = Place(name: "HERE", details: "A", lat: -28.0051447, long: 153.3507475, id: "1")
-		let test2 = Place(name: "Sharks", details: "CCCC", lat: -27.955567312387117, long: 153.3850246667862, id: "2")
-		markers = [test, test2]
+		markers = placesController.places
     }
 
 	private func setUpView() {
