@@ -18,11 +18,9 @@ class FindTableViewController: UITableViewController {
 		sctrl = UISearchController(searchResultsController: nil)
 		sctrl.obscuresBackgroundDuringPresentation = false
 		sctrl.searchBar.placeholder = "Find Place"
-		navigationItem.searchController = sctrl
-		navigationItem.hidesSearchBarWhenScrolling = false
-		sctrl.searchBar.delegate = self
-		definesPresentationContext = true
+		sctrl.hidesNavigationBarDuringPresentation = false
 		sctrl.searchResultsUpdater = self
+		sctrl.searchBar.delegate = self
 		return sctrl
 	}()
 
@@ -36,8 +34,16 @@ class FindTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		title = "Add Location"
+		setUpNavBar()
     }
+
+	private func setUpNavBar() {
+		title = "Add Location"
+		definesPresentationContext = true
+		navigationItem.hidesBackButton = false
+		navigationItem.searchController = searchController
+		navigationItem.hidesSearchBarWhenScrolling = false
+	}
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
