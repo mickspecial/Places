@@ -1,0 +1,32 @@
+excluded: # paths to ignore during linting. overridden byincluded.
+- Carthage
+- Pods
+
+line_length:
+- 200 # warning
+- 500 # error
+
+disabled_rules:
+- force_cast
+- trailing_whitespace
+- identifier_name
+- force_try
+- large_tuple
+- nesting
+- line_length
+- function_parameter_count
+- todo
+
+opt_in_rules: # some rules are only opt-in
+- empty_count
+- unused_private_declaration
+- convenience_type
+# - empty_string
+# - fatal_error_message
+# - first_where
+- toggle_bool
+#- trailing_closure
+- fallthrough
+- identical_operands
+- joined_default_parameter
+#- unavailable_function
