@@ -7,12 +7,21 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
 
+	var mapView: MKMapView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.backgroundColor = .blue
+		view.backgroundColor = .white
 		title = "Map"
     }
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		mapView = MKMapView(frame: view.frame)
+		view.addSubview(mapView)
+	}
 }
