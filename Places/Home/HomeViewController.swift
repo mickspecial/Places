@@ -8,15 +8,18 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
 	let placesController: PlacesController!
 	let coordinator: HomeCoordinator!
+	private let cellId = "cellId"
 
 	init(placesCtrl: PlacesController, coordinator: HomeCoordinator) {
 		self.placesController = placesCtrl
 		self.coordinator = coordinator
-		super.init(nibName: nil, bundle: nil)
+		let layout = UICollectionViewFlowLayout()
+		layout.scrollDirection = .vertical
+		super.init(collectionViewLayout: layout)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -25,12 +28,39 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.backgroundColor = .white
+		collectionView.backgroundColor = .white
 		title = "Places"
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(showNextTest))
+		collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: cellId)
+		collectionView.dataSource = self
+		collectionView.delegate = self
     }
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		collectionView.reloadData()
+	}
 
 	@objc func showNextTest() {
 		coordinator.showNext()
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return placesController.places.count
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PlaceCell
+		let place = placesController.places[indexPath.row]
+		cell.fillCell(info: place)
+		return cell
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+		return 10
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		return CGSize(width: view.frame.width, height: 60)
 	}
 }
