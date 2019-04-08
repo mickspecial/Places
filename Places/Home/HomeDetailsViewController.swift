@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import MapKit
 
 class HomeDetailsViewController: UIViewController {
 
 	let coordinator: HomeCoordinator!
 	let place: Place!
+	var mapView: MKMapView!
 
 	init(coordinator: HomeCoordinator, place: Place) {
 		self.coordinator = coordinator
@@ -25,8 +27,25 @@ class HomeDetailsViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		setUpView()
+		addMapToView()
+	}
+
+	private func setUpView() {
 		view.backgroundColor = .white
 		title = place.name
+	}
 
+	private func addMapToView() {
+		mapView = MKMapView(frame: .zero)
+		mapView.isUserInteractionEnabled = false
+		view.addSubview(mapView)
+		mapView.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, size: CGSize(width: view.frame.size.width, height: view.frame.size.height / 2))
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		mapView.addAnnotation(place)
+		mapView.showAnnotations([place], animated: false)
 	}
 }
