@@ -23,8 +23,8 @@ class HomeCoordinator: Coordinator {
 		navigationController.viewControllers = [home]
 	}
 
-	func showNext() {
-		let test = HomeDetailsViewController(coordinator: self)
+	func showDetails(_ place: Place) {
+		let test = HomeDetailsViewController(coordinator: self, place: place)
 		navigationController.pushViewController(test, animated: true)
 	}
 

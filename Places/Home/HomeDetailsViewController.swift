@@ -11,9 +11,11 @@ import UIKit
 class HomeDetailsViewController: UIViewController {
 
 	let coordinator: HomeCoordinator!
+	let place: Place!
 
-	init(coordinator: HomeCoordinator) {
+	init(coordinator: HomeCoordinator, place: Place) {
 		self.coordinator = coordinator
+		self.place = place
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -24,6 +26,7 @@ class HomeDetailsViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .white
-		title = "Details"
+		title = place.name
+
 	}
 }

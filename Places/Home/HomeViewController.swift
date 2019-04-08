@@ -30,7 +30,6 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         super.viewDidLoad()
 		collectionView.backgroundColor = .white
 		title = "Places"
-		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(showNextTest))
 		collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: cellId)
 		collectionView.dataSource = self
 		collectionView.delegate = self
@@ -39,10 +38,6 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		collectionView.reloadData()
-	}
-
-	@objc func showNextTest() {
-		coordinator.showNext()
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -62,5 +57,10 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 		return CGSize(width: view.frame.width, height: 60)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		let place = placesController.places[indexPath.row]
+		coordinator.showDetails(place)
 	}
 }
