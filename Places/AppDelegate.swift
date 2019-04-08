@@ -9,7 +9,6 @@
 // swiftlint:disable line_length
 
 import UIKit
-var coordinator: MainCoordinator?
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -11,9 +11,11 @@ import UIKit
 class HomeViewController: UIViewController {
 
 	let placesController: PlacesController!
+	let coordinator: HomeCoordinator!
 
-	init(placesCtrl: PlacesController) {
-		placesController = placesCtrl
+	init(placesCtrl: PlacesController, coordinator: HomeCoordinator) {
+		self.placesController = placesCtrl
+		self.coordinator = coordinator
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -23,7 +25,12 @@ class HomeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		view.backgroundColor = .red
+		view.backgroundColor = .white
 		title = "Places"
+		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(showNextTest))
     }
+
+	@objc func showNextTest() {
+		coordinator.showNext()
+	}
 }
