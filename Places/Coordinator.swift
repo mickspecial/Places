@@ -43,7 +43,7 @@ class MainTabBarController: UITabBarController {
 		let map = MapViewController(placesCtrl: mainCoordinator.placesController)
 		map.tabBarItem = UITabBarItem(title: "Map", image: #imageLiteral(resourceName: "marker"), tag: 1)
 
-		let find = FindTableViewController()
+		let find = FindTableViewController(placesCtrl: mainCoordinator.placesController)
 		find.tabBarItem = UITabBarItem(title: "Find", image: #imageLiteral(resourceName: "find"), tag: 2)
 
 		viewControllers = [

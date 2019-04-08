@@ -13,12 +13,14 @@ class PinCalloutView: UIView {
 	let titleLabel: UILabel = {
 		let tf = UILabel()
 		tf.text = "titleLabel"
+		tf.font = UIFont.preferredFont(forTextStyle: .title2)
 		return tf
 	}()
 
 	let subLabel: UILabel = {
 		let tf = UILabel()
 		tf.text = "subLabel"
+		tf.font = UIFont.preferredFont(forTextStyle: .callout)
 		return tf
 	}()
 
@@ -26,7 +28,7 @@ class PinCalloutView: UIView {
 		super.init(frame: .zero)
 		setupView()
 		titleLabel.text = place.name
-		subLabel.text = place.details
+		subLabel.text = place.address
 	}
 
 	override init(frame: CGRect) {

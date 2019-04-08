@@ -31,6 +31,16 @@ class FindTableViewController: UITableViewController {
 	}()
 
 	private var searchResults = [MKLocalSearchCompletion]()
+	let placesController: PlacesController!
+
+	init(placesCtrl: PlacesController) {
+		placesController = placesCtrl
+		super.init(nibName: nil, bundle: nil)
+	}
+
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,13 +82,17 @@ class FindTableViewController: UITableViewController {
 
 		let searchRequest = MKLocalSearch.Request(completion: completion)
 		let search = MKLocalSearch(request: searchRequest)
-		search.start { (response, _) in
+		search.start { [weak self] (response, _) in
 			guard let response = response, let item = response.mapItems.first else {
 				print("Missing coordinate")
 				return
 			}
 			let coordinate = item.placemark.coordinate
 			print(String(describing: coordinate))
+
+			// Add to central list
+			let newPlace = Place(mapItem: item, name: "Fred")
+			self?.placesController.addPlace(newPlace)
 		}
 	}
 }

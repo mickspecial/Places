@@ -10,7 +10,7 @@ import Foundation
 
 class PlacesController {
 
-	var places = [Place]()
+	private (set) var places = [Place]()
 
 	init(places: [Place] = [Place]()) {
 		self.places = places
@@ -26,5 +26,10 @@ class PlacesController {
 		]
 
 		places.append(contentsOf: testPlaces)
+	}
+
+	func addPlace(_ place: Place) {
+		places.append(place)
+		print("Place was added to controller")
 	}
 }

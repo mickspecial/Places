@@ -12,7 +12,6 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate {
 
 	var mapView: MKMapView!
-	var markers = [MKAnnotation]()
 	let placesController: PlacesController!
 
 	init(placesCtrl: PlacesController) {
@@ -28,7 +27,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
 		setUpView()
 		addMapToView()
-		markers = placesController.places
     }
 
 	private func setUpView() {
@@ -44,12 +42,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		mapView.addAnnotations(markers)
+		mapView.removeAnnotations(mapView.annotations)
+		mapView.addAnnotations(placesController.places)
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		mapView.showAnnotations(markers, animated: true)
+		mapView.showAnnotations(placesController.places, animated: true)
 	}
 
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -75,13 +74,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 		let callout = PinCalloutView(place: place)
 		annotationView.detailCalloutAccessoryView = callout
-		callout.centerInSuperview(size: CGSize(width: 100, height: 60))
+		callout.centerInSuperview(size: CGSize(width: 150, height: 60))
 		return annotationView
 	}
 
 	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-		if let xxx = view.annotation as? Place {
-			dump(xxx)
+		guard let newSelection = view.annotation as? Place else {
+			return
 		}
+		print(newSelection)
 	}
 }
