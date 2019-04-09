@@ -47,7 +47,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PlaceCell
 		let place = placesController.places[indexPath.row]
-		cell.fillCell(info: place)
+		cell.fillCell(place: place)
 		return cell
 	}
 

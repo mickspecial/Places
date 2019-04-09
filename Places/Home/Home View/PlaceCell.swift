@@ -30,17 +30,27 @@ class PlaceCell: UICollectionViewCell {
 		return label
 	}()
 
+	var markerImageView: UIImageView = {
+		let logoView = UIImageView()
+		logoView.image = #imageLiteral(resourceName: "white")
+		logoView.contentMode = .scaleAspectFit
+		return logoView
+	}()
+
 	private func setUpView() {
-		let theViews = [nameLabel, addressLabel]
+		let theViews = [markerImageView, nameLabel, addressLabel]
 		theViews.forEach({ addSubview($0)})
 		backgroundColor = .lightGray
-		nameLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: addressLabel.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
-		addressLabel.anchor(top: nameLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 10, right: 10))
+		markerImageView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
+		markerImageView.centerY()
+		nameLabel.anchor(top: topAnchor, leading: markerImageView.trailingAnchor, bottom: addressLabel.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
+		addressLabel.anchor(top: nameLabel.bottomAnchor, leading: markerImageView.trailingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 10, right: 10))
 	}
 
-	func fillCell(info: Place) {
-		nameLabel.text = info.name
-		addressLabel.text = info.address
+	func fillCell(place: Place) {
+		nameLabel.text = place.name
+		addressLabel.text = place.address
+		markerImageView.image = place.markerImage
 	}
 
 	required init?(coder aDecoder: NSCoder) {
