@@ -20,7 +20,7 @@ class PlacesController {
 	func addTestData() {
 		// test places
 		let testPlaces = [
-			Place(name: "HERE", details: "A", lat: -28.0051447, long: 153.3507475, id: "1", category: .aqua),
+			Place(name: "HERE", details: "A", lat: -28.0051447, long: 153.3507475, id: "1", category: .cyan),
 			Place(name: "Sharks", details: "CCCC", lat: -27.955567312387117, long: 153.3850246667862, id: "2", category: .red),
 			Place(name: "Burleigh", details: "Beach", lat: -28.0968254, long: 153.443296, id: "3", category: .orange)
 		]

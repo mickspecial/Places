@@ -10,7 +10,7 @@ import Foundation
 import MapKit
 
 enum MarkerColor: String {
-	case red, green, aqua, blue, white, orange, purple
+	case red, green, cyan, blue, white, orange, purple
 }
 
 class Place: NSObject {
