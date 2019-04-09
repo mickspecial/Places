@@ -91,7 +91,7 @@ class FindTableViewController: UITableViewController {
 			print(String(describing: coordinate))
 
 			// Add to central list
-			let newPlace = Place(mapItem: item, name: "Fred")
+			let newPlace = Place(mapItem: item, name: "Fred", category: "demo")
 			self?.placesController.addPlace(newPlace)
 		}
 	}

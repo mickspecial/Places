@@ -15,21 +15,24 @@ class Place: NSObject {
 	let lat: Double
 	let long: Double
 	let id: String
+	let category: String
 
-	init(name: String, details: String, lat: Double, long: Double, id: String) {
+	init(name: String, details: String, lat: Double, long: Double, id: String, category: String) {
 		self.name = name
 		self.address = details
 		self.long = long
 		self.lat = lat
 		self.id = id
+		self.category = category
 	}
 
-	init(mapItem: MKMapItem, name: String) {
+	init(mapItem: MKMapItem, name: String, category: String) {
 		self.name = name
 		self.address = mapItem.name ?? "Unknown Location"
 		self.long = mapItem.placemark.coordinate.longitude
 		self.lat = mapItem.placemark.coordinate.latitude
 		self.id = UUID().uuidString
+		self.category = category
 	}
 }
 

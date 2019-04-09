@@ -40,7 +40,7 @@ class HomeCoordinator: Coordinator {
 		}
 
 		print("Update - \(place.name)")
-		let newPlace = Place(name: name, details: place.address, lat: place.lat, long: place.long, id: place.id)
+		let newPlace = Place(name: name, details: place.address, lat: place.lat, long: place.long, id: place.id, category: place.category)
 		placesCtrl.removePlace(place)
 		placesCtrl.addPlace(newPlace)
 	}

@@ -63,13 +63,29 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 			annotationView!.annotation = annotation
 		}
 
-		let updatedView = addCustomCallout(to: annotationView!)
-		let randomColor = ["red", "white", "green", "aqua", "purple", "orange", "blue"].randomElement()!
-		updatedView.image = UIImage(named: randomColor)
-		return updatedView
+		addCustomCallout(to: annotationView!)
+		setMarkerImage(for: annotationView!)
+		return annotationView
 	}
 
-	private func addCustomCallout(to annotationView: MKAnnotationView) -> MKAnnotationView {
+	private func setMarkerImage(for annotationView: MKAnnotationView) {
+		guard let place = annotationView.annotation as? Place else {
+			fatalError()
+		}
+
+		var image = UIImage(named: "blue")
+
+		switch place.category {
+		case "ok": image = UIImage(named: "aqua")
+		case "warning": image = UIImage(named: "orange")
+		case "danger": image = UIImage(named: "red")
+		default: image = UIImage(named: "blue")
+		}
+
+		annotationView.image = image
+	}
+
+	private func addCustomCallout(to annotationView: MKAnnotationView) {
 		guard let place = annotationView.annotation as? Place else {
 			fatalError()
 		}
@@ -77,7 +93,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		let callout = PinCalloutView(place: place)
 		annotationView.detailCalloutAccessoryView = callout
 		callout.centerInSuperview(size: CGSize(width: 150, height: 60))
-		return annotationView
 	}
 
 	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
