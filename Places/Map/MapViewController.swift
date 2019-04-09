@@ -57,13 +57,15 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
 
 		if annotationView == nil {
-			annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+			annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
 			annotationView!.canShowCallout = true
 		} else {
 			annotationView!.annotation = annotation
 		}
 
 		let updatedView = addCustomCallout(to: annotationView!)
+		let randomColor = ["red", "white", "green", "aqua", "purple", "orange", "blue"].randomElement()!
+		updatedView.image = UIImage(named: randomColor)
 		return updatedView
 	}
 
