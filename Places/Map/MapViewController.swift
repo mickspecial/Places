@@ -8,11 +8,13 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
 	var mapView: MKMapView!
 	let placesController: PlacesController!
+	let locationManager = CLLocationManager()
 
 	init(placesCtrl: PlacesController) {
 		placesController = placesCtrl
@@ -27,6 +29,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
 		setUpView()
 		addMapToView()
+		showUsersLocationOnMap()
     }
 
 	private func setUpView() {
@@ -37,7 +40,22 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 	private func addMapToView() {
 		mapView = MKMapView(frame: view.frame)
 		mapView.delegate = self
+		mapView.showsUserLocation = true
 		view.addSubview(mapView)
+	}
+
+	private func showUsersLocationOnMap() {
+		locationManager.requestWhenInUseAuthorization()
+
+		if CLLocationManager.locationServicesEnabled() {
+			locationManager.delegate = self
+			locationManager.desiredAccuracy = kCLLocationAccuracyBest
+			locationManager.startUpdatingLocation()
+		}
+
+		if let coor = mapView.userLocation.location?.coordinate {
+			mapView.setCenter(coor, animated: true)
+		}
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
