@@ -73,16 +73,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 			fatalError()
 		}
 
-		var image = UIImage(named: "blue")
-
-		switch place.category {
-		case "ok": image = UIImage(named: "aqua")
-		case "warning": image = UIImage(named: "orange")
-		case "danger": image = UIImage(named: "red")
-		default: image = UIImage(named: "blue")
-		}
-
-		annotationView.image = image
+		annotationView.image = place.markerImage
 	}
 
 	private func addCustomCallout(to annotationView: MKAnnotationView) {

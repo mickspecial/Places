@@ -9,15 +9,23 @@
 import Foundation
 import MapKit
 
+enum MarkerColor: String {
+	case red, green, aqua, blue, white, orange, purple
+}
+
 class Place: NSObject {
 	let name: String
 	let address: String
 	let lat: Double
 	let long: Double
 	let id: String
-	let category: String
+	let category: MarkerColor
 
-	init(name: String, details: String, lat: Double, long: Double, id: String, category: String) {
+	var markerImage: UIImage {
+		return UIImage(named: category.rawValue)!
+	}
+
+	init(name: String, details: String, lat: Double, long: Double, id: String, category: MarkerColor) {
 		self.name = name
 		self.address = details
 		self.long = long
@@ -26,7 +34,7 @@ class Place: NSObject {
 		self.category = category
 	}
 
-	init(mapItem: MKMapItem, name: String, category: String) {
+	init(mapItem: MKMapItem, name: String, category: MarkerColor) {
 		self.name = name
 		self.address = mapItem.name ?? "Unknown Location"
 		self.long = mapItem.placemark.coordinate.longitude
