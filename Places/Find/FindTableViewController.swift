@@ -87,13 +87,47 @@ class FindTableViewController: UITableViewController {
 				print("Missing coordinate")
 				return
 			}
-			let coordinate = item.placemark.coordinate
-			print(String(describing: coordinate))
 
-			// Add to central list
-			let newPlace = Place(mapItem: item, name: "Fred", category: .blue)
-			self?.placesController.addPlace(newPlace)
+			DispatchQueue.main.async { [weak self] in
+				self?.promptForPlaceName(mapItem: item)
+			}
 		}
+	}
+
+	func promptForPlaceName(mapItem: MKMapItem) {
+		let ac = UIAlertController(title: "Save Place As", message: nil, preferredStyle: .alert)
+		ac.addTextField()
+		ac.addAction(markerAction(title: "Blue Marker", marker: .blue, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(title: "Red Marker", marker: .red, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(title: "Green Marker", marker: .green, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(title: "Cyan Marker", marker: .cyan, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(title: "Orange Marker", marker: .orange, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(title: "Purple Marker", marker: .purple, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(title: "White Marker", marker: .white, mapItem: mapItem, alertController: ac))
+		ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+		present(ac, animated: true)
+	}
+
+	private func markerAction(title: String, marker: MarkerColor, mapItem: MKMapItem, alertController: UIAlertController) -> UIAlertAction {
+		let action = UIAlertAction(title: title, style: .default) { [weak self] _ in
+			guard let tf = alertController.textFields?.first, !tf.string.isEmpty else {
+				self?.alertError()
+				return
+			}
+			self?.savePlaceWith(mapItem: mapItem, marker: marker, name: tf.string)
+		}
+		return action
+	}
+
+	func alertError() {
+		let ac = UIAlertController(title: "Not Saved", message: "Missing Title", preferredStyle: .alert)
+		ac.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+		present(ac, animated: true)
+	}
+
+	func savePlaceWith(mapItem: MKMapItem, marker: MarkerColor, name: String) {
+		let newPlace = Place(mapItem: mapItem, name: name, category: marker)
+		placesController.addPlace(newPlace)
 	}
 }
 
