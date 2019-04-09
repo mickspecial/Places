@@ -13,6 +13,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 	let placesController: PlacesController!
 	let coordinator: HomeCoordinator!
 	private let cellId = "cellId"
+	private var places = [Place]()
 
 	init(placesCtrl: PlacesController, coordinator: HomeCoordinator) {
 		self.placesController = placesCtrl
@@ -37,16 +38,22 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		prepareData()
 		collectionView.reloadData()
 	}
 
+	private func prepareData() {
+		places = placesController.places
+		places.sort(by: { $0.name.lowercased() < $1.name.lowercased() })
+	}
+
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-		return placesController.places.count
+		return places.count
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PlaceCell
-		let place = placesController.places[indexPath.row]
+		let place = places[indexPath.row]
 		cell.fillCell(place: place)
 		return cell
 	}
@@ -60,7 +67,7 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-		let place = placesController.places[indexPath.row]
+		let place = places[indexPath.row]
 		coordinator.showDetails(place)
 	}
 }
