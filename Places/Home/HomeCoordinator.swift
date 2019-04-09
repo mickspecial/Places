@@ -34,6 +34,17 @@ class HomeCoordinator: Coordinator {
 		navigationController.popViewController(animated: true)
 	}
 
+	func updatePlace(_ place: Place, name: String) {
+		if name == place.name || name.isEmpty {
+			return
+		}
+
+		print("Update - \(place.name)")
+		let newPlace = Place(name: name, details: place.address, lat: place.lat, long: place.long, id: place.id)
+		placesCtrl.removePlace(place)
+		placesCtrl.addPlace(newPlace)
+	}
+
 	func start() {
 
 	}

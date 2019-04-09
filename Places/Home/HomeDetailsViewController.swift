@@ -15,6 +15,19 @@ class HomeDetailsViewController: UIViewController {
 	let place: Place!
 	var mapView: MKMapView!
 
+	let nameTF: UITextField = {
+		let tf = UITextField()
+		tf.heightAnchor.constraint(equalToConstant: 50).isActive = true
+		return tf
+	}()
+
+	private var	nameLabel: UILabel = {
+		let label = UILabel(frame: .zero)
+		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
+		label.textColor = .darkGray
+		return label
+	}()
+
 	init(coordinator: HomeCoordinator, place: Place) {
 		self.coordinator = coordinator
 		self.place = place
@@ -29,6 +42,7 @@ class HomeDetailsViewController: UIViewController {
 		super.viewDidLoad()
 		setUpView()
 		addMapToView()
+		addTextInputs()
 	}
 
 	private func setUpView() {
@@ -48,9 +62,22 @@ class HomeDetailsViewController: UIViewController {
 		super.viewWillAppear(animated)
 		mapView.addAnnotation(place)
 		mapView.showAnnotations([place], animated: false)
+		nameTF.text = place.name
 	}
 
 	@objc func deletePlace() {
 		coordinator.deletePlace(place)
+	}
+
+	private func addTextInputs() {
+		view.addSubview(nameTF)
+		view.addSubview(nameLabel)
+		nameLabel.anchor(top: mapView.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
+		nameTF.anchor(top: nameLabel.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		coordinator.updatePlace(place, name: nameTF.text ?? "")
 	}
 }
