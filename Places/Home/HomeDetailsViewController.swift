@@ -78,6 +78,6 @@ class HomeDetailsViewController: UIViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		coordinator.updatePlace(place, name: nameTF.text ?? "")
+		coordinator.updatePlace(place, name: nameTF.string)
 	}
 }

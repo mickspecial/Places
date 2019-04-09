@@ -29,3 +29,7 @@ extension NSAttributedString {
 		return attributedText
 	}
 }
+
+extension UITextField {
+	var string: String { return text ?? "" }
+}
