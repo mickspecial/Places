@@ -32,4 +32,8 @@ class PlacesController {
 		places.append(place)
 		print("Place was added to controller")
 	}
+
+	func removePlace(_ place: Place) {
+		places.removeAll(where: { place.id == $0.id })
+	}
 }

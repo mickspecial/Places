@@ -34,6 +34,7 @@ class HomeDetailsViewController: UIViewController {
 	private func setUpView() {
 		view.backgroundColor = .white
 		title = place.name
+		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(deletePlace))
 	}
 
 	private func addMapToView() {
@@ -47,5 +48,9 @@ class HomeDetailsViewController: UIViewController {
 		super.viewWillAppear(animated)
 		mapView.addAnnotation(place)
 		mapView.showAnnotations([place], animated: false)
+	}
+
+	@objc func deletePlace() {
+		coordinator.deletePlace(place)
 	}
 }

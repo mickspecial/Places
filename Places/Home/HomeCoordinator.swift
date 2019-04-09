@@ -28,6 +28,12 @@ class HomeCoordinator: Coordinator {
 		navigationController.pushViewController(test, animated: true)
 	}
 
+	func deletePlace(_ place: Place) {
+		print("Delete - \(place.name)")
+		placesCtrl.removePlace(place)
+		navigationController.popViewController(animated: true)
+	}
+
 	func start() {
 
 	}
