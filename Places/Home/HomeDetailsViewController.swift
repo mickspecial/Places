@@ -25,6 +25,7 @@ class HomeDetailsViewController: UIViewController {
 		let label = UILabel(frame: .zero)
 		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
 		label.textColor = .darkGray
+		label.text = "Name"
 		return label
 	}()
 
