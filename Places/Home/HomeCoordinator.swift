@@ -26,8 +26,8 @@ class HomeCoordinator: Coordinator {
 	}
 
 	func showDetails(_ place: Place) {
-		let test = HomeDetailsViewController(coordinator: self, place: place)
-		navigationController.pushViewController(test, animated: true)
+		let homeVC = HomeDetailsViewController(coordinator: self, place: place)
+		navigationController.pushViewController(homeVC, animated: true)
 	}
 
 	func deletePlace(_ place: Place) {
