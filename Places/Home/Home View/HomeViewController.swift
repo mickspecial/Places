@@ -34,7 +34,12 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
 		collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: cellId)
 		collectionView.dataSource = self
 		collectionView.delegate = self
+		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Categories", style: .done, target: self, action: #selector(showCategoriesView))
     }
+
+	@objc func showCategoriesView() {
+		coordinator.showCategories()
+	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)

@@ -26,15 +26,16 @@ class MainTabBarController: UITabBarController {
 		placesController = PlacesController()
 		categoriesController = CategoryController()
 		// if VC needs more advanced actions set it up with a coordinator
-		homeCoordinator = HomeCoordinator(placesCtrl: placesController)
 
+		// Home Tab
+		homeCoordinator = HomeCoordinator(placesCtrl: placesController, categoryCtrl: categoriesController)
+
+		// Map Tap
 		let map = MapViewController(placesCtrl: placesController)
 		map.tabBarItem = UITabBarItem(title: "Map", image: #imageLiteral(resourceName: "marker"), tag: 1)
 
+		// Find Location Tap
 		mapSeachCoordinator = FindCoordinator(placesCtrl: placesController, categoriesCtrl: categoriesController)
-
-//		let find = FindTableViewController(placesCtrl: placesController, categoriesCtrl: categoriesController)
-//		find.tabBarItem = UITabBarItem(title: "Find", image: #imageLiteral(resourceName: "find"), tag: 2)
 
 		viewControllers = [
 			homeCoordinator.navigationController,

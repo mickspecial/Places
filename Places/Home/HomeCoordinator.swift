@@ -13,10 +13,12 @@ class HomeCoordinator: Coordinator {
 	var childCoordinators = [Coordinator]()
 	var navigationController: UINavigationController
 	var placesCtrl: PlacesController
+	var categoryCtrl: CategoryController
 
-	init(navigationController: UINavigationController = UINavigationController(), placesCtrl: PlacesController) {
+	init(navigationController: UINavigationController = UINavigationController(), placesCtrl: PlacesController, categoryCtrl: CategoryController) {
 		self.navigationController = navigationController
 		self.placesCtrl = placesCtrl
+		self.categoryCtrl = categoryCtrl
 
 		let home = HomeViewController(placesCtrl: placesCtrl, coordinator: self)
 		home.tabBarItem = UITabBarItem(title: "Places", image: #imageLiteral(resourceName: "list"), tag: 0)
@@ -32,6 +34,11 @@ class HomeCoordinator: Coordinator {
 		print("Delete - \(place.name)")
 		placesCtrl.removePlace(place)
 		navigationController.popViewController(animated: true)
+	}
+
+	func showCategories() {
+		let catVC = CategoryViewController(categoryCtrl: categoryCtrl, coordinator: self)
+		navigationController.pushViewController(catVC, animated: true)
 	}
 
 	func updatePlace(_ place: Place, name: String) {
