@@ -37,3 +37,28 @@ class PlacesController {
 		places.removeAll(where: { place.id == $0.id })
 	}
 }
+
+class CategoryController {
+
+	var categories: [MarkerColor: String]
+
+	init(categories: [MarkerColor: String] = [MarkerColor: String]()) {
+		self.categories = categories
+		addTestData()
+	}
+
+	func addTestData() {
+		// test places
+		let test = [
+			MarkerColor.blue: "Blue Marker",
+			MarkerColor.red: "Red Marker",
+			MarkerColor.orange: "Orange Marker",
+			MarkerColor.cyan: "Cyan Marker",
+			MarkerColor.white: "White Marker",
+			MarkerColor.purple: "Purple Marker",
+			MarkerColor.green: "Green Marker"
+		]
+
+		self.categories = test
+	}
+}

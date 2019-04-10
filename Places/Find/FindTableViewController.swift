@@ -32,9 +32,11 @@ class FindTableViewController: UITableViewController {
 
 	private var searchResults = [MKLocalSearchCompletion]()
 	let placesController: PlacesController!
+	let categoriesController: CategoryController!
 
-	init(placesCtrl: PlacesController) {
+	init(placesCtrl: PlacesController, categoriesCtrl: CategoryController) {
 		placesController = placesCtrl
+		categoriesController = categoriesCtrl
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -97,19 +99,23 @@ class FindTableViewController: UITableViewController {
 	func promptForPlaceName(mapItem: MKMapItem) {
 		let ac = UIAlertController(title: "Save Place As", message: nil, preferredStyle: .alert)
 		ac.addTextField()
-		ac.addAction(markerAction(title: "Blue Marker", marker: .blue, mapItem: mapItem, alertController: ac))
-		ac.addAction(markerAction(title: "Red Marker", marker: .red, mapItem: mapItem, alertController: ac))
-		ac.addAction(markerAction(title: "Green Marker", marker: .green, mapItem: mapItem, alertController: ac))
-		ac.addAction(markerAction(title: "Cyan Marker", marker: .cyan, mapItem: mapItem, alertController: ac))
-		ac.addAction(markerAction(title: "Orange Marker", marker: .orange, mapItem: mapItem, alertController: ac))
-		ac.addAction(markerAction(title: "Purple Marker", marker: .purple, mapItem: mapItem, alertController: ac))
-		ac.addAction(markerAction(title: "White Marker", marker: .white, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(.blue, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(.red, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(.green, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(.cyan, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(.orange, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(.purple, mapItem: mapItem, alertController: ac))
+		ac.addAction(markerAction(.white, mapItem: mapItem, alertController: ac))
 		ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 		present(ac, animated: true)
 	}
 
-	private func markerAction(title: String, marker: MarkerColor, mapItem: MKMapItem, alertController: UIAlertController) -> UIAlertAction {
-		let action = UIAlertAction(title: title, style: .default) { [weak self] _ in
+	private func titleForMarker(_ marker: MarkerColor) -> String {
+		return categoriesController.categories[marker] ?? ""
+	}
+
+	private func markerAction(_ marker: MarkerColor, mapItem: MKMapItem, alertController: UIAlertController) -> UIAlertAction {
+		let action = UIAlertAction(title: titleForMarker(marker), style: .default) { [weak self] _ in
 			guard let tf = alertController.textFields?.first, !tf.string.isEmpty else {
 				self?.alertError()
 				return
