@@ -32,6 +32,10 @@ class FindDetailsViewController: UIViewController, MKMapViewDelegate {
 		setUpView()
 	}
 
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+		view.endEditing(true)
+	}
+
 	private func setUpView() {
 		view.backgroundColor = .white
 		title = item.name ?? ""
