@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class FindDetailsViewController: UIViewController, MKMapViewDelegate {
+class FindDetailsViewController: UIViewController {
 
 	private let detailsView = FindDetailsView()
 	let coordinator: FindCoordinator
@@ -86,30 +86,25 @@ class FindDetailsViewController: UIViewController, MKMapViewDelegate {
 		title = newPlace.name
 	}
 
-	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-		if annotation is Place {
-			let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
-			setMarkerImage(for: annotationView)
-			return annotationView
-		}
-		// default pin
-		return nil
-	}
-
-	private func setMarkerImage(for annotationView: MKAnnotationView) {
-		guard let place = annotationView.annotation as? Place else {
-			return
-		}
-
-		annotationView.image = place.markerImage
-	}
-
 	private func titleForMarker(_ marker: MarkerColor) -> String {
 		return categoriesController.categories[marker] ?? ""
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+}
+
+extension FindDetailsViewController: MKMapViewDelegate {
+
+	// will show the custom map marker if is a place
+	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+		guard let place = annotation as? Place else {
+			return nil // default marker will be used
+		}
+		let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
+		annotationView.image = place.markerImage
+		return annotationView
 	}
 }
 
