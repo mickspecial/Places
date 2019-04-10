@@ -49,6 +49,7 @@ class CategoryController {
 
 	func addTestData() {
 		// test places
+
 		let test = [
 			MarkerColor.blue: "Blue Marker",
 			MarkerColor.red: "Red Marker",

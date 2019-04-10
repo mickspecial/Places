@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-enum MarkerColor: String {
+enum MarkerColor: String, CaseIterable {
 	case red, green, cyan, blue, white, orange, purple
 }
 

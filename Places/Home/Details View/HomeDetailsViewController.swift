@@ -12,8 +12,8 @@ import MapKit
 class HomeDetailsViewController: UIViewController {
 
 	private let detailsView = HomeDetailsView()
-	let coordinator: HomeCoordinator!
-	let place: Place!
+	let coordinator: HomeCoordinator
+	let place: Place
 
 	init(coordinator: HomeCoordinator, place: Place) {
 		self.coordinator = coordinator

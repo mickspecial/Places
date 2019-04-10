@@ -13,7 +13,7 @@ import CoreLocation
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
 
 	var mapView: MKMapView!
-	let placesController: PlacesController!
+	let placesController: PlacesController
 	let locationManager = CLLocationManager()
 
 	init(placesCtrl: PlacesController) {

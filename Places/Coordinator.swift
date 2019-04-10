@@ -17,6 +17,7 @@ protocol Coordinator {
 class MainTabBarController: UITabBarController {
 
 	var homeCoordinator: HomeCoordinator!
+	var mapSeachCoordinator: FindCoordinator!
 	var placesController: PlacesController!
 	var categoriesController: CategoryController!
 
@@ -30,13 +31,15 @@ class MainTabBarController: UITabBarController {
 		let map = MapViewController(placesCtrl: placesController)
 		map.tabBarItem = UITabBarItem(title: "Map", image: #imageLiteral(resourceName: "marker"), tag: 1)
 
-		let find = FindTableViewController(placesCtrl: placesController, categoriesCtrl: categoriesController)
-		find.tabBarItem = UITabBarItem(title: "Find", image: #imageLiteral(resourceName: "find"), tag: 2)
+		mapSeachCoordinator = FindCoordinator(placesCtrl: placesController, categoriesCtrl: categoriesController)
+
+//		let find = FindTableViewController(placesCtrl: placesController, categoriesCtrl: categoriesController)
+//		find.tabBarItem = UITabBarItem(title: "Find", image: #imageLiteral(resourceName: "find"), tag: 2)
 
 		viewControllers = [
 			homeCoordinator.navigationController,
 			UINavigationController(rootViewController: map),
-			UINavigationController(rootViewController: find)
+			mapSeachCoordinator.navigationController
 		]
 	}
 }

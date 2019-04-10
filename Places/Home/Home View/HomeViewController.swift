@@ -10,8 +10,8 @@ import UIKit
 
 class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
-	let placesController: PlacesController!
-	let coordinator: HomeCoordinator!
+	let placesController: PlacesController
+	let coordinator: HomeCoordinator
 	private let cellId = "cellId"
 	private var places = [Place]()
 

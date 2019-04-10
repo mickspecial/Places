@@ -31,12 +31,12 @@ class FindTableViewController: UITableViewController {
 	}()
 
 	private var searchResults = [MKLocalSearchCompletion]()
-	let placesController: PlacesController!
-	let categoriesController: CategoryController!
+	let placesController: PlacesController
+	let coordinator: FindCoordinator
 
-	init(placesCtrl: PlacesController, categoriesCtrl: CategoryController) {
+	init(placesCtrl: PlacesController, coordinator: FindCoordinator) {
 		placesController = placesCtrl
-		categoriesController = categoriesCtrl
+		self.coordinator = coordinator
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -86,54 +86,14 @@ class FindTableViewController: UITableViewController {
 		let search = MKLocalSearch(request: searchRequest)
 		search.start { [weak self] (response, _) in
 			guard let response = response, let item = response.mapItems.first else {
-				print("Missing coordinate")
+				SCLAlertView(appearance: AlertService.standard).showError("Missing coordinate")
 				return
 			}
 
 			DispatchQueue.main.async { [weak self] in
-				self?.promptForPlaceName(mapItem: item)
+				self?.coordinator.showDetails(item)
 			}
 		}
-	}
-
-	func promptForPlaceName(mapItem: MKMapItem) {
-		let ac = UIAlertController(title: "Save Place As", message: nil, preferredStyle: .alert)
-		ac.addTextField()
-		ac.addAction(markerAction(.blue, mapItem: mapItem, alertController: ac))
-		ac.addAction(markerAction(.red, mapItem: mapItem, alertController: ac))
-		ac.addAction(markerAction(.green, mapItem: mapItem, alertController: ac))
-		ac.addAction(markerAction(.cyan, mapItem: mapItem, alertController: ac))
-		ac.addAction(markerAction(.orange, mapItem: mapItem, alertController: ac))
-		ac.addAction(markerAction(.purple, mapItem: mapItem, alertController: ac))
-		ac.addAction(markerAction(.white, mapItem: mapItem, alertController: ac))
-		ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-		present(ac, animated: true)
-	}
-
-	private func titleForMarker(_ marker: MarkerColor) -> String {
-		return categoriesController.categories[marker] ?? ""
-	}
-
-	private func markerAction(_ marker: MarkerColor, mapItem: MKMapItem, alertController: UIAlertController) -> UIAlertAction {
-		let action = UIAlertAction(title: titleForMarker(marker), style: .default) { [weak self] _ in
-			guard let tf = alertController.textFields?.first, !tf.string.isEmpty else {
-				self?.alertError()
-				return
-			}
-			self?.savePlaceWith(mapItem: mapItem, marker: marker, name: tf.string)
-		}
-		return action
-	}
-
-	func alertError() {
-		let ac = UIAlertController(title: "Not Saved", message: "Missing Title", preferredStyle: .alert)
-		ac.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-		present(ac, animated: true)
-	}
-
-	func savePlaceWith(mapItem: MKMapItem, marker: MarkerColor, name: String) {
-		let newPlace = Place(mapItem: mapItem, name: name, category: marker)
-		placesController.addPlace(newPlace)
 	}
 }
 
