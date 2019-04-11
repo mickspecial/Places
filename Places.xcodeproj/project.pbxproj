@@ -124,7 +124,7 @@
 			path = Find;
 			sourceTree = "<group>";
 		};
-		000EB02D2259D44F008D0DD1 /* Home */ = {
+		000EB02D2259D44F008D0DD1 /* Places */ = {
 			isa = PBXGroup;
 			children = (
 				00B2E97D225B316D005A8DDD /* PlaceListCoordinator.swift */,
@@ -132,7 +132,7 @@
 				00EAA3BA225C6B43006240FD /* Places List */,
 				00EAA3B7225C6A99006240FD /* Details View */,
 			);
-			path = Home;
+			path = Places;
 			sourceTree = "<group>";
 		};
 		000EB02E2259D458008D0DD1 /* Map */ = {
@@ -203,7 +203,7 @@
 			children = (
 				000EB02A2259D426008D0DD1 /* MainController.swift */,
 				00993F31225ABBC2006EDA83 /* PlacesController.swift */,
-				000EB02D2259D44F008D0DD1 /* Home */,
+				000EB02D2259D44F008D0DD1 /* Places */,
 				000EB02E2259D458008D0DD1 /* Map */,
 				000EB02C2259D446008D0DD1 /* Find */,
 				000EB0292259D40E008D0DD1 /* Extensions */,
