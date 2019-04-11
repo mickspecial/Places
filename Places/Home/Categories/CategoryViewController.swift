@@ -13,11 +13,11 @@ class CategoryViewController: UITableViewController {
 	let coordinator: HomeCoordinator
 	let categoryCtrl: CategoryController
 
-	var blueCell: UITableViewCell = UITableViewCell()
-	var redCell: UITableViewCell = UITableViewCell()
+	let blueCell = UITableViewCell()
+	let redCell = UITableViewCell()
 
-	var blueCellText: UITextField = UITextField()
-	var redCellText: UITextField = UITextField()
+	var blueCellText: UITextField!
+	var redCellText: UITextField!
 
 	init(categoryCtrl: CategoryController, coordinator: HomeCoordinator) {
 		self.categoryCtrl = categoryCtrl
@@ -28,15 +28,15 @@ class CategoryViewController: UITableViewController {
 	override func loadView() {
 		super.loadView()
 		// construct first name cell, section 0, row 0
-		blueCell.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5)
 		blueCellText = UITextField(frame: CGRect(x: 20, y: 0, width: blueCell.frame.width, height: blueCell.frame.height))
-		blueCellText.placeholder = "Custom Category Name"
 		blueCell.addSubview(blueCellText)
 
-		redCell.backgroundColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 0.5)
 		redCellText = UITextField(frame: CGRect(x: 20, y: 0, width: redCell.frame.width, height: redCell.frame.height))
-		redCellText.placeholder = "Custom Category Name"
 		redCell.addSubview(redCellText)
+
+		[redCellText, blueCellText].forEach { tf in
+			tf.placeholder = "Custom Category Name"
+		}
 	}
 
 	override func viewDidLoad() {
@@ -99,17 +99,16 @@ class CategoryViewController: UITableViewController {
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
-		print("Try save")
-		if blueCellText.string != "" {
-			print("Save Blue with \(blueCellText.string)")
-			// do it coodinator...?
-			categoryCtrl.categories[.blue] = blueCellText.string
-		}
+		save(textField: blueCellText, marker: .blue)
+		save(textField: redCellText, marker: .red)
+	}
 
-		if redCellText.string != "" {
-			print("Save Blue with \(redCellText.string)")
-			// do it coodinator...?
-			categoryCtrl.categories[.red] = redCellText.string
+	func save(textField: UITextField, marker: MarkerColor) {
+		let isValidString = !textField.string.isEmpty
+		let nameHasChanged = textField.string != categoryCtrl.categories[marker]
+		if isValidString && nameHasChanged {
+			print("Save \(textField.string) for \(marker)")
+			categoryCtrl.categories[marker] = textField.string
 		}
 	}
 
