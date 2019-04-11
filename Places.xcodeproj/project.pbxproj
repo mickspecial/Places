@@ -128,9 +128,9 @@
 			isa = PBXGroup;
 			children = (
 				00B2E97D225B316D005A8DDD /* PlaceListCoordinator.swift */,
-				0073CB13225EA8E300C342FD /* Categories */,
-				00EAA3BA225C6B43006240FD /* Places List */,
-				00EAA3B7225C6A99006240FD /* Details View */,
+				00EAA3BA225C6B43006240FD /* Place List */,
+				00EAA3B7225C6A99006240FD /* Place Details */,
+				0073CB13225EA8E300C342FD /* Categories List */,
 			);
 			path = Places;
 			sourceTree = "<group>";
@@ -170,12 +170,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		0073CB13225EA8E300C342FD /* Categories */ = {
+		0073CB13225EA8E300C342FD /* Categories List */ = {
 			isa = PBXGroup;
 			children = (
 				0073CB11225EA84F00C342FD /* CategoryViewController.swift */,
 			);
-			path = Categories;
+			path = "Categories List";
 			sourceTree = "<group>";
 		};
 		00A3F94D225962A6003EFD3B = {
@@ -227,22 +227,22 @@
 			path = PlacesTests;
 			sourceTree = "<group>";
 		};
-		00EAA3B7225C6A99006240FD /* Details View */ = {
+		00EAA3B7225C6A99006240FD /* Place Details */ = {
 			isa = PBXGroup;
 			children = (
 				00B2E97F225B31E9005A8DDD /* PlaceDetailsViewController.swift */,
 				00EAA3B8225C6AA9006240FD /* PlaceDetailsView.swift */,
 			);
-			path = "Details View";
+			path = "Place Details";
 			sourceTree = "<group>";
 		};
-		00EAA3BA225C6B43006240FD /* Places List */ = {
+		00EAA3BA225C6B43006240FD /* Place List */ = {
 			isa = PBXGroup;
 			children = (
 				00A3F97B225964D4003EFD3B /* PlaceListController.swift */,
 				00BA6912225B50AF00D22C41 /* PlaceCell.swift */,
 			);
-			path = "Places List";
+			path = "Place List";
 			sourceTree = "<group>";
 		};
 		C6702F7552D78C29C1B46275 /* Pods */ = {
