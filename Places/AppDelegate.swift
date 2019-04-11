@@ -27,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		UINavigationBar.appearance().backgroundColor = Theme.current.primaryDark
 		UINavigationBar.appearance().isOpaque = true
 
+		UITextField.appearance().keyboardAppearance = .dark
+
 		UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 		UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
 
