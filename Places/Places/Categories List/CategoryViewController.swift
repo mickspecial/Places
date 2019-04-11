@@ -78,6 +78,7 @@ class CategoryViewController: UITableViewController {
 		tableView.dataSource = self
 		tableView.allowsSelection = false
 		tableView.backgroundColor = Theme.current.primary
+		tableView.separatorColor = Theme.current.primary
 	}
 
 	private func fillCells() {
@@ -104,6 +105,12 @@ class CategoryViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		return items[section].sectionTitle
+	}
+
+	override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+		let header = view as! UITableViewHeaderFooterView
+		header.textLabel?.textColor = .lightGray
+		header.textLabel?.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
