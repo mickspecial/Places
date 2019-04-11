@@ -61,7 +61,7 @@ class PlaceDetailsViewController: UIViewController {
 	private func setUpView() {
 		view.backgroundColor = Theme.current.primary
 		title = place.name
-		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(deletePlace))
+		detailsView.deleteButton.addTarget(self, action: #selector(deletePlace), for: .touchUpInside)
 		detailsView.mapView.delegate = self
 	}
 
@@ -74,7 +74,17 @@ class PlaceDetailsViewController: UIViewController {
 	}
 
 	@objc func deletePlace() {
-		coordinator.deletePlace(place)
+		let alert = SCLAlertView(appearance: AlertService.standardNoCloseButton)
+
+		alert.addButton("Delete") {
+			self.coordinator.deletePlace(self.place)
+		}
+
+		alert.addButton("Cancel", backgroundColor: Theme.current.cellDark, textColor: .white, showTimeout: nil) {
+			return
+		}
+
+		alert.showError("Delete Place?")
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {

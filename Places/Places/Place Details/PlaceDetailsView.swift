@@ -43,6 +43,14 @@ class PlaceDetailsView: UIView {
 		return label
 	}()
 
+	let deleteButton: UIButton = {
+		let button = UIButton(type: .system)
+		button.setTitle("Delete", for: .normal)
+		button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
+		button.setTitleColor(UIColor.FlatColor.Red.Valencia, for: .normal)
+		return button
+	}()
+
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setupView()
@@ -67,10 +75,13 @@ class PlaceDetailsView: UIView {
 		addSubview(nameLabel)
 		addSubview(categoryTF)
 		addSubview(categoryLabel)
+		addSubview(deleteButton)
 		mapView.anchor(top: layoutMarginsGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor)
 		nameLabel.anchor(top: mapView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
 		nameTF.anchor(top: nameLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
 		categoryLabel.anchor(top: nameTF.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
 		categoryTF.anchor(top: categoryLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
+		deleteButton.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 20, right: 0), size: .init(width: 80, height: 40))
+		deleteButton.centerX()
 	}
 }
