@@ -41,18 +41,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 	}
 
 	@objc func goToPlace() {
-		guard let selected = mapView.selectedAnnotations.first else {
+		guard let selected = mapView.selectedAnnotations.first, let place = selected as? Place else {
 			SCLAlertView(appearance: AlertService.standard).showError("Select Destinaton")
 			return
 		}
 
-		let source = MKMapItem(placemark: MKPlacemark(coordinate: mapView.userLocation.coordinate))
-		source.name = "Start"
+		let destination = MKMapItem(placemark: MKPlacemark(coordinate: place.coordinate))
+		destination.name = place.name
 
-		let destination = MKMapItem(placemark: MKPlacemark(coordinate: selected.coordinate))
-		destination.name = "End"
-
-		MKMapItem.openMaps(with: [source, destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+		MKMapItem.openMaps(with: [destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
 	}
 
 	private func addMapToView() {
