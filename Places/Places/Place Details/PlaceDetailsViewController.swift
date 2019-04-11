@@ -46,6 +46,7 @@ class PlaceDetailsViewController: UIViewController {
 
 		pickerData.sort(by: { $0.value < $1.value })
 		categoryPickerSetUp()
+		navigationItem.rightBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(goToPlace), imageName: "navigation", size: .medium)
 	}
 
 	func categoryPickerSetUp() {
@@ -71,6 +72,13 @@ class PlaceDetailsViewController: UIViewController {
 		detailsView.mapView.showAnnotations([place], animated: false)
 		detailsView.nameTF.text = place.name
 		detailsView.categoryTF.text = categoriesController.categories[place.category]
+	}
+
+	@objc func goToPlace() {
+		let destination = MKMapItem(placemark: MKPlacemark(coordinate: place.coordinate))
+		destination.name = place.name
+
+		MKMapItem.openMaps(with: [destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
 	}
 
 	@objc func deletePlace() {
