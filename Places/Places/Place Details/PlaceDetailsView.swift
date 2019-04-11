@@ -19,11 +19,25 @@ class PlaceDetailsView: UIView {
 		return tf
 	}()
 
+	let categoryTF: UITextField = {
+		let tf = UITextField()
+		tf.heightAnchor.constraint(equalToConstant: 50).isActive = true
+		return tf
+	}()
+
 	private var	nameLabel: UILabel = {
 		let label = UILabel(frame: .zero)
 		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
 		label.textColor = .darkGray
 		label.text = "Name"
+		return label
+	}()
+
+	private var categoryLabel: UILabel = {
+		let label = UILabel(frame: .zero)
+		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
+		label.textColor = .darkGray
+		label.text = "Category"
 		return label
 	}()
 
@@ -39,7 +53,7 @@ class PlaceDetailsView: UIView {
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
-		mapView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, size: CGSize(width: frame.size.width, height: frame.size.height / 2))
+		mapView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, size: CGSize(width: frame.size.width, height: frame.size.height / 3))
 	}
 
 	private func setupView() {
@@ -49,8 +63,12 @@ class PlaceDetailsView: UIView {
 		addSubview(mapView)
 		addSubview(nameTF)
 		addSubview(nameLabel)
+		addSubview(categoryTF)
+		addSubview(categoryLabel)
 		mapView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor)
 		nameLabel.anchor(top: mapView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
 		nameTF.anchor(top: nameLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
+		categoryLabel.anchor(top: nameTF.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
+		categoryTF.anchor(top: categoryLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
 	}
 }

@@ -26,7 +26,7 @@ class PlaceListCoordinator: Coordinator {
 	}
 
 	func showDetails(_ place: Place) {
-		let homeVC = PlaceDetailsViewController(coordinator: self, place: place)
+		let homeVC = PlaceDetailsViewController(coordinator: self, place: place, categoriesController: categoryCtrl)
 		navigationController.pushViewController(homeVC, animated: true)
 	}
 
@@ -41,13 +41,13 @@ class PlaceListCoordinator: Coordinator {
 		navigationController.pushViewController(catVC, animated: true)
 	}
 
-	func updatePlace(_ place: Place, name: String) {
-		if name == place.name || name.isEmpty {
+	func updatePlace(_ place: Place, name: String, category: MarkerColor) {
+		if (name == place.name && category == place.category) || name.isEmpty {
 			return
 		}
 
 		print("Update - \(place.name)")
-		let newPlace = Place(name: name, details: place.address, lat: place.lat, long: place.long, id: place.id, category: place.category)
+		let newPlace = Place(name: name, details: place.address, lat: place.lat, long: place.long, id: place.id, category: category)
 		placesCtrl.removePlace(place)
 		placesCtrl.addPlace(newPlace)
 	}

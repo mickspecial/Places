@@ -13,11 +13,15 @@ class PlaceDetailsViewController: UIViewController {
 
 	private let detailsView = PlaceDetailsView()
 	let coordinator: PlaceListCoordinator
+	let categoriesController: CategoryController
 	let place: Place
+	let markerPicker = UIPickerView()
+	var pickerData = [(key: MarkerColor, value: String)]()
 
-	init(coordinator: PlaceListCoordinator, place: Place) {
+	init(coordinator: PlaceListCoordinator, place: Place, categoriesController: CategoryController) {
 		self.coordinator = coordinator
 		self.place = place
+		self.categoriesController = categoriesController
 		super.init(nibName: nil, bundle: nil)
 	}
 
@@ -28,6 +32,24 @@ class PlaceDetailsViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setUpView()
+
+		// convert dict to tuple so can easily manage data
+		pickerData = categoriesController.categories.map { (key: MarkerColor, value: String) in
+			return (key, value)
+		}
+
+		pickerData.sort(by: { $0.value < $1.value })
+		categoryPickerSetUp()
+	}
+
+	func categoryPickerSetUp() {
+		markerPicker.showsSelectionIndicator = true
+		markerPicker.delegate = self
+		markerPicker.dataSource = self
+		detailsView.categoryTF.inputView = markerPicker
+		if let index = pickerData.firstIndex(where: { $0.key == place.category }) {
+			markerPicker.selectRow(index, inComponent: 0, animated: false)
+		}
 	}
 
 	private func setUpView() {
@@ -42,6 +64,7 @@ class PlaceDetailsViewController: UIViewController {
 		detailsView.mapView.addAnnotation(place)
 		detailsView.mapView.showAnnotations([place], animated: false)
 		detailsView.nameTF.text = place.name
+		detailsView.categoryTF.text = categoriesController.categories[place.category]
 	}
 
 	@objc func deletePlace() {
@@ -50,7 +73,9 @@ class PlaceDetailsViewController: UIViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		coordinator.updatePlace(place, name: detailsView.nameTF.string)
+		let selectedMarker = pickerData[markerPicker.selectedRow(inComponent: 0)]
+		assert(selectedMarker.value == detailsView.categoryTF.string)
+		coordinator.updatePlace(place, name: detailsView.nameTF.string, category: selectedMarker.key)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -68,5 +93,25 @@ extension PlaceDetailsViewController: MKMapViewDelegate {
 		let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
 		annotationView.image = place.markerImage
 		return annotationView
+	}
+}
+
+// MARK: - UIPickerViewDelegate
+extension PlaceDetailsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+
+	func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+		return pickerData[row].value
+	}
+
+	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+		detailsView.categoryTF.text = pickerData[row].value
+	}
+
+	func numberOfComponents(in pickerView: UIPickerView) -> Int {
+		return 1
+	}
+
+	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+		return categoriesController.categories.count
 	}
 }
