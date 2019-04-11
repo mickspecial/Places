@@ -37,6 +37,22 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 		title = "Map"
 		navigationController?.navigationBar.prefersLargeTitles = true
 		navigationController?.navigationBar.isTranslucent = false
+		navigationItem.rightBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(goToPlace), imageName: "navigation", size: .medium)
+	}
+
+	@objc func goToPlace() {
+		guard let selected = mapView.selectedAnnotations.first else {
+			SCLAlertView(appearance: AlertService.standard).showError("Select Destinaton")
+			return
+		}
+
+		let source = MKMapItem(placemark: MKPlacemark(coordinate: mapView.userLocation.coordinate))
+		source.name = "Start"
+
+		let destination = MKMapItem(placemark: MKPlacemark(coordinate: selected.coordinate))
+		destination.name = "End"
+
+		MKMapItem.openMaps(with: [source, destination], launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
 	}
 
 	private func addMapToView() {
