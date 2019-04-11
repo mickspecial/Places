@@ -8,31 +8,34 @@
 
 import UIKit
 
+struct GroupedItem {
+	let sectionTitle: String
+	let cell = UITableViewCell()
+	let textField: UITextField
+	let marker: MarkerColor
+
+	init(_ maker: MarkerColor) {
+		self.textField = UITextField(frame: CGRect(x: 20, y: 0, width: cell.frame.width, height: cell.frame.height))
+		self.textField.placeholder = "Custom Category Name"
+		self.cell.addSubview(textField)
+		self.marker = maker
+		switch maker {
+		case .blue: self.sectionTitle = "Blue"
+		case .red: self.sectionTitle = "Red"
+		case .green: self.sectionTitle = "Green"
+		case .orange: self.sectionTitle = "Orange"
+		case .cyan: self.sectionTitle = "Cyan"
+		case .white: self.sectionTitle = "White"
+		case .purple: self.sectionTitle = "Purple"
+		}
+	}
+}
+
 class CategoryViewController: UITableViewController {
 
 	let coordinator: HomeCoordinator
 	let categoryCtrl: CategoryController
-
-	let cyanCell = UITableViewCell()
-	let greenCell = UITableViewCell()
-	let orangeCell = UITableViewCell()
-	let blueCell = UITableViewCell()
-	let purpleCell = UITableViewCell()
-	let redCell = UITableViewCell()
-	let whiteCell = UITableViewCell()
-
-	var cyanCellText: UITextField!
-	var greenCellText: UITextField!
-	var orangeCellText: UITextField!
-	var blueCellText: UITextField!
-	var purpleCellText: UITextField!
-	var redCellText: UITextField!
-	var whiteCellText: UITextField!
-
-	private var cells = [UITableViewCell]()
-	private var textFields = [UITextField]()
-	private var labels = [String]()
-	private var markers = [MarkerColor]()
+	var items = [GroupedItem]()
 
 	init(categoryCtrl: CategoryController, coordinator: HomeCoordinator) {
 		self.categoryCtrl = categoryCtrl
@@ -42,21 +45,15 @@ class CategoryViewController: UITableViewController {
 
 	override func loadView() {
 		super.loadView()
-		// construct first name cell, section 0, row 0
-		blueCellText = setUp(cell: blueCell)
-		redCellText = setUp(cell: redCell)
-		cyanCellText = setUp(cell: cyanCell)
-		greenCellText = setUp(cell: greenCell)
-		orangeCellText = setUp(cell: orangeCell)
-		purpleCellText = setUp(cell: purpleCell)
-		whiteCellText = setUp(cell: whiteCell)
-
-		// set up data arrays
-		cells = [cyanCell, greenCell, orangeCell, blueCell, purpleCell, redCell, whiteCell]
-		textFields = [cyanCellText, greenCellText, orangeCellText, blueCellText, purpleCellText, redCellText, whiteCellText]
-		labels = ["Cyan", "Green", "Orange", "Blue", "Purple", "Red", "White"]
-		markers = [.cyan, .green, .orange, .blue, .purple, .red, .white]
-		assert(cells.count == labels.count && labels.count == markers.count && labels.count == textFields.count)
+		items = [
+			GroupedItem(.cyan),
+			GroupedItem(.blue),
+			GroupedItem(.green),
+			GroupedItem(.orange),
+			GroupedItem(.red),
+			GroupedItem(.purple),
+			GroupedItem(.white)
+		]
 	}
 
 	private func setUp(cell: UITableViewCell) -> UITextField {
@@ -81,10 +78,8 @@ class CategoryViewController: UITableViewController {
 	}
 
 	private func fillCells() {
-		for index in 0..<markers.count {
-			let currentMarker = markers[index]
-			let currentTextField = textFields[index]
-			currentTextField.text = categoryCtrl.categories[currentMarker]
+		for item in items {
+			item.textField.text = categoryCtrl.categories[item.marker]
 		}
 	}
 
@@ -93,7 +88,7 @@ class CategoryViewController: UITableViewController {
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		return cells.count
+		return items.count
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -101,11 +96,11 @@ class CategoryViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		return cells[indexPath.section] // only one cell per section so can do this
+		return items[indexPath.section].cell // only one cell per section so can do this
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		return labels[section]
+		return items[section].sectionTitle
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -113,19 +108,18 @@ class CategoryViewController: UITableViewController {
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
-		// save as necessary
-		for index in 0..<markers.count {
-			save(textField: textFields[index], marker: markers[index])
+		for item in items {
+			save(item)
 		}
 	}
 
-	func save(textField: UITextField, marker: MarkerColor) {
+	func save(_ item: GroupedItem) {
 		// only save if name has been changed and is not empty string
-		let isValidString = !textField.string.isEmpty
-		let nameHasChanged = textField.string != categoryCtrl.categories[marker]
+		let isValidString = !item.textField.string.isEmpty
+		let nameHasChanged = item.textField.string != categoryCtrl.categories[item.marker]
 		if isValidString && nameHasChanged {
-			print("Save \(textField.string) for \(marker)")
-			categoryCtrl.categories[marker] = textField.string
+			print("Save \(item.textField.string) for \(item.marker)")
+			categoryCtrl.categories[item.marker] = item.textField.string
 		}
 	}
 }
