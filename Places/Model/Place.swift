@@ -11,6 +11,10 @@ import MapKit
 
 enum MarkerColor: String, CaseIterable {
 	case red, green, cyan, blue, white, orange, purple
+
+	var markerImage: UIImage {
+		return UIImage(named: self.rawValue)!
+	}
 }
 
 class Place: NSObject {
@@ -22,7 +26,7 @@ class Place: NSObject {
 	let category: MarkerColor
 
 	var markerImage: UIImage {
-		return UIImage(named: category.rawValue)!
+		return category.markerImage
 	}
 
 	init(name: String, details: String, lat: Double, long: Double, id: String, category: MarkerColor) {

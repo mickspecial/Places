@@ -17,10 +17,12 @@ class PlaceDetailsViewController: UIViewController {
 	let place: Place
 	let markerPicker = UIPickerView()
 	var pickerData = [(key: MarkerColor, value: String)]()
+	var markerColor: MarkerColor!
 
 	init(coordinator: PlaceListCoordinator, place: Place, categoriesController: CategoryController) {
 		self.coordinator = coordinator
 		self.place = place
+		self.markerColor = place.category
 		self.categoriesController = categoriesController
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -87,11 +89,8 @@ extension PlaceDetailsViewController: MKMapViewDelegate {
 
 	// will show the custom map marker if is a place
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-		guard let place = annotation as? Place else {
-			return nil // default marker will be used
-		}
 		let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: nil)
-		annotationView.image = place.markerImage
+		annotationView.image = markerColor.markerImage
 		return annotationView
 	}
 }
@@ -105,6 +104,11 @@ extension PlaceDetailsViewController: UIPickerViewDelegate, UIPickerViewDataSour
 
 	func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
 		detailsView.categoryTF.text = pickerData[row].value
+		markerColor = pickerData[row].key
+		let pin = MKPointAnnotation()
+		pin.coordinate = place.coordinate
+		detailsView.mapView.removeAnnotations(detailsView.mapView.annotations)
+		detailsView.mapView.addAnnotation(pin)
 	}
 
 	func numberOfComponents(in pickerView: UIPickerView) -> Int {
