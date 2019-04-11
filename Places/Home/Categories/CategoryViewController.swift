@@ -33,11 +33,11 @@ struct GroupedItem {
 
 class CategoryViewController: UITableViewController {
 
-	let coordinator: HomeCoordinator
+	let coordinator: PlaceListCoordinator
 	let categoryCtrl: CategoryController
 	var items = [GroupedItem]()
 
-	init(categoryCtrl: CategoryController, coordinator: HomeCoordinator) {
+	init(categoryCtrl: CategoryController, coordinator: PlaceListCoordinator) {
 		self.categoryCtrl = categoryCtrl
 		self.coordinator = coordinator
 		super.init(nibName: nil, bundle: nil)

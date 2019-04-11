@@ -8,14 +8,14 @@
 
 import UIKit
 
-class HomeViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class PlaceListController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
 	let placesController: PlacesController
-	let coordinator: HomeCoordinator
+	let coordinator: PlaceListCoordinator
 	private let cellId = "cellId"
 	private var places = [Place]()
 
-	init(placesCtrl: PlacesController, coordinator: HomeCoordinator) {
+	init(placesCtrl: PlacesController, coordinator: PlaceListCoordinator) {
 		self.placesController = placesCtrl
 		self.coordinator = coordinator
 		let layout = UICollectionViewFlowLayout()

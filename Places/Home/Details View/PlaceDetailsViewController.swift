@@ -9,13 +9,13 @@
 import UIKit
 import MapKit
 
-class HomeDetailsViewController: UIViewController {
+class PlaceDetailsViewController: UIViewController {
 
-	private let detailsView = HomeDetailsView()
-	let coordinator: HomeCoordinator
+	private let detailsView = PlaceDetailsView()
+	let coordinator: PlaceListCoordinator
 	let place: Place
 
-	init(coordinator: HomeCoordinator, place: Place) {
+	init(coordinator: PlaceListCoordinator, place: Place) {
 		self.coordinator = coordinator
 		self.place = place
 		super.init(nibName: nil, bundle: nil)
@@ -58,7 +58,7 @@ class HomeDetailsViewController: UIViewController {
 	}
 }
 
-extension HomeDetailsViewController: MKMapViewDelegate {
+extension PlaceDetailsViewController: MKMapViewDelegate {
 
 	// will show the custom map marker if is a place
 	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {

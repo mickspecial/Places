@@ -16,7 +16,7 @@ protocol Coordinator {
 
 class MainTabBarController: UITabBarController {
 
-	var homeCoordinator: HomeCoordinator!
+	var homeCoordinator: PlaceListCoordinator!
 	var mapSeachCoordinator: FindCoordinator!
 	var placesController: PlacesController!
 	var categoriesController: CategoryController!
@@ -28,7 +28,7 @@ class MainTabBarController: UITabBarController {
 		// if VC needs more advanced actions set it up with a coordinator
 
 		// Home Tab
-		homeCoordinator = HomeCoordinator(placesCtrl: placesController, categoryCtrl: categoriesController)
+		homeCoordinator = PlaceListCoordinator(placesCtrl: placesController, categoryCtrl: categoriesController)
 
 		// Map Tap
 		let map = MapViewController(placesCtrl: placesController)

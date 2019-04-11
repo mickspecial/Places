@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class HomeDetailsView: UIView {
+class PlaceDetailsView: UIView {
 
 	var mapView: MKMapView!
 

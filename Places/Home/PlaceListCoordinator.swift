@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HomeCoordinator: Coordinator {
+class PlaceListCoordinator: Coordinator {
 
 	var childCoordinators = [Coordinator]()
 	var navigationController: UINavigationController
@@ -20,13 +20,13 @@ class HomeCoordinator: Coordinator {
 		self.placesCtrl = placesCtrl
 		self.categoryCtrl = categoryCtrl
 
-		let home = HomeViewController(placesCtrl: placesCtrl, coordinator: self)
+		let home = PlaceListController(placesCtrl: placesCtrl, coordinator: self)
 		home.tabBarItem = UITabBarItem(title: "Places", image: #imageLiteral(resourceName: "list"), tag: 0)
 		navigationController.viewControllers = [home]
 	}
 
 	func showDetails(_ place: Place) {
-		let homeVC = HomeDetailsViewController(coordinator: self, place: place)
+		let homeVC = PlaceDetailsViewController(coordinator: self, place: place)
 		navigationController.pushViewController(homeVC, animated: true)
 	}
 

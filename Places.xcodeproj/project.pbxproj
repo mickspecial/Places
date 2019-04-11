@@ -25,13 +25,13 @@
 		00A3F961225962A7003EFD3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00A3F960225962A7003EFD3B /* Assets.xcassets */; };
 		00A3F964225962A7003EFD3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00A3F962225962A7003EFD3B /* LaunchScreen.storyboard */; };
 		00A3F96F225962A7003EFD3B /* PlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F96E225962A7003EFD3B /* PlacesTests.swift */; };
-		00A3F97C225964D4003EFD3B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F97B225964D4003EFD3B /* HomeViewController.swift */; };
+		00A3F97C225964D4003EFD3B /* PlaceListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F97B225964D4003EFD3B /* PlaceListController.swift */; };
 		00A3F97E225964E4003EFD3B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F97D225964E4003EFD3B /* MapViewController.swift */; };
-		00B2E97E225B316D005A8DDD /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B2E97D225B316D005A8DDD /* HomeCoordinator.swift */; };
-		00B2E980225B31E9005A8DDD /* HomeDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B2E97F225B31E9005A8DDD /* HomeDetailsViewController.swift */; };
+		00B2E97E225B316D005A8DDD /* PlaceListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B2E97D225B316D005A8DDD /* PlaceListCoordinator.swift */; };
+		00B2E980225B31E9005A8DDD /* PlaceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B2E97F225B31E9005A8DDD /* PlaceDetailsViewController.swift */; };
 		00BA6913225B50AF00D22C41 /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BA6912225B50AF00D22C41 /* PlaceCell.swift */; };
 		00E3F2D82259701400133301 /* FindTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E3F2D72259701400133301 /* FindTableViewController.swift */; };
-		00EAA3B9225C6AA9006240FD /* HomeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EAA3B8225C6AA9006240FD /* HomeDetailsView.swift */; };
+		00EAA3B9225C6AA9006240FD /* PlaceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EAA3B8225C6AA9006240FD /* PlaceDetailsView.swift */; };
 		49963380535ED3E219C3CD8F /* Pods_Places.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5897D54B78B967E18E3619 /* Pods_Places.framework */; };
 		FFA2D4D246A9AF80E06C6ADB /* Pods_PlacesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07ED4216221222B89B4CFB86 /* Pods_PlacesTests.framework */; };
 /* End PBXBuildFile section */
@@ -69,13 +69,13 @@
 		00A3F96A225962A7003EFD3B /* PlacesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlacesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00A3F96E225962A7003EFD3B /* PlacesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesTests.swift; sourceTree = "<group>"; };
 		00A3F970225962A7003EFD3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00A3F97B225964D4003EFD3B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		00A3F97B225964D4003EFD3B /* PlaceListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListController.swift; sourceTree = "<group>"; };
 		00A3F97D225964E4003EFD3B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		00B2E97D225B316D005A8DDD /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
-		00B2E97F225B31E9005A8DDD /* HomeDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDetailsViewController.swift; sourceTree = "<group>"; };
+		00B2E97D225B316D005A8DDD /* PlaceListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCoordinator.swift; sourceTree = "<group>"; };
+		00B2E97F225B31E9005A8DDD /* PlaceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsViewController.swift; sourceTree = "<group>"; };
 		00BA6912225B50AF00D22C41 /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
 		00E3F2D72259701400133301 /* FindTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindTableViewController.swift; sourceTree = "<group>"; };
-		00EAA3B8225C6AA9006240FD /* HomeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeDetailsView.swift; sourceTree = "<group>"; };
+		00EAA3B8225C6AA9006240FD /* PlaceDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsView.swift; sourceTree = "<group>"; };
 		07ED4216221222B89B4CFB86 /* Pods_PlacesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlacesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EB3C41833C263ED99CE4937 /* Pods-Places.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Places.debug.xcconfig"; path = "Target Support Files/Pods-Places/Pods-Places.debug.xcconfig"; sourceTree = "<group>"; };
 		5BF2CBCDE01DA3A9A060A021 /* Pods-PlacesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesTests.release.xcconfig"; path = "Target Support Files/Pods-PlacesTests/Pods-PlacesTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -127,9 +127,9 @@
 		000EB02D2259D44F008D0DD1 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				00B2E97D225B316D005A8DDD /* HomeCoordinator.swift */,
+				00B2E97D225B316D005A8DDD /* PlaceListCoordinator.swift */,
 				0073CB13225EA8E300C342FD /* Categories */,
-				00EAA3BA225C6B43006240FD /* Home View */,
+				00EAA3BA225C6B43006240FD /* Places List */,
 				00EAA3B7225C6A99006240FD /* Details View */,
 			);
 			path = Home;
@@ -230,19 +230,19 @@
 		00EAA3B7225C6A99006240FD /* Details View */ = {
 			isa = PBXGroup;
 			children = (
-				00B2E97F225B31E9005A8DDD /* HomeDetailsViewController.swift */,
-				00EAA3B8225C6AA9006240FD /* HomeDetailsView.swift */,
+				00B2E97F225B31E9005A8DDD /* PlaceDetailsViewController.swift */,
+				00EAA3B8225C6AA9006240FD /* PlaceDetailsView.swift */,
 			);
 			path = "Details View";
 			sourceTree = "<group>";
 		};
-		00EAA3BA225C6B43006240FD /* Home View */ = {
+		00EAA3BA225C6B43006240FD /* Places List */ = {
 			isa = PBXGroup;
 			children = (
-				00A3F97B225964D4003EFD3B /* HomeViewController.swift */,
+				00A3F97B225964D4003EFD3B /* PlaceListController.swift */,
 				00BA6912225B50AF00D22C41 /* PlaceCell.swift */,
 			);
-			path = "Home View";
+			path = "Places List";
 			sourceTree = "<group>";
 		};
 		C6702F7552D78C29C1B46275 /* Pods */ = {
@@ -435,25 +435,25 @@
 				00737F0E225DF7D70054F35F /* FindDetailsViewController.swift in Sources */,
 				00BA6913225B50AF00D22C41 /* PlaceCell.swift in Sources */,
 				00737F10225DF8080054F35F /* FindDetailsView.swift in Sources */,
-				00EAA3B9225C6AA9006240FD /* HomeDetailsView.swift in Sources */,
+				00EAA3B9225C6AA9006240FD /* PlaceDetailsView.swift in Sources */,
 				00495041225DC46600051498 /* SCLAlertView.swift in Sources */,
 				00A3F95A225962A6003EFD3B /* AppDelegate.swift in Sources */,
 				000EB0282259D245008D0DD1 /* String-Extension.swift in Sources */,
 				00A3F97E225964E4003EFD3B /* MapViewController.swift in Sources */,
-				00A3F97C225964D4003EFD3B /* HomeViewController.swift in Sources */,
+				00A3F97C225964D4003EFD3B /* PlaceListController.swift in Sources */,
 				006C794C225AA8A2002A586A /* UIView-Extension.swift in Sources */,
 				00E3F2D82259701400133301 /* FindTableViewController.swift in Sources */,
 				00495042225DC46600051498 /* SCLExtensions.swift in Sources */,
 				006C7949225AA6C3002A586A /* Place.swift in Sources */,
 				00993F32225ABBC2006EDA83 /* PlacesController.swift in Sources */,
-				00B2E980225B31E9005A8DDD /* HomeDetailsViewController.swift in Sources */,
+				00B2E980225B31E9005A8DDD /* PlaceDetailsViewController.swift in Sources */,
 				000EB02B2259D426008D0DD1 /* MainController.swift in Sources */,
 				00495040225DC46600051498 /* SCLAlertViewStyleKit.swift in Sources */,
 				006C794E225AB6A0002A586A /* PinCalloutView.swift in Sources */,
 				00495044225DC4D000051498 /* AlertService.swift in Sources */,
 				00737F12225DF84C0054F35F /* FindCoordinator.swift in Sources */,
 				0073CB12225EA84F00C342FD /* CategoryViewController.swift in Sources */,
-				00B2E97E225B316D005A8DDD /* HomeCoordinator.swift in Sources */,
+				00B2E97E225B316D005A8DDD /* PlaceListCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
