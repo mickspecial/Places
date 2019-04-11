@@ -30,7 +30,7 @@ class PlaceDetailsView: UIView {
 	private var	nameLabel: UILabel = {
 		let label = UILabel(frame: .zero)
 		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-		label.textColor = .orange
+		label.textColor = Theme.current.highlight
 		label.text = "Name"
 		return label
 	}()
@@ -38,7 +38,7 @@ class PlaceDetailsView: UIView {
 	private var categoryLabel: UILabel = {
 		let label = UILabel(frame: .zero)
 		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-		label.textColor = .orange
+		label.textColor = Theme.current.highlight
 		label.text = "Category"
 		return label
 	}()

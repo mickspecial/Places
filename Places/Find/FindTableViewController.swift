@@ -77,6 +77,7 @@ class FindTableViewController: UITableViewController {
 		cell.textLabel?.textColor = .white
 		cell.detailTextLabel?.textColor = .white
 		cell.backgroundColor = Theme.current.cellDark
+		// show search letters in bold
 		cell.textLabel?.attributedText = NSAttributedString.highlightedText(searchResult.title, ranges: searchResult.titleHighlightRanges, size: 17)
 		cell.detailTextLabel?.attributedText = NSAttributedString.highlightedText(searchResult.subtitle, ranges: searchResult.subtitleHighlightRanges, size: 12)
 		return cell

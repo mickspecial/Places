@@ -17,6 +17,7 @@ protocol ThemeProtocol {
 	var primary: UIColor { get }
 	var primaryDark: UIColor { get }
 	var cellDark: UIColor { get }
+	var highlight: UIColor { get }
 }
 
 struct Default: ThemeProtocol {
@@ -24,6 +25,7 @@ struct Default: ThemeProtocol {
 	let primary = UIColor(r: 68, g: 65, b: 69)
 	let primaryDark = UIColor(r: 49, g: 47, b: 47)
 	let cellDark = UIColor(r: 54, g: 52, b: 54)
+	let highlight = UIColor.FlatColor.Orange.Sun
 }
 
 extension UIColor {

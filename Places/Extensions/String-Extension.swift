@@ -25,6 +25,7 @@ extension NSAttributedString {
 		let bold = UIFont.boldSystemFont(ofSize: size)
 		for value in ranges {
 			attributedText.addAttribute(NSAttributedString.Key.font, value: bold, range: value.rangeValue)
+			attributedText.addAttribute(NSAttributedString.Key.foregroundColor, value: Theme.current.highlight, range: value.rangeValue)
 		}
 		return attributedText
 	}
