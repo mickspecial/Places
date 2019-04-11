@@ -13,6 +13,7 @@
 		00495041225DC46600051498 /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049503E225DC46600051498 /* SCLAlertView.swift */; };
 		00495042225DC46600051498 /* SCLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049503F225DC46600051498 /* SCLExtensions.swift */; };
 		00495044225DC4D000051498 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00495043225DC4D000051498 /* AlertService.swift */; };
+		0051D736225F47500057B9B0 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0051D735225F47500057B9B0 /* Theme.swift */; };
 		006C7949225AA6C3002A586A /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C7948225AA6C3002A586A /* Place.swift */; };
 		006C794C225AA8A2002A586A /* UIView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C794B225AA8A2002A586A /* UIView-Extension.swift */; };
 		006C794E225AB6A0002A586A /* PinCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C794D225AB6A0002A586A /* PinCalloutView.swift */; };
@@ -53,6 +54,7 @@
 		0049503E225DC46600051498 /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
 		0049503F225DC46600051498 /* SCLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLExtensions.swift; sourceTree = "<group>"; };
 		00495043225DC4D000051498 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		0051D735225F47500057B9B0 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		006C7948225AA6C3002A586A /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		006C794B225AA8A2002A586A /* UIView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView-Extension.swift"; sourceTree = "<group>"; };
 		006C794D225AB6A0002A586A /* PinCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCalloutView.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				0049503D225DC46500051498 /* SCLAlertViewStyleKit.swift */,
 				0049503F225DC46600051498 /* SCLExtensions.swift */,
 				00495043225DC4D000051498 /* AlertService.swift */,
+				0051D735225F47500057B9B0 /* Theme.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -435,6 +438,7 @@
 				00737F0E225DF7D70054F35F /* FindDetailsViewController.swift in Sources */,
 				00BA6913225B50AF00D22C41 /* PlaceCell.swift in Sources */,
 				00737F10225DF8080054F35F /* FindDetailsView.swift in Sources */,
+				0051D736225F47500057B9B0 /* Theme.swift in Sources */,
 				00EAA3B9225C6AA9006240FD /* PlaceDetailsView.swift in Sources */,
 				00495041225DC46600051498 /* SCLAlertView.swift in Sources */,
 				00A3F95A225962A6003EFD3B /* AppDelegate.swift in Sources */,

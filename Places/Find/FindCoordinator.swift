@@ -21,6 +21,9 @@ class FindCoordinator: Coordinator {
 		self.placesCtrl = placesCtrl
 		self.categoriesCtrl = categoriesCtrl
 
+		self.navigationController.navigationBar.prefersLargeTitles = true
+		self.navigationController.navigationBar.isTranslucent = false
+
 		let findVC = FindTableViewController(placesCtrl: placesCtrl, coordinator: self)
 		findVC.tabBarItem = UITabBarItem(title: "Find", image: #imageLiteral(resourceName: "find"), tag: 2)
 		navigationController.viewControllers = [findVC]

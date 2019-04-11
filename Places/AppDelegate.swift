@@ -17,6 +17,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var tabBarController: MainTabBarController?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
+		// Theme
+		UINavigationBar.appearance().tintColor = .white
+		UINavigationBar.appearance().barTintColor = Theme.current.primaryDark
+		let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+		UINavigationBar.appearance().titleTextAttributes = textAttributes
+		UINavigationBar.appearance().largeTitleTextAttributes = textAttributes
+		UINavigationBar.appearance().backgroundColor = Theme.current.primaryDark
+		UINavigationBar.appearance().isOpaque = true
+
+		UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+		UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white], for: .normal)
+
+		UITabBar.appearance().backgroundColor = Theme.current.primaryDark
+		UITabBar.appearance().tintColor = .white
+		UITabBar.appearance().barTintColor = Theme.current.primaryDark
+
 		tabBarController = MainTabBarController()
 		window = UIWindow(frame: UIScreen.main.bounds)
 		window?.rootViewController = tabBarController

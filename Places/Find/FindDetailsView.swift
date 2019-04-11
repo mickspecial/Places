@@ -15,12 +15,14 @@ class FindDetailsView: UIView {
 
 	let nameTF: UITextField = {
 		let tf = UITextField()
+		tf.textColor = .white
 		tf.heightAnchor.constraint(equalToConstant: 50).isActive = true
 		return tf
 	}()
 
 	let categoryTF: UITextField = {
 		let tf = UITextField()
+		tf.textColor = .white
 		tf.heightAnchor.constraint(equalToConstant: 50).isActive = true
 		return tf
 	}()
@@ -28,7 +30,7 @@ class FindDetailsView: UIView {
 	private var	nameLabel: UILabel = {
 		let label = UILabel(frame: .zero)
 		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-		label.textColor = .darkGray
+		label.textColor = .orange
 		label.text = "Name"
 		return label
 	}()
@@ -36,7 +38,7 @@ class FindDetailsView: UIView {
 	private var categoryLabel: UILabel = {
 		let label = UILabel(frame: .zero)
 		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-		label.textColor = .darkGray
+		label.textColor = .orange
 		label.text = "Category"
 		return label
 	}()
@@ -65,7 +67,7 @@ class FindDetailsView: UIView {
 		addSubview(nameLabel)
 		addSubview(categoryTF)
 		addSubview(categoryLabel)
-		mapView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor)
+		mapView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor)
 		nameLabel.anchor(top: mapView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
 		nameTF.anchor(top: nameLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
 		categoryLabel.anchor(top: nameTF.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))

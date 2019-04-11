@@ -48,7 +48,7 @@ class FindDetailsViewController: UIViewController {
 	}
 
 	private func setUpView() {
-		view.backgroundColor = .white
+		view.backgroundColor = Theme.current.primary
 		title = item.name ?? ""
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(savePlace))
 		detailsView.mapView.delegate = self

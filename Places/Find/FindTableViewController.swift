@@ -47,6 +47,7 @@ class FindTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 		setUpNavBar()
+		tableView.backgroundColor = Theme.current.primary
     }
 
 	private func setUpNavBar() {
@@ -73,6 +74,9 @@ class FindTableViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let searchResult = searchResults[indexPath.row]
 		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
+		cell.textLabel?.textColor = .white
+		cell.detailTextLabel?.textColor = .white
+		cell.backgroundColor = Theme.current.cellDark
 		cell.textLabel?.attributedText = NSAttributedString.highlightedText(searchResult.title, ranges: searchResult.titleHighlightRanges, size: 17)
 		cell.detailTextLabel?.attributedText = NSAttributedString.highlightedText(searchResult.subtitle, ranges: searchResult.subtitleHighlightRanges, size: 12)
 		return cell

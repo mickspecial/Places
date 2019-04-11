@@ -55,7 +55,7 @@ class PlaceDetailsViewController: UIViewController {
 	}
 
 	private func setUpView() {
-		view.backgroundColor = .white
+		view.backgroundColor = Theme.current.primary
 		title = place.name
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(deletePlace))
 		detailsView.mapView.delegate = self

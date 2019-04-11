@@ -35,6 +35,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 	private func setUpView() {
 		view.backgroundColor = .white
 		title = "Map"
+		navigationController?.navigationBar.prefersLargeTitles = true
+		navigationController?.navigationBar.isTranslucent = false
 	}
 
 	private func addMapToView() {
@@ -42,6 +44,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
 		mapView.delegate = self
 		mapView.showsUserLocation = true
 		view.addSubview(mapView)
+		mapView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor)
 	}
 
 	private func showUsersLocationOnMap() {

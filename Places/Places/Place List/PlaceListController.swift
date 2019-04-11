@@ -29,7 +29,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 
     override func viewDidLoad() {
         super.viewDidLoad()
-		collectionView.backgroundColor = .white
+		collectionView.backgroundColor = Theme.current.primary
 		title = "Places"
 		collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: cellId)
 		collectionView.dataSource = self

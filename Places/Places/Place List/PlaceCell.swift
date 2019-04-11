@@ -17,7 +17,7 @@ class PlaceCell: UICollectionViewCell {
 
 	var nameLabel: UILabel = {
 		let label = UILabel(frame: .zero)
-		label.textColor = .black
+		label.textColor = .white
 		label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
 		label.allowsDefaultTighteningForTruncation = true
 		return label
@@ -25,7 +25,7 @@ class PlaceCell: UICollectionViewCell {
 
 	var addressLabel: UILabel = {
 		let label = UILabel(frame: .zero)
-		label.textColor = .darkGray
+		label.textColor = .white
 		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
 		return label
 	}()
@@ -40,7 +40,7 @@ class PlaceCell: UICollectionViewCell {
 	private func setUpView() {
 		let theViews = [markerImageView, nameLabel, addressLabel]
 		theViews.forEach({ addSubview($0)})
-		backgroundColor = .lightGray
+		backgroundColor = Theme.current.cellDark
 		markerImageView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
 		markerImageView.centerY()
 		nameLabel.anchor(top: topAnchor, leading: markerImageView.trailingAnchor, bottom: addressLabel.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))

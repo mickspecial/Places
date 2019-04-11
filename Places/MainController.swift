@@ -23,6 +23,7 @@ class MainTabBarController: UITabBarController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		tabBar.isTranslucent = false
 		placesController = PlacesController()
 		categoriesController = CategoryController()
 		// if VC needs more advanced actions set it up with a coordinator

@@ -17,6 +17,8 @@ struct GroupedItem {
 	init(_ maker: MarkerColor) {
 		self.textField = UITextField(frame: CGRect(x: 20, y: 0, width: cell.frame.width, height: cell.frame.height))
 		self.textField.placeholder = "Custom Category Name"
+		self.textField.textColor = .white
+		cell.backgroundColor = Theme.current.cellDark
 		self.cell.addSubview(textField)
 		self.marker = maker
 		switch maker {
@@ -75,6 +77,7 @@ class CategoryViewController: UITableViewController {
 		tableView.delegate = self
 		tableView.dataSource = self
 		tableView.allowsSelection = false
+		tableView.backgroundColor = Theme.current.primary
 	}
 
 	private func fillCells() {

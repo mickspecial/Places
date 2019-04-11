@@ -20,6 +20,9 @@ class PlaceListCoordinator: Coordinator {
 		self.placesCtrl = placesCtrl
 		self.categoryCtrl = categoryCtrl
 
+		self.navigationController.navigationBar.prefersLargeTitles = true
+		self.navigationController.navigationBar.isTranslucent = false
+
 		let home = PlaceListController(placesCtrl: placesCtrl, coordinator: self)
 		home.tabBarItem = UITabBarItem(title: "Places", image: #imageLiteral(resourceName: "list"), tag: 0)
 		navigationController.viewControllers = [home]
