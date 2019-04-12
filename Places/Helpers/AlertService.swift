@@ -26,7 +26,7 @@ class AlertService {
 			kTitleFont: UIFont.systemFont(ofSize: 18, weight: .regular),
 			kButtonFont: UIFont.systemFont(ofSize: 18, weight: .semibold),
 			showCloseButton: false,
-			buttonsLayout: SCLAlertButtonLayout.vertical
+			buttonsLayout: SCLAlertButtonLayout.horizontal
 		)
 		return appearance
 	}
