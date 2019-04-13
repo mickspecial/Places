@@ -80,6 +80,6 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 
 extension PlaceListController: PlaceCellDelegate {
 	func placeCellMapPressed(place: Place) {
-		print("Tap")
+		coordinator.showOnMap(place)
 	}
 }

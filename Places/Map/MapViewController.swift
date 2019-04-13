@@ -53,6 +53,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		}
 	}
 
+	func zoomToPlace(place: Place) {
+		// find place within the local list
+		if mapView == nil {
+			return
+		}
+
+		let places = mapView.annotations.compactMap({ $0 as? Place })
+		if let zoomTo = places.first(where: { $0.id == place.id }) {
+			//mapView.showAnnotations([zoomTo], animated: true)
+			mapView.selectAnnotation(zoomTo, animated: true)
+		}
+	}
+
 	init(placesCtrl: PlacesController) {
 		placesController = placesCtrl
 		super.init(nibName: nil, bundle: nil)

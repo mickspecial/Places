@@ -14,11 +14,13 @@ class PlaceListCoordinator: Coordinator {
 	var navigationController: UINavigationController
 	var placesCtrl: PlacesController
 	var categoryCtrl: CategoryController
+	var tabCtrl: MainTabBarController
 
-	init(navigationController: UINavigationController = UINavigationController(), placesCtrl: PlacesController, categoryCtrl: CategoryController) {
+	init(navigationController: UINavigationController = UINavigationController(), placesCtrl: PlacesController, categoryCtrl: CategoryController, tabCtrl: MainTabBarController) {
 		self.navigationController = navigationController
 		self.placesCtrl = placesCtrl
 		self.categoryCtrl = categoryCtrl
+		self.tabCtrl = tabCtrl
 
 		self.navigationController.navigationBar.prefersLargeTitles = true
 		self.navigationController.navigationBar.isTranslucent = false
@@ -31,6 +33,10 @@ class PlaceListCoordinator: Coordinator {
 	func showDetails(_ place: Place) {
 		let homeVC = PlaceDetailsViewController(coordinator: self, place: place, categoriesController: categoryCtrl)
 		navigationController.pushViewController(homeVC, animated: true)
+	}
+
+	func showOnMap(_ place: Place) {
+		tabCtrl.changeTabZoomToPlace(place: place)
 	}
 
 	func deletePlace(_ place: Place) {

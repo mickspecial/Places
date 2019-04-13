@@ -20,6 +20,7 @@ class MainTabBarController: UITabBarController {
 	var mapSeachCoordinator: FindCoordinator!
 	var placesController: PlacesController!
 	var categoriesController: CategoryController!
+	var mapVC: MapViewController!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -29,19 +30,32 @@ class MainTabBarController: UITabBarController {
 		// if VC needs more advanced actions set it up with a coordinator
 
 		// Home Tab
-		homeCoordinator = PlaceListCoordinator(placesCtrl: placesController, categoryCtrl: categoriesController)
+		homeCoordinator = PlaceListCoordinator(placesCtrl: placesController, categoryCtrl: categoriesController, tabCtrl: self)
 
 		// Map Tap
-		let map = MapViewController(placesCtrl: placesController)
-		map.tabBarItem = UITabBarItem(title: "Map", image: #imageLiteral(resourceName: "marker"), tag: 1)
+		mapVC = MapViewController(placesCtrl: placesController)
+		mapVC.tabBarItem = UITabBarItem(title: "Map", image: #imageLiteral(resourceName: "marker"), tag: 1)
 
 		// Find Location Tap
 		mapSeachCoordinator = FindCoordinator(placesCtrl: placesController, categoriesCtrl: categoriesController)
 
 		viewControllers = [
 			homeCoordinator.navigationController,
-			UINavigationController(rootViewController: map),
+			UINavigationController(rootViewController: mapVC),
 			mapSeachCoordinator.navigationController
 		]
+	}
+
+	func changeTabZoomToPlace(place: Place) {
+		selectedIndex = 1
+		DispatchQueue.delayWithSeconds(1) {
+			self.mapVC.zoomToPlace(place: place)
+		}
+	}
+}
+
+extension DispatchQueue {
+	static func delayWithSeconds(_ seconds: Double, closure:@escaping () -> Void) {
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds, execute: closure)
 	}
 }
