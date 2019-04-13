@@ -15,59 +15,22 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 	var mapView: MKMapView!
 	let placesController: PlacesController
 	let locationManager = CLLocationManager()
-
-	let start: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitle("Start", for: .normal)
-		button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-		button.setTitleColor(.white, for: .normal)
-		button.backgroundColor = UIColor.FlatColor.Green.Fern
-		button.tag = ButtonTag.start.rawValue
-		return button
-	}()
-
-	var startLabel: UILabel = {
-		let label = UILabel(frame: .zero)
-		label.textColor = .white
-		label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-		return label
-	}()
-
-	var endLabel: UILabel = {
-		let label = UILabel(frame: .zero)
-		label.textColor = .white
-		label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-		return label
-	}()
-
-	enum ButtonTag: Int {
-		case start, end
-	}
-
-	let end: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitle("End", for: .normal)
-		button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-		button.setTitleColor(.white, for: .normal)
-		button.backgroundColor = UIColor.FlatColor.Red.TerraCotta
-		button.tag = ButtonTag.end.rawValue
-		return button
-	}()
+	let startEndViewCtrl = StartEndViewController()
 
 	var startPoint: Place? {
 		didSet {
 			switch checkPlace(new: startPoint, other: endPoint) {
 			case .placeIsEmpty:
-				startLabel.text = ""
+				startEndViewCtrl.startLabel.text = ""
 			case .matchesOtherPlace(let new):
-				startLabel.text = "\(new.name) \(new.address)"
+				startEndViewCtrl.startLabel.text = "\(new.name) \(new.address)"
 				endPoint = nil // remove other point
 				removeOverlaysFromMap()
 			case .okToRoute(let new):
-				startLabel.text = "\(new.name) \(new.address)"
+				startEndViewCtrl.startLabel.text = "\(new.name) \(new.address)"
 				drawRoute()
 			case .missingOtherPlace(let new):
-				startLabel.text = "\(new.name) \(new.address)"
+				startEndViewCtrl.startLabel.text = "\(new.name) \(new.address)"
 			}
 		}
 	}
@@ -76,30 +39,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		didSet {
 			switch checkPlace(new: endPoint, other: startPoint) {
 			case .placeIsEmpty:
-				endLabel.text = ""
+				startEndViewCtrl.endLabel.text = ""
 			case .matchesOtherPlace(let new):
-				endLabel.text = "\(new.name) \(new.address)"
+				startEndViewCtrl.endLabel.text = "\(new.name) \(new.address)"
 				startPoint = nil // remove other point
 				removeOverlaysFromMap()
 			case .okToRoute(let new):
-				endLabel.text = "\(new.name) \(new.address)"
+				startEndViewCtrl.endLabel.text = "\(new.name) \(new.address)"
 				drawRoute()
 			case .missingOtherPlace(let new):
-				endLabel.text = "\(new.name) \(new.address)"
+				startEndViewCtrl.endLabel.text = "\(new.name) \(new.address)"
 			}
-		}
-	}
-
-	@objc func startEndButtonTapped(sender: UIButton) {
-		guard let tag = ButtonTag(rawValue: sender.tag) else { fatalError() }
-		guard let selectedPlace = mapView.selectedAnnotations.first else { return }
-
-		// select place pin or the default current location marker
-		let place = selectedPlace as? Place ?? Place(currentLocation: selectedPlace.coordinate)
-
-		switch tag {
-		case .start: startPoint = place
-		case .end: endPoint = place
 		}
 	}
 
@@ -141,8 +91,21 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
 		setUpView()
 		addMapToView()
-		addToFromButtons()
+		addStartEndChildViewController()
     }
+
+	private func addStartEndChildViewController() {
+		addChild(startEndViewCtrl)
+		startEndViewCtrl.delegate = self
+		startEndViewCtrl.view.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: 80)
+		view.addSubview(startEndViewCtrl.view)
+		startEndViewCtrl.didMove(toParent: self)
+	}
+
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+		startEndViewCtrl.view.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: mapView.topAnchor, trailing: view.trailingAnchor)
+	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
@@ -180,19 +143,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		mapView.showsUserLocation = true
 		view.addSubview(mapView)
 		mapView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 80, left: 0, bottom: 0, right: 0))
-	}
-
-	private func addToFromButtons() {
-		view.addSubview(start)
-		view.addSubview(end)
-		view.addSubview(startLabel)
-		view.addSubview(endLabel)
-		start.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, size: .init(width: 80, height: 40))
-		end.anchor(top: nil, leading: view.leadingAnchor, bottom: mapView.topAnchor, trailing: nil, size: .init(width: 80, height: 40))
-		end.addTarget(self, action: #selector(startEndButtonTapped), for: .touchUpInside)
-		start.addTarget(self, action: #selector(startEndButtonTapped), for: .touchUpInside)
-		startLabel.anchor(top: start.topAnchor, leading: start.trailingAnchor, bottom: start.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0))
-		endLabel.anchor(top: end.topAnchor, leading: end.trailingAnchor, bottom: end.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0))
 	}
 
 	@objc func clearPressed() {
@@ -329,5 +279,19 @@ extension MapViewController: CLLocationManagerDelegate {
 
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 		print("location for user")
+	}
+}
+
+extension MapViewController: StartEndViewControllerDelegate {
+
+	func startEndWasTapped(button: StartEndViewController.ButtonTag) {
+		guard let selectedPlace = mapView.selectedAnnotations.first else { return }
+		// select place pin or the default current location marker
+		let place = selectedPlace as? Place ?? Place(currentLocation: selectedPlace.coordinate)
+
+		switch button {
+		case .start: startPoint = place
+		case .end: endPoint = place
+		}
 	}
 }
