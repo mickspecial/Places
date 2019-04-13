@@ -34,6 +34,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: cellId)
 		collectionView.dataSource = self
 		collectionView.delegate = self
+		collectionView.contentInset = .init(top: 10, left: 0, bottom: 0, right: 0)
 		navigationItem.rightBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(showCategoriesView), imageName: "bullets", size: .medium)
     }
 
@@ -69,7 +70,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-		return CGSize(width: view.frame.width, height: 60)
+		return CGSize(width: view.frame.width - 20, height: 60)
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

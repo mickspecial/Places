@@ -63,6 +63,8 @@ class PlaceCell: UICollectionViewCell {
 		showOnMapBtn.anchor(top: topAnchor, leading: nil, bottom: bottomAnchor, trailing: trailingAnchor, size: .init(width: 80, height: 0))
 
 		showOnMapBtn.addTarget(self, action: #selector(showMapPressed), for: .touchUpInside)
+
+		layer.cornerRadius = 10
 	}
 
 	@objc func showMapPressed() {
