@@ -98,10 +98,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		mapView.showAnnotations(placesController.places, animated: true)
 	}
 
-	override func viewWillDisappear(_ animated: Bool) {
-		locationManager.stopUpdatingLocation()
-	}
-
 	private func setUpView() {
 		title = "Map"
 		view.backgroundColor = Theme.current.primary
@@ -157,7 +153,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		if CLLocationManager.locationServicesEnabled() {
 			locationManager.delegate = self
 			locationManager.desiredAccuracy = kCLLocationAccuracyBest
+			// if use add stopUpdatingLocation in view will disappear
 			//locationManager.startUpdatingLocation()
+			// single call
 			locationManager.requestLocation()
 		}
 	}
