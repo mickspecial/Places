@@ -29,9 +29,9 @@ class Place: NSObject {
 		return category.markerImage
 	}
 
-	init(name: String, details: String, lat: Double, long: Double, id: String, category: MarkerColor) {
+	init(name: String, address: String, lat: Double, long: Double, id: String, category: MarkerColor) {
 		self.name = name
-		self.address = details
+		self.address = address
 		self.long = long
 		self.lat = lat
 		self.id = id
@@ -40,16 +40,79 @@ class Place: NSObject {
 
 	init(mapItem: MKMapItem, name: String, category: MarkerColor) {
 		self.name = name
-		self.address = mapItem.name ?? "Unknown Location"
 		self.long = mapItem.placemark.coordinate.longitude
 		self.lat = mapItem.placemark.coordinate.latitude
 		self.id = UUID().uuidString
 		self.category = category
+		if mapItem.name == "Unknown Location" {
+			self.address = ""
+		} else {
+			self.address = mapItem.name ?? ""
+		}
+	}
+
+	init(currentLocation coordinate: CLLocationCoordinate2D) {
+		let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
+		self.name = "Current Location"
+		self.long = mapItem.placemark.coordinate.longitude
+		self.lat = mapItem.placemark.coordinate.latitude
+		self.id = "current location"
+		self.category = .white
+		if mapItem.name == "Unknown Location" {
+			self.address = ""
+		} else {
+			self.address = mapItem.name ?? ""
+		}
+	}
+}
+
+extension MKMapItem {
+
+	func getStreetAddress() -> String {
+
+		let geoCoder = CLGeocoder()
+		let location = CLLocation(latitude: placemark.coordinate.latitude, longitude: placemark.coordinate.longitude)
+
+		geoCoder.reverseGeocodeLocation(location, completionHandler: { (placemarks, _) -> Void in
+
+			// Place details
+			var placeMark: CLPlacemark!
+			placeMark = placemarks?[0]
+
+			// Location name
+			if let locationName = placeMark.location {
+				print(locationName)
+			}
+			// Street address
+			if let street = placeMark.thoroughfare {
+				print(street)
+			}
+			// City
+			if let city = placeMark.subAdministrativeArea {
+				print(city)
+			}
+			// Zip code
+			if let zip = placeMark.isoCountryCode {
+				print(zip)
+			}
+			// Country
+			if let country = placeMark.country {
+				print(country)
+			}
+		})
+
+		return "TESTING"
 	}
 }
 
 extension Place: MKAnnotation {
 	var coordinate: CLLocationCoordinate2D {
 		return CLLocationCoordinate2D(latitude: lat, longitude: long)
+	}
+
+	var placeMapItem: MKMapItem {
+		let placeMapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
+		placeMapItem.name = name
+		return placeMapItem
 	}
 }

@@ -50,7 +50,7 @@ class PlaceListCoordinator: Coordinator {
 		}
 
 		print("Update - \(place.name)")
-		let newPlace = Place(name: name, details: place.address, lat: place.lat, long: place.long, id: place.id, category: category)
+		let newPlace = Place(name: name, address: place.address, lat: place.lat, long: place.long, id: place.id, category: category)
 		placesCtrl.removePlace(place)
 		placesCtrl.addPlace(newPlace)
 	}

@@ -20,9 +20,9 @@ class PlacesController {
 	func addTestData() {
 		// test places
 		let testPlaces = [
-			Place(name: "Josh", details: "1 Demo St", lat: -28.0051447, long: 153.3507475, id: "1", category: .cyan),
-			Place(name: "Harry", details: "2 Cat Rd", lat: -27.955567312387117, long: 153.3850246667862, id: "2", category: .red),
-			Place(name: "Marry", details: "111 Smith Road", lat: -28.0968254, long: 153.443296, id: "3", category: .orange)
+//			Place(name: "Josh", address: "1 Demo St", lat: -28.0051447, long: 153.3507475, id: "1", category: .cyan),
+			Place(name: "Harry", address: "2 Cat Rd", lat: -27.955567312387117, long: 153.3850246667862, id: "2", category: .red),
+			Place(name: "Marry", address: "111 Smith Road", lat: -28.0968254, long: 153.443296, id: "3", category: .orange)
 		]
 
 		places.append(contentsOf: testPlaces)
