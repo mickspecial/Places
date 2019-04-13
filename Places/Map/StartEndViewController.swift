@@ -19,7 +19,7 @@ class StartEndViewController: UIViewController {
 		button.setTitle("Start", for: .normal)
 		button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 		button.setTitleColor(.white, for: .normal)
-		button.backgroundColor = UIColor.FlatColor.Green.Fern
+		button.backgroundColor = .clear
 		button.tag = ButtonTag.start.rawValue
 		return button
 	}()
@@ -47,7 +47,7 @@ class StartEndViewController: UIViewController {
 		button.setTitle("End", for: .normal)
 		button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 		button.setTitleColor(.white, for: .normal)
-		button.backgroundColor = UIColor.FlatColor.Red.TerraCotta
+		button.backgroundColor = .clear
 		button.tag = ButtonTag.end.rawValue
 		return button
 	}()
@@ -58,6 +58,20 @@ class StartEndViewController: UIViewController {
 		super.viewDidLoad()
 		addToFromButtons()
 		precondition(delegate != nil)
+	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		convertButtonToPill(end, color: UIColor.FlatColor.Red.TerraCotta)
+		convertButtonToPill(start, color: UIColor.FlatColor.Green.Fern)
+	}
+
+	private func convertButtonToPill(_ button: UIButton, color: UIColor) {
+		let shapeLayer = CAShapeLayer()
+		shapeLayer.path = UIBezierPath(roundedRect: button.layer.bounds.insetBy(dx: 10, dy: 6), cornerRadius: 12).cgPath
+		shapeLayer.fillColor = color.cgColor
+		button.layer.insertSublayer(shapeLayer, at: 0)
+		shapeLayer.frame = button.bounds
 	}
 
 	private func addToFromButtons() {
