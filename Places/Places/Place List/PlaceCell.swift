@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol PlaceCellDelegate: AnyObject {
+	func placeCellMapPressed(place: Place)
+}
+
 class PlaceCell: UICollectionViewCell {
 
 	override init(frame: CGRect) {
@@ -30,6 +34,14 @@ class PlaceCell: UICollectionViewCell {
 		return label
 	}()
 
+	let showOnMapBtn: UIButton = {
+		let button = UIButton(type: .system)
+		button.setImage(#imageLiteral(resourceName: "marker"), for: .normal)
+		button.tintColor = Theme.current.highlight
+		button.backgroundColor = .clear
+		return button
+	}()
+
 	var markerImageView: UIImageView = {
 		let logoView = UIImageView()
 		logoView.image = #imageLiteral(resourceName: "white")
@@ -37,17 +49,30 @@ class PlaceCell: UICollectionViewCell {
 		return logoView
 	}()
 
+	private var place: Place?
+	weak var delegate: PlaceCellDelegate?
+
 	private func setUpView() {
-		let theViews = [markerImageView, nameLabel, addressLabel]
+		let theViews = [markerImageView, nameLabel, addressLabel, showOnMapBtn]
 		theViews.forEach({ addSubview($0)})
 		backgroundColor = Theme.current.cellDark
 		markerImageView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
 		markerImageView.centerY()
 		nameLabel.anchor(top: topAnchor, leading: markerImageView.trailingAnchor, bottom: addressLabel.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
 		addressLabel.anchor(top: nameLabel.bottomAnchor, leading: markerImageView.trailingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 10, right: 10))
+		showOnMapBtn.anchor(top: topAnchor, leading: nil, bottom: bottomAnchor, trailing: trailingAnchor, size: .init(width: 80, height: 0))
+
+		showOnMapBtn.addTarget(self, action: #selector(showMapPressed), for: .touchUpInside)
+	}
+
+	@objc func showMapPressed() {
+		if let place = place {
+			delegate?.placeCellMapPressed(place: place)
+		}
 	}
 
 	func fillCell(place: Place) {
+		self.place = place
 		nameLabel.text = place.name
 		addressLabel.text = place.address
 		markerImageView.image = place.markerImage

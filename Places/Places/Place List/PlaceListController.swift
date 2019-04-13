@@ -60,6 +60,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! PlaceCell
 		let place = places[indexPath.row]
 		cell.fillCell(place: place)
+		cell.delegate = self
 		return cell
 	}
 
@@ -74,5 +75,11 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let place = places[indexPath.row]
 		coordinator.showDetails(place)
+	}
+}
+
+extension PlaceListController: PlaceCellDelegate {
+	func placeCellMapPressed(place: Place) {
+		print("Tap")
 	}
 }
