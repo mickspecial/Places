@@ -176,38 +176,26 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 	}
 
 	private func placeAnnotationView(for annotation: MKAnnotation) -> MKAnnotationView {
-		guard annotation is Place else { fatalError() }
+		guard let placeAnnotation = annotation as? Place else { fatalError() }
 		let identifier = "Annotation"
 		var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
 
 		if annotationView == nil {
-			annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+			annotationView = MKAnnotationView(annotation: placeAnnotation, reuseIdentifier: identifier)
 			annotationView!.canShowCallout = true
 		} else {
-			annotationView!.annotation = annotation
+			annotationView!.annotation = placeAnnotation
 		}
 
-		addCustomCallout(to: annotationView!)
-		setMarkerImage(for: annotationView!)
-		return annotationView!
-	}
+		// add pin image
+		annotationView!.image = placeAnnotation.markerImage
 
-	private func setMarkerImage(for annotationView: MKAnnotationView) {
-		guard let place = annotationView.annotation as? Place else {
-			fatalError()
-		}
-
-		annotationView.image = place.markerImage
-	}
-
-	private func addCustomCallout(to annotationView: MKAnnotationView) {
-		guard let place = annotationView.annotation as? Place else {
-			fatalError()
-		}
-
-		let callout = PinCalloutView(place: place)
-		annotationView.detailCalloutAccessoryView = callout
+		// add callout view
+		let callout = PinCalloutView(place: placeAnnotation)
+		annotationView!.detailCalloutAccessoryView = callout
 		callout.centerInSuperview(size: CGSize(width: 150, height: 60))
+
+		return annotationView!
 	}
 
 	func drawRoute() {
