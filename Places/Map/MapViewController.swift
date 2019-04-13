@@ -19,7 +19,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 	var startPoint: Place? {
 		didSet {
-			switch checkPlace(new: startPoint, other: endPoint) {
+			switch PlaceSetOptions(new: startPoint, other: endPoint) {
 			case .placeIsEmpty:
 				startEndViewCtrl.startLabel.text = ""
 			case .matchesOtherPlace(let new):
@@ -37,7 +37,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 	var endPoint: Place? {
 		didSet {
-			switch checkPlace(new: endPoint, other: startPoint) {
+			switch PlaceSetOptions(new: endPoint, other: startPoint) {
 			case .placeIsEmpty:
 				startEndViewCtrl.endLabel.text = ""
 			case .matchesOtherPlace(let new):
@@ -51,31 +51,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 				startEndViewCtrl.endLabel.text = "\(new.name) \(new.address)"
 			}
 		}
-	}
-
-	func checkPlace(new: Place?, other: Place?) -> PlaceSetOptions {
-		if new == nil {
-			return .placeIsEmpty
-		}
-
-		if let new = new, other == nil {
-			return .missingOtherPlace(newPlace: new)
-		}
-
-		guard let new = new, let other = other else { fatalError() }
-
-		if new.id == other.id {
-			return .matchesOtherPlace(newPlace: new)
-		}
-
-		return .okToRoute(newPlace: new)
-	}
-
-	enum PlaceSetOptions {
-		case placeIsEmpty
-		case matchesOtherPlace(newPlace: Place)
-		case okToRoute(newPlace: Place)
-		case missingOtherPlace(newPlace: Place)
 	}
 
 	init(placesCtrl: PlacesController) {
