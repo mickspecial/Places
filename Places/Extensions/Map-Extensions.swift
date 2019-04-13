@@ -18,7 +18,14 @@ extension MKRoute {
 		// https://developer.apple.com/documentation/foundation/datecomponentsformatter/unitsstyle
 		let formatter = DateComponentsFormatter()
 		formatter.allowedUnits = [.hour, .minute]
-		formatter.unitsStyle = .short
+		print("\(expectedTravelTime)")
+		if expectedTravelTime >= 3600 {
+			// over 1 hr
+			formatter.unitsStyle = .abbreviated
+		} else {
+			// “9 hr, 41 min, 30 sec”
+			formatter.unitsStyle = .short
+		}
 		let formattedString = formatter.string(from: expectedTravelTime)
 		return formattedString ?? ""
 	}
