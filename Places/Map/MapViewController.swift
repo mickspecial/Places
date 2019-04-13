@@ -112,6 +112,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		mapView = MKMapView(frame: view.frame)
 		mapView.delegate = self
 		mapView.showsUserLocation = true
+		mapView.isRotateEnabled = false
 		view.addSubview(mapView)
 		mapView.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, trailing: view.trailingAnchor, padding: .init(top: 80, left: 0, bottom: 0, right: 0))
 	}
