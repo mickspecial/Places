@@ -56,37 +56,76 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 	var startPoint: Place? {
 		didSet {
-			if endPoint != nil && startPoint != nil {
-				print(startPoint!)
-				if endPoint!.id == startPoint!.id {
-					// remove the other point as cannot start end at same place
-					endPoint = nil
-					// only one place left so remove route
-					removeOverlaysFromMap()
-				} else {
-					drawRoute()
-				}
-			}
-			if startPoint == nil {
+			switch checkPlace(new: startPoint, other: endPoint) {
+			case .placeIsEmpty:
 				startLabel.text = ""
+			case .matchesOtherPlace(let new):
+				startLabel.text = "\(new.name) \(new.address)"
+				endPoint = nil // remove other point
+				removeOverlaysFromMap()
+			case .okToRoute(let new):
+				startLabel.text = "\(new.name) \(new.address)"
+				drawRoute()
+			case .missingOtherPlace(let new):
+				startLabel.text = "\(new.name) \(new.address)"
 			}
 		}
 	}
 
 	var endPoint: Place? {
 		didSet {
-			if endPoint != nil && startPoint != nil {
-				if endPoint!.id == startPoint!.id {
-					startPoint = nil
-					removeOverlaysFromMap()
-				} else {
-					drawRoute()
-				}
-			}
-			if endPoint == nil {
+			switch checkPlace(new: endPoint, other: startPoint) {
+			case .placeIsEmpty:
 				endLabel.text = ""
+			case .matchesOtherPlace(let new):
+				endLabel.text = "\(new.name) \(new.address)"
+				startPoint = nil // remove other point
+				removeOverlaysFromMap()
+			case .okToRoute(let new):
+				endLabel.text = "\(new.name) \(new.address)"
+				drawRoute()
+			case .missingOtherPlace(let new):
+				endLabel.text = "\(new.name) \(new.address)"
 			}
 		}
+	}
+
+	@objc func startEndButtonTapped(sender: UIButton) {
+		guard let tag = ButtonTag(rawValue: sender.tag) else { fatalError() }
+		guard let selectedPlace = mapView.selectedAnnotations.first else { return }
+
+		// select place pin or the default current location marker
+		let place = selectedPlace as? Place ?? Place(currentLocation: selectedPlace.coordinate)
+
+		switch tag {
+		case .start: startPoint = place
+		case .end: endPoint = place
+		}
+	}
+
+	func checkPlace(new: Place?, other: Place?) -> PlaceSetOptions {
+		if new == nil {
+			return .placeIsEmpty
+		}
+
+		if let new = new, other == nil {
+			return .missingOtherPlace(newPlace: new)
+		}
+
+		guard let new = new, let other = other else { fatalError() }
+
+		if new.id == other.id {
+			return .matchesOtherPlace(newPlace: new)
+		}
+
+		return .okToRoute(newPlace: new)
+	}
+
+	enum PlaceSetOptions {
+		case placeIsEmpty
+		case matchesOtherPlace(newPlace: Place)
+		case okToRoute(newPlace: Place)
+		case missingOtherPlace(newPlace: Place)
 	}
 
 	init(placesCtrl: PlacesController) {
@@ -123,21 +162,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		locationManager.stopUpdatingLocation()
-	}
-
-	@objc func startEndButtonTapped(sender: UIButton) {
-		guard let tag = ButtonTag(rawValue: sender.tag) else { fatalError() }
-		guard let selectedPlace = mapView.selectedAnnotations.first else { return }
-
-		// select place pin or the default current location marker
-		let place = selectedPlace as? Place ?? Place(currentLocation: selectedPlace.coordinate)
-
-		switch tag {
-		case .start:
-			setStartLocation(place: place)
-		case .end:
-			setEndLocation(place: place)
-		}
 	}
 
 	private func setUpView() {
@@ -294,16 +318,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		renderer.strokeColor = UIColor.FlatColor.Red.Cinnabar
 		renderer.lineWidth = 3.0
 		return renderer
-	}
-
-	func setStartLocation(place: Place) {
-		startPoint = place
-		startLabel.text = "\(place.name) \(place.address)"
-	}
-
-	func setEndLocation(place: Place) {
-		endPoint = place
-		endLabel.text = "\(place.name) \(place.address)"
 	}
 }
 
