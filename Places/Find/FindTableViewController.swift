@@ -9,9 +9,7 @@
 import UIKit
 import MapKit
 
-// swiftlint:disable line_length
-
-class FindTableViewController: UITableViewController {
+class FindListController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
 	lazy private var searchController: UISearchController = {
 		var sctrl = UISearchController()
@@ -31,24 +29,32 @@ class FindTableViewController: UITableViewController {
 	}()
 
 	private var searchResults = [MKLocalSearchCompletion]()
+
 	let placesController: PlacesController
 	let coordinator: FindCoordinator
+	private let cellId = "cellId"
 
 	init(placesCtrl: PlacesController, coordinator: FindCoordinator) {
-		placesController = placesCtrl
+		self.placesController = placesCtrl
 		self.coordinator = coordinator
-		super.init(nibName: nil, bundle: nil)
+		let layout = UICollectionViewFlowLayout()
+		layout.scrollDirection = .vertical
+		super.init(collectionViewLayout: layout)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+	override func viewDidLoad() {
+		super.viewDidLoad()
 		setUpNavBar()
-		tableView.backgroundColor = Theme.current.primary
-    }
+		collectionView.backgroundColor = Theme.current.primary
+		collectionView.register(SearchCell.self, forCellWithReuseIdentifier: cellId)
+		collectionView.dataSource = self
+		collectionView.delegate = self
+		collectionView.contentInset = .init(top: 10, left: 0, bottom: 10, right: 0)
+	}
 
 	private func setUpNavBar() {
 		title = "Add Location"
@@ -60,31 +66,32 @@ class FindTableViewController: UITableViewController {
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		searchController.searchBar.becomeFirstResponder()
+		//searchController.searchBar.becomeFirstResponder()
 	}
 
-	override func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
-	}
-
-	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return searchResults.count
 	}
 
-	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		collectionView.deselectItem(at: indexPath, animated: true)
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchCell
 		let searchResult = searchResults[indexPath.row]
-		let cell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
-		cell.textLabel?.textColor = .white
-		cell.detailTextLabel?.textColor = .white
-		cell.backgroundColor = Theme.current.cellDark
 		// show search letters in bold
-		cell.textLabel?.attributedText = NSAttributedString.highlightedText(searchResult.title, ranges: searchResult.titleHighlightRanges, size: 17)
-		cell.detailTextLabel?.attributedText = NSAttributedString.highlightedText(searchResult.subtitle, ranges: searchResult.subtitleHighlightRanges, size: 12)
+		cell.nameLabel.attributedText = NSAttributedString.highlightedText(searchResult.title, ranges: searchResult.titleHighlightRanges, size: 17)
+		cell.addressLabel.attributedText = NSAttributedString.highlightedText(searchResult.subtitle, ranges: searchResult.subtitleHighlightRanges, size: 12)
 		return cell
 	}
 
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		tableView.deselectRow(at: indexPath, animated: true)
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+		return 10
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+		return CGSize(width: view.frame.width - 20, height: 60)
+	}
+
+	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		let completion = searchResults[indexPath.row]
 
 		let searchRequest = MKLocalSearch.Request(completion: completion)
@@ -102,25 +109,25 @@ class FindTableViewController: UITableViewController {
 	}
 }
 
-extension FindTableViewController: UISearchBarDelegate {
+extension FindListController: UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		searchCompleter.queryFragment = searchText
 	}
 }
 
-extension FindTableViewController: MKLocalSearchCompleterDelegate {
+extension FindListController: MKLocalSearchCompleterDelegate {
 	func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
 		searchResults = completer.results
-		tableView.reloadData()
+		collectionView.reloadData()
 	}
 }
 
-extension FindTableViewController: UISearchResultsUpdating {
+extension FindListController: UISearchResultsUpdating {
 	func updateSearchResults(for searchController: UISearchController) {
 		let text = searchController.searchBar.text ?? ""
 		if text.isEmpty {
 			searchResults.removeAll()
-			tableView.reloadData()
+			collectionView.reloadData()
 		}
 	}
 }

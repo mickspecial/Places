@@ -13,6 +13,7 @@
 		00495041225DC46600051498 /* SCLAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049503E225DC46600051498 /* SCLAlertView.swift */; };
 		00495042225DC46600051498 /* SCLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0049503F225DC46600051498 /* SCLExtensions.swift */; };
 		00495044225DC4D000051498 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00495043225DC4D000051498 /* AlertService.swift */; };
+		004E12622263DDE3006EE16F /* FindCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004E12612263DDE3006EE16F /* FindCell.swift */; };
 		0051D736225F47500057B9B0 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0051D735225F47500057B9B0 /* Theme.swift */; };
 		0051D738225FEEF60057B9B0 /* BarButton-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0051D737225FEEF60057B9B0 /* BarButton-Extension.swift */; };
 		0051D73A22613E4E0057B9B0 /* Double-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0051D73922613E4E0057B9B0 /* Double-Extension.swift */; };
@@ -61,6 +62,7 @@
 		0049503E225DC46600051498 /* SCLAlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLAlertView.swift; sourceTree = "<group>"; };
 		0049503F225DC46600051498 /* SCLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCLExtensions.swift; sourceTree = "<group>"; };
 		00495043225DC4D000051498 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
+		004E12612263DDE3006EE16F /* FindCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCell.swift; sourceTree = "<group>"; };
 		0051D735225F47500057B9B0 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		0051D737225FEEF60057B9B0 /* BarButton-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BarButton-Extension.swift"; sourceTree = "<group>"; };
 		0051D73922613E4E0057B9B0 /* Double-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double-Extension.swift"; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				00E3F2D72259701400133301 /* FindTableViewController.swift */,
 				00737F0D225DF7D70054F35F /* FindDetailsViewController.swift */,
 				00737F0F225DF8080054F35F /* FindDetailsView.swift */,
+				004E12612263DDE3006EE16F /* FindCell.swift */,
 			);
 			path = Find;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				006C794C225AA8A2002A586A /* UIView-Extension.swift in Sources */,
 				00E3F2D82259701400133301 /* FindTableViewController.swift in Sources */,
 				0051D73C22614A9E0057B9B0 /* Map-Extensions.swift in Sources */,
+				004E12622263DDE3006EE16F /* FindCell.swift in Sources */,
 				00495042225DC46600051498 /* SCLExtensions.swift in Sources */,
 				006C7949225AA6C3002A586A /* Place.swift in Sources */,
 				00993F32225ABBC2006EDA83 /* PlacesController.swift in Sources */,
