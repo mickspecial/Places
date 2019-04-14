@@ -117,8 +117,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		navigationController?.navigationBar.prefersLargeTitles = true
 		navigationController?.navigationBar.isTranslucent = false
 		let route = UIBarButtonItem.menuButton(self, action: #selector(goToPlace), imageName: "navigation", size: .medium)
-		let reset = UIBarButtonItem.init(title: "Clear", style: .plain, target: self, action: #selector(clearPressed))
-		navigationItem.rightBarButtonItems = [route, reset]
+		let reset = UIBarButtonItem.menuButton(self, action: #selector(clearPressed), imageName: "clear", size: .small)
+		let fixedspacer = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+		fixedspacer.width = 26
+		navigationItem.rightBarButtonItems = [reset, fixedspacer, route]
 	}
 
 	private func addMapToView() {
