@@ -34,7 +34,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: cellId)
 		collectionView.dataSource = self
 		collectionView.delegate = self
-		collectionView.contentInset = .init(top: 10, left: 0, bottom: 0, right: 0)
+		collectionView.contentInset = .init(top: 10, left: 0, bottom: 10, right: 0)
 		navigationItem.rightBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(showCategoriesView), imageName: "bullets", size: .large)
     }
 
@@ -74,6 +74,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+		collectionView.deselectItem(at: indexPath, animated: true)
 		let place = places[indexPath.row]
 		coordinator.showDetails(place)
 	}

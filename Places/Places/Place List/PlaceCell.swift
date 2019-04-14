@@ -19,6 +19,16 @@ class PlaceCell: UICollectionViewCell {
 		setUpView()
 	}
 
+	override var isSelected: Bool {
+		didSet {
+			if self.isSelected {
+				backgroundColor = .darkGray
+			} else {
+				backgroundColor = Theme.current.cellDark
+			}
+		}
+	}
+
 	var nameLabel: UILabel = {
 		let label = UILabel(frame: .zero)
 		label.textColor = .white
