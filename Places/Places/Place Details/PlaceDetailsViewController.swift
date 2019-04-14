@@ -82,7 +82,7 @@ class PlaceDetailsViewController: UIViewController {
 	}
 
 	@objc func deletePlace() {
-		let alert = SCLAlertView(appearance: AlertService.standardNoCloseButton)
+		let alert = SCLAlertView(appearance: AlertService.standardNoCloseButtonH)
 
 		alert.addButton("Delete") {
 			self.coordinator.deletePlace(self.place)

@@ -20,13 +20,24 @@ class AlertService {
 		return appearance
 	}
 
-	static var standardNoCloseButton: SCLAlertView.SCLAppearance {
+	static var standardNoCloseButtonH: SCLAlertView.SCLAppearance {
 		let appearance = SCLAlertView.SCLAppearance(
 			kButtonHeight: 40,
 			kTitleFont: UIFont.systemFont(ofSize: 18, weight: .regular),
 			kButtonFont: UIFont.systemFont(ofSize: 18, weight: .semibold),
 			showCloseButton: false,
 			buttonsLayout: SCLAlertButtonLayout.horizontal
+		)
+		return appearance
+	}
+
+	static var standardNoCloseButtonV: SCLAlertView.SCLAppearance {
+		let appearance = SCLAlertView.SCLAppearance(
+			kButtonHeight: 40,
+			kTitleFont: UIFont.systemFont(ofSize: 18, weight: .regular),
+			kButtonFont: UIFont.systemFont(ofSize: 18, weight: .semibold),
+			showCloseButton: false,
+			buttonsLayout: SCLAlertButtonLayout.vertical
 		)
 		return appearance
 	}

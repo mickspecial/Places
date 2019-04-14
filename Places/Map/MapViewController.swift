@@ -148,19 +148,50 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 	@objc func goToPlace() {
 
 		guard let endPoint = endPoint else {
+			// must have an end point to rout to
 			SCLAlertView(appearance: AlertService.standard).showError("Route Details Missing")
 			return
 		}
 
-		var showMapItems = [endPoint.placeMapItem]
+		let alert = SCLAlertView(appearance: AlertService.standardNoCloseButtonV)
 
+		alert.addButton("Apple Maps") {
+			self.openWithAppleMaps(destination: endPoint)
+		}
+
+		if let googleurl = URL(string: "https://maps.google.com"), UIApplication.shared.canOpenURL(googleurl) {
+			// add google option if can open in google maps
+			alert.addButton("Google Maps") {
+				self.openWithGoolgeMaps(destination: endPoint)
+			}
+		}
+
+		alert.addButton("Cancel", backgroundColor: Theme.current.cellDark, textColor: .white, showTimeout: nil) { return }
+		alert.showCustom("Open In", color: UIColor.FlatColor.Blue.Denim)
+	}
+
+	func openWithAppleMaps(destination: Place) {
+		var showMapItems = [destination.placeMapItem]
 		// no need to send start point to maps if its current location
 		if let startPoint = startPoint, startPoint.name != "Current Location" {
 			showMapItems.append(startPoint.placeMapItem)
 		}
 
-		// can show map if just end point - maps will use current location by default as start point
 		MKMapItem.openMaps(with: showMapItems, launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+	}
+
+	func openWithGoolgeMaps(destination: Place) {
+		var url: URL
+		// start end
+		if let startPoint = startPoint {
+			let go = "https://www.google.com/maps/dir/?api=1&origin=\(startPoint.coordinate.latitude),\(startPoint.coordinate.longitude)&destination=\(destination.coordinate.latitude),\(destination.coordinate.longitude)&travelmode=driving"
+			url = URL(string: go)!
+		} else {
+			let go = "https://www.google.com/maps/dir/?api=1&destination=\(destination.coordinate.latitude),\(destination.coordinate.longitude)&travelmode=driving"
+			url = URL(string: go)!
+		}
+
+		UIApplication.shared.open(url)
 	}
 
 	private func showUsersLocationOnMap() {
