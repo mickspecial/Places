@@ -46,7 +46,7 @@ class PlaceDetailsViewController: UIViewController {
 
 		pickerData.sort(by: { $0.value < $1.value })
 		categoryPickerSetUp()
-		navigationItem.rightBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(goToPlace), imageName: "navigation", size: .medium)
+		navigationItem.rightBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(goToPlace), imageName: "navigation", size: .small)
 	}
 
 	func categoryPickerSetUp() {

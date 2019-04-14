@@ -35,7 +35,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		collectionView.dataSource = self
 		collectionView.delegate = self
 		collectionView.contentInset = .init(top: 10, left: 0, bottom: 0, right: 0)
-		navigationItem.rightBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(showCategoriesView), imageName: "bullets", size: .medium)
+		navigationItem.rightBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(showCategoriesView), imageName: "bullets", size: .large)
     }
 
 	@objc func showCategoriesView() {

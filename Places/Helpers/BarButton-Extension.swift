@@ -11,6 +11,7 @@ import UIKit
 extension UIBarButtonItem {
 
 	enum BarButtonSize: CGFloat {
+		case xsmall = 20
 		case small = 22
 		case medium = 24
 		case large = 28
