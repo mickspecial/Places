@@ -10,17 +10,20 @@ import Foundation
 
 class PlacesController {
 
-	private (set) var places = [Place]()
+	private (set) var places: [Place] {
+		didSet {
+			print("Save Places")
+			User.current.places = places
+			User.current.save()
+		}
+	}
 
-	init(places: [Place] = [Place]()) {
-		self.places = places
-		addTestData()
+	init(places: [Place]) {
+		self.places = User.current.places
 	}
 
 	func addTestData() {
-		// test places
 		let testPlaces = [
-//			Place(name: "Josh", address: "1 Demo St", lat: -28.0051447, long: 153.3507475, id: "1", category: .cyan),
 			Place(name: "Harry", address: "2 Cat Rd", lat: -27.955567312387117, long: 153.3850246667862, id: "2", category: .red),
 			Place(name: "Marry", address: "111 Smith Road", lat: -28.0968254, long: 153.443296, id: "3", category: .orange)
 		]
@@ -40,26 +43,15 @@ class PlacesController {
 
 class CategoryController {
 
-	var categories: [MarkerColor: String]
-
-	init(categories: [MarkerColor: String] = [MarkerColor: String]()) {
-		self.categories = categories
-		addTestData()
+	var categories: [MarkerColor: String] {
+		didSet {
+			print("Save categories")
+			User.current.categories = categories
+			User.current.save()
+		}
 	}
 
-	func addTestData() {
-		// test places
-
-		let test = [
-			MarkerColor.blue: "Blue Marker",
-			MarkerColor.red: "Red Marker",
-			MarkerColor.orange: "Orange Marker",
-			MarkerColor.cyan: "Cyan Marker",
-			MarkerColor.white: "White Marker",
-			MarkerColor.purple: "Purple Marker",
-			MarkerColor.green: "Green Marker"
-		]
-
-		self.categories = test
+	init(categories: [MarkerColor: String]) {
+		self.categories = categories
 	}
 }

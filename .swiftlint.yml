@@ -16,6 +16,9 @@ disabled_rules:
 - line_length
 - function_parameter_count
 - todo
+- unused_closure_parameter
+- redundant_optional_initialization
+- cyclomatic_complexity
 
 opt_in_rules: # some rules are only opt-in
 - empty_count

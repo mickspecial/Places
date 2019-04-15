@@ -9,7 +9,7 @@
 import Foundation
 import MapKit
 
-enum MarkerColor: String, CaseIterable {
+enum MarkerColor: String, CaseIterable, Codable {
 	case red, green, cyan, blue, white, orange, purple
 
 	var markerImage: UIImage {
@@ -17,7 +17,7 @@ enum MarkerColor: String, CaseIterable {
 	}
 }
 
-class Place: NSObject {
+class Place: NSObject, Codable {
 	let name: String
 	let address: String
 	let lat: Double

@@ -25,8 +25,12 @@ class MainTabBarController: UITabBarController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		tabBar.isTranslucent = false
-		placesController = PlacesController()
-		categoriesController = CategoryController()
+
+		// set up controllers with user data
+		placesController = PlacesController(places: User.current.places)
+		// placesController.addTestData()
+
+		categoriesController = CategoryController(categories: User.current.categories)
 		// if VC needs more advanced actions set it up with a coordinator
 
 		// Home Tab
