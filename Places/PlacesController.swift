@@ -12,14 +12,19 @@ class PlacesController {
 
 	private (set) var places: [Place] {
 		didSet {
-			print("Save Places")
 			User.current.places = places
-			User.current.save()
+			save()
 		}
 	}
 
 	init(places: [Place]) {
 		self.places = User.current.places
+	}
+
+	private func save() {
+		DispatchQueue.main.async {
+			User.current.save()
+		}
 	}
 
 	func addTestData() {
@@ -47,6 +52,12 @@ class CategoryController {
 		didSet {
 			print("Save categories")
 			User.current.categories = categories
+			save()
+		}
+	}
+
+	private func save() {
+		DispatchQueue.main.async {
 			User.current.save()
 		}
 	}
