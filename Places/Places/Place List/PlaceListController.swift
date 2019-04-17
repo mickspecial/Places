@@ -49,7 +49,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 	}
 
 	private func prepareData() {
-		places = placesController.places
+		places = User.current.places.filter({ $0.isDeleted == false })
 		places.sort(by: { $0.name.lowercased() < $1.name.lowercased() })
 	}
 

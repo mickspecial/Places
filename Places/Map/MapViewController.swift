@@ -13,6 +13,7 @@ import CoreLocation
 class MapViewController: UIViewController, MKMapViewDelegate {
 
 	var mapView: MKMapView!
+	private var places = [Place]()
 	let placesController: PlacesController
 	let locationManager = CLLocationManager()
 	let startEndViewCtrl = StartEndViewController()
@@ -97,18 +98,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		places = User.current.places.filter({ $0.isDeleted == false })
 
 		// dont remove route details ie 14 min
-		let places = mapView.annotations.filter({ $0 is Place })
-		mapView.removeAnnotations(places)
+		let existsingPlaces = mapView.annotations.filter({ $0 is Place })
+		mapView.removeAnnotations(existsingPlaces)
 
-		mapView.addAnnotations(placesController.places)
+		mapView.addAnnotations(places)
 		showUsersLocationOnMap()
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		mapView.showAnnotations(placesController.places, animated: true)
+		mapView.showAnnotations(places, animated: true)
 	}
 
 	private func setUpView() {
@@ -136,7 +138,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		removeOverlaysFromMap()
 		startPoint = nil
 		endPoint = nil
-		mapView.showAnnotations(placesController.places, animated: true)
+		mapView.showAnnotations(places, animated: true)
 	}
 
 	func removeOverlaysFromMap() {

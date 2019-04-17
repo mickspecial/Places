@@ -36,7 +36,7 @@ class FindCoordinator: Coordinator {
 
 	func savePlaceWith(mapItem: MKMapItem, marker: MarkerColor, name: String) -> Place {
 		let newPlace = Place(mapItem: mapItem, name: name, category: marker)
-		placesCtrl.addPlace(newPlace)
+		User.current.addPlace(newPlace)
 		return newPlace
 	}
 

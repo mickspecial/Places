@@ -35,7 +35,7 @@ class FindDetailsViewController: UIViewController {
 		setUpView()
 
 		// convert dict to tuple so can easily manage data
-		pickerData = categoriesController.categories.map { (key: MarkerColor, value: String) in
+		pickerData = User.current.categories.map { (key: MarkerColor, value: String) in
 			return (key, value)
 		}
 
@@ -87,7 +87,7 @@ class FindDetailsViewController: UIViewController {
 	}
 
 	private func titleForMarker(_ marker: MarkerColor) -> String {
-		return categoriesController.categories[marker] ?? ""
+		return User.current.categories[marker] ?? ""
 	}
 
 	required init?(coder aDecoder: NSCoder) {
@@ -125,7 +125,7 @@ extension FindDetailsViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 	}
 
 	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-		return categoriesController.categories.count
+		return User.current.categories.count
 	}
 }
 

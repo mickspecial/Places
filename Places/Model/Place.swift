@@ -24,18 +24,20 @@ class Place: NSObject, Codable {
 	let long: Double
 	let id: String
 	let category: MarkerColor
+	let isDeleted: Bool
 
 	var markerImage: UIImage {
 		return category.markerImage
 	}
 
-	init(name: String, address: String, lat: Double, long: Double, id: String, category: MarkerColor) {
+	init(name: String, address: String, lat: Double, long: Double, id: String, category: MarkerColor, isDeleted: Bool) {
 		self.name = name
 		self.address = address
 		self.long = long
 		self.lat = lat
 		self.id = id
 		self.category = category
+		self.isDeleted = isDeleted
 	}
 
 	init(mapItem: MKMapItem, name: String, category: MarkerColor) {
@@ -49,6 +51,7 @@ class Place: NSObject, Codable {
 		} else {
 			self.address = mapItem.name ?? ""
 		}
+		self.isDeleted = false
 	}
 
 	init(currentLocation coordinate: CLLocationCoordinate2D) {
@@ -63,6 +66,7 @@ class Place: NSObject, Codable {
 		} else {
 			self.address = mapItem.name ?? ""
 		}
+		self.isDeleted = false
 	}
 }
 

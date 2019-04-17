@@ -41,7 +41,7 @@ class PlaceListCoordinator: Coordinator {
 
 	func deletePlace(_ place: Place) {
 		print("Delete - \(place.name)")
-		placesCtrl.removePlace(place)
+		User.current.markAsDeletedPlace(place)
 		navigationController.popViewController(animated: true)
 	}
 
@@ -56,9 +56,7 @@ class PlaceListCoordinator: Coordinator {
 		}
 
 		print("Update - \(place.name)")
-		let newPlace = Place(name: name, address: place.address, lat: place.lat, long: place.long, id: place.id, category: category)
-		placesCtrl.removePlace(place)
-		placesCtrl.addPlace(newPlace)
+		User.current.updatePlace(place: place, name: name, category: category)
 	}
 
 	func start() {

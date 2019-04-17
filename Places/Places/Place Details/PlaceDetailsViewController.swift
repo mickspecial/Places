@@ -40,7 +40,7 @@ class PlaceDetailsViewController: UIViewController {
 		setUpView()
 
 		// convert dict to tuple so can easily manage data
-		pickerData = categoriesController.categories.map { (key: MarkerColor, value: String) in
+		pickerData = User.current.categories.map { (key: MarkerColor, value: String) in
 			return (key, value)
 		}
 
@@ -71,7 +71,7 @@ class PlaceDetailsViewController: UIViewController {
 		detailsView.mapView.addAnnotation(place)
 		detailsView.mapView.showAnnotations([place], animated: false)
 		detailsView.nameTF.text = place.name
-		detailsView.categoryTF.text = categoriesController.categories[place.category]
+		detailsView.categoryTF.text = User.current.categories[place.category]
 	}
 
 	@objc func goToPlace() {
@@ -138,6 +138,6 @@ extension PlaceDetailsViewController: UIPickerViewDelegate, UIPickerViewDataSour
 	}
 
 	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-		return categoriesController.categories.count
+		return User.current.categories.count
 	}
 }

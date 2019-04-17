@@ -83,7 +83,7 @@ class CategoryViewController: UITableViewController {
 
 	private func fillCells() {
 		for item in items {
-			item.textField.text = categoryCtrl.categories[item.marker]
+			item.textField.text = User.current.categories[item.marker]
 		}
 	}
 
@@ -126,10 +126,10 @@ class CategoryViewController: UITableViewController {
 	func save(_ item: GroupedItem) {
 		// only save if name has been changed and is not empty string
 		let isValidString = !item.textField.string.isEmpty
-		let nameHasChanged = item.textField.string != categoryCtrl.categories[item.marker]
+		let nameHasChanged = item.textField.string != User.current.categories[item.marker]
 		if isValidString && nameHasChanged {
 			print("Save \(item.textField.string) for \(item.marker)")
-			categoryCtrl.categories[item.marker] = item.textField.string
+			User.current.updateCategory(colour: item.marker, value: item.textField.string)
 		}
 	}
 }

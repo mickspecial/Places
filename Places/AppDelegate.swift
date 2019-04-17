@@ -17,14 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var tabBarController: MainTabBarController?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-
 		// User.destroyTestUser()
 		User.current = User.load() ?? User()
 
 		if User.current.categories.isEmpty {
 			print("New User Created - Default Categories Added")
 
-			User.current.categories = [
+			User.current.updateCategories(new: [
 				MarkerColor.blue: "Blue Marker",
 				MarkerColor.red: "Red Marker",
 				MarkerColor.orange: "Orange Marker",
@@ -32,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				MarkerColor.white: "White Marker",
 				MarkerColor.purple: "Purple Marker",
 				MarkerColor.green: "Green Marker"
-			]
+			])
 		}
 
 		print("Load App: Categories = \(User.current.categories.count), Places = \(User.current.places.count)")

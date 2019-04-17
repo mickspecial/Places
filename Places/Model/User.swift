@@ -9,8 +9,43 @@
 import Foundation
 
 final class User: Codable {
-	var places = [Place]()
-	var categories = [MarkerColor: String]()
+	private (set) var places = [Place]()
+	private (set) var categories = [MarkerColor: String]()
+
+	private func saveUser() {
+		DispatchQueue.main.async {
+			self.save()
+		}
+	}
+
+	func addPlace(_ place: Place) {
+		places.append(place)
+		saveUser()
+	}
+
+	func updateCategories(new: [MarkerColor: String]) {
+		self.categories = new
+		saveUser()
+	}
+
+	func updateCategory(colour: MarkerColor, value: String) {
+		categories[colour] = value
+		saveUser()
+	}
+
+	func updatePlace(place: Place, name: String, category: MarkerColor) {
+		let newPlace = Place(name: name, address: place.address, lat: place.lat, long: place.long, id: place.id, category: category, isDeleted: place.isDeleted)
+		places.removeAll(where: { place.id == $0.id })
+		User.current.addPlace(newPlace)
+		saveUser()
+	}
+
+	func markAsDeletedPlace(_ place: Place) {
+		let newPlace = Place(name: place.name, address: place.address, lat: place.lat, long: place.long, id: place.id, category: place.category, isDeleted: true)
+		places.removeAll(where: { place.id == $0.id })
+		User.current.addPlace(newPlace)
+		saveUser()
+	}
 }
 
 extension User {
@@ -47,6 +82,9 @@ extension User {
 
 	/// Saves a user to user defaults.
 	func save(testMode: Bool = false) {
+
+		print("try save")
+
 		let keyName: String
 
 		if testMode == true {
@@ -60,6 +98,11 @@ extension User {
 		encoder.dateEncodingStrategy = .iso8601
 
 		if let encodedUser = try? encoder.encode(self) {
+
+			print("SAVING 2")
+//			print(places)
+			print(categories)
+
 			defaults.set(encodedUser, forKey: keyName)
 		} else {
 			print("Failed to save user.")
@@ -70,6 +113,7 @@ extension User {
 	static func destroyTestUser() {
 		let defaults = UserDefaults.standard
 		defaults.removeObject(forKey: testKeyName)
+		defaults.removeObject(forKey: liveKeyName)
 	}
 }
 
