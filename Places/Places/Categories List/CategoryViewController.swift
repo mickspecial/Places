@@ -38,6 +38,7 @@ class CategoryViewController: UITableViewController {
 	let coordinator: PlaceListCoordinator
 	let categoryCtrl: CategoryController
 	var items = [GroupedItem]()
+	private var exportButton: UIBarButtonItem?
 
 	init(categoryCtrl: CategoryController, coordinator: PlaceListCoordinator) {
 		self.categoryCtrl = categoryCtrl
@@ -67,9 +68,38 @@ class CategoryViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		title = "Categories"
+		title = "Settings"
 		setUpTableView()
 		fillCells()
+		exportButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(exportData))
+		navigationItem.rightBarButtonItem = exportButton
+	}
+
+	@objc func exportData() {
+
+		let encoder = JSONEncoder()
+		encoder.dateEncodingStrategy = .iso8601
+
+		if let encodedUser = try? encoder.encode(User.current!) {
+			let dataseturl = exportToFileURL(data: encodedUser)
+			let activityViewController = UIActivityViewController(activityItems: ["Export Data", dataseturl], applicationActivities: nil)
+
+			if let popoverPresentationController = activityViewController.popoverPresentationController {
+				popoverPresentationController.barButtonItem = exportButton
+			}
+			present(activityViewController, animated: true)
+		}
+	}
+
+	private func exportToFileURL(data: Data) -> URL {
+
+		guard let path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
+			fatalError()
+		}
+
+		let saveFileURL = path.appendingPathComponent("place_data.plcs")
+		try! data.write(to: saveFileURL)
+		return saveFileURL
 	}
 
 	private func setUpTableView() {

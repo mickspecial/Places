@@ -79,11 +79,13 @@ class FindDetailsViewController: UIViewController {
 		}
 
 		let newPlace = coordinator.savePlaceWith(mapItem: item, marker: marker, name: name)
-		SCLAlertView(appearance: AlertService.standard).showSuccess("Saved")
 		view.endEditing(true)
 		detailsView.mapView.removeAnnotations(detailsView.mapView.annotations)
 		detailsView.mapView.addAnnotation(newPlace)
 		title = newPlace.name
+		SCLAlertView(appearance: AlertService.standard).showSuccess("Saved").setDismissBlock {
+			self.navigationController?.popViewController(animated: true)
+		}
 	}
 
 	private func titleForMarker(_ marker: MarkerColor) -> String {

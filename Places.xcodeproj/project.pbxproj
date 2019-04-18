@@ -348,6 +348,11 @@
 				TargetAttributes = {
 					00A3F955225962A6003EFD3B = {
 						CreatedOnToolsVersion = 10.2;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 0;
+							};
+						};
 					};
 					00A3F969225962A7003EFD3B = {
 						CreatedOnToolsVersion = 10.2;

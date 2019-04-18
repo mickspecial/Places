@@ -35,7 +35,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		collectionView.dataSource = self
 		collectionView.delegate = self
 		collectionView.contentInset = .init(top: 10, left: 0, bottom: 10, right: 0)
-		navigationItem.rightBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(showCategoriesView), imageName: "bullets", size: .large)
+		navigationItem.leftBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(showCategoriesView), imageName: "bullets", size: .large)
     }
 
 	@objc func showCategoriesView() {
@@ -45,12 +45,12 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		prepareData()
-		collectionView.reloadData()
 	}
 
-	private func prepareData() {
+	func prepareData() {
 		places = User.current.places.filter({ $0.isDeleted == false })
 		places.sort(by: { $0.name.lowercased() < $1.name.lowercased() })
+		collectionView.reloadData()
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -64,9 +64,17 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 		navigationItem.hidesSearchBarWhenScrolling = false
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		navigationItem.largeTitleDisplayMode = .always
+		navigationController?.navigationBar.prefersLargeTitles = true
+	}
+
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		//searchController.searchBar.becomeFirstResponder()
+		if searchResults.isEmpty { return }
+		collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+		searchController.searchBar.becomeFirstResponder()
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

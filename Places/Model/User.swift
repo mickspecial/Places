@@ -9,11 +9,16 @@
 import Foundation
 
 final class User: Codable {
+	// created with an empty slate
 	private (set) var places = [Place]()
 	private (set) var categories = [MarkerColor: String]()
+	private (set) var created = Date()
+	private (set) var modified = Date()
+	private (set) var id = UUID().uuidString
 
 	private func saveUser() {
 		DispatchQueue.main.async {
+			self.modified = Date()
 			self.save()
 		}
 	}
@@ -52,73 +57,44 @@ extension User {
 	/// The UserDefaults key where the real user is stored.
 	fileprivate static var liveKeyName: String { return "User" }
 
-	/// The UserDefaults key where the test user is stored so we don't break the live user when running tests.
-	fileprivate static var testKeyName: String { return "TestUser" }
-
 	/// Loads a user from UserDefaults, or returns nil if there was none.
 	static func load(testMode: Bool = false) -> User? {
-		let keyName: String
 
-		if testMode == true {
-			keyName = testKeyName
-		} else {
-			keyName = liveKeyName
-		}
+		let decoder = JSONDecoder()
+		decoder.dateDecodingStrategy = .iso8601
 
 		let defaults = UserDefaults.standard
-		if let data = defaults.data(forKey: keyName) {
-			let decoder = JSONDecoder()
-			decoder.dateDecodingStrategy = .iso8601
 
+		if let data = defaults.data(forKey: liveKeyName) {
 			if let decodedUser = try? decoder.decode(User.self, from: data) {
-				print("Load User Success")
+				print("Load Local User Success")
 				return decodedUser
 			}
 		}
 
-		print("Nothing To Load")
 		return nil
 	}
 
-	/// Saves a user to user defaults.
+	/// Saves a user to user defaults
 	func save(testMode: Bool = false) {
 
-		print("try save")
-
-		let keyName: String
-
-		if testMode == true {
-			keyName = User.testKeyName
-		} else {
-			keyName = User.liveKeyName
-		}
-
-		let defaults = UserDefaults.standard
 		let encoder = JSONEncoder()
 		encoder.dateEncodingStrategy = .iso8601
 
 		if let encodedUser = try? encoder.encode(self) {
-
-			print("SAVING 2")
-//			print(places)
-			print(categories)
-
-			defaults.set(encodedUser, forKey: keyName)
-		} else {
-			print("Failed to save user.")
+			let defaults = UserDefaults.standard
+			defaults.set(encodedUser, forKey: User.liveKeyName)
 		}
 	}
 
 	/// Destroys any existing user so we can be sure we have a blank slate when testing.
 	static func destroyTestUser() {
+		print(" ⛔️ DB CLEAR ⛔️ ")
 		let defaults = UserDefaults.standard
-		defaults.removeObject(forKey: testKeyName)
 		defaults.removeObject(forKey: liveKeyName)
 	}
 }
 
 extension User {
 	static var current: User!
-	/// Future release
-	/// static let maxPlaceForFree = 20
 }

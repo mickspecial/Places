@@ -105,7 +105,7 @@ extension MKMapItem {
 			}
 		})
 
-		return "TESTING"
+		return "? Street Address"
 	}
 }
 
@@ -118,5 +118,25 @@ extension Place: MKAnnotation {
 		let placeMapItem = MKMapItem(placemark: MKPlacemark(coordinate: coordinate))
 		placeMapItem.name = name
 		return placeMapItem
+	}
+}
+
+extension Place {
+
+	static func importData(from url: URL) {
+		guard let data = try? Data(contentsOf: url) else {
+			SCLAlertView(appearance: AlertService.standard).showError("Import Error")
+			return
+		}
+
+		let decoder = JSONDecoder()
+		decoder.dateDecodingStrategy = .iso8601
+
+		if let decodedUser = try? decoder.decode(User.self, from: data) {
+			User.current = decodedUser
+			User.current.save()
+		} else {
+			SCLAlertView(appearance: AlertService.standard).showError("Import Error")
+		}
 	}
 }

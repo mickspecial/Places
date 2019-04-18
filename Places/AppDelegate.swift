@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	var tabBarController: MainTabBarController?
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-		// User.destroyTestUser()
+//		User.destroyTestUser()
 		User.current = User.load() ?? User()
 
 		if User.current.categories.isEmpty {
@@ -34,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			])
 		}
 
-		print("Load App: Categories = \(User.current.categories.count), Places = \(User.current.places.count)")
+		print("Id: \(User.current.id) - mod: \(User.current.modified.simpleDate) - created: \(User.current.created.simpleDate) Load App: Categories = \(User.current.categories.count), Places = \(User.current.places.count)")
 
 		// Theme
 		UINavigationBar.appearance().tintColor = .white
@@ -60,5 +60,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		window?.tintColor = .darkGray
 		window?.makeKeyAndVisible()
 		return true
+	}
+
+	// MARK: - Handle File Sharing
+	func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+
+		guard url.pathExtension == "plcs" else { return false }
+
+		if let tabController = window?.rootViewController as? UITabBarController {
+			tabController.selectedIndex = 0
+		}
+
+		let alert = SCLAlertView(appearance: AlertService.standardNoCloseButtonV)
+
+		alert.addButton("Replace Data") {
+			Place.importData(from: url)
+
+			if let tabController = self.window?.rootViewController as? UITabBarController {
+				if let nav = tabController.selectedViewController {
+					if let navcontroller = nav as? UINavigationController, let vc = navcontroller.viewControllers.first as? PlaceListController {
+						vc.prepareData()
+					}
+				}
+			}
+		}
+
+		alert.addButton("Cancel", backgroundColor: Theme.current.cellDark, textColor: .white, showTimeout: nil) { return }
+		alert.showCustom("Import?", color: UIColor.FlatColor.Blue.Denim)
+
+		return true
+	}
+}
+
+extension Date {
+	var simpleDate: String {
+		let monthyearformatter = DateFormatter()
+		monthyearformatter.dateFormat = "dd'/'MM'/'yy h:mm a"
+		return monthyearformatter.string(from: self)
 	}
 }

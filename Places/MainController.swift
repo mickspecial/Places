@@ -60,6 +60,7 @@ class MainTabBarController: UITabBarController {
 
 extension DispatchQueue {
 	static func delayWithSeconds(_ seconds: Double, closure:@escaping () -> Void) {
-		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + seconds, execute: closure)
+		let when = DispatchTime.now() + seconds
+		DispatchQueue.main.asyncAfter(deadline: when, execute: closure)
 	}
 }
