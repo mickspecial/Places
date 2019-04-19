@@ -35,7 +35,7 @@ class PlaceCell: UICollectionViewCell {
 		button.setImage(#imageLiteral(resourceName: "marker"), for: .normal)
 		button.tintColor = Theme.current.highlight
 		button.backgroundColor = .clear
-		button.widthAnchor.constraint(equalToConstant: 80).isActive = true
+		button.constrainWidth(constant: 80)
 		return button
 	}()
 
@@ -43,8 +43,8 @@ class PlaceCell: UICollectionViewCell {
 		let logoView = UIImageView()
 		logoView.image = #imageLiteral(resourceName: "white")
 		logoView.contentMode = .scaleAspectFit
-		logoView.heightAnchor.constraint(equalToConstant: 20).isActive = true
-		logoView.widthAnchor.constraint(equalToConstant: 20).isActive = true
+		logoView.constrainHeight(constant: 20)
+		logoView.constrainWidth(constant: 20)
 		return logoView
 	}()
 
