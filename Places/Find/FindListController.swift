@@ -54,6 +54,7 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 		collectionView.dataSource = self
 		collectionView.delegate = self
 		collectionView.contentInset = .init(top: 10, left: 0, bottom: 10, right: 0)
+		collectionView.scrollIndicatorInsets = .init(top: 10, left: 0, bottom: 10, right: 0)
 	}
 
 	private func setUpNavBar() {
