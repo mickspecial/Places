@@ -20,34 +20,20 @@ class SearchCell: UICollectionViewCell {
 
 	override var isSelected: Bool {
 		didSet {
-			if self.isSelected {
-				backgroundColor = .darkGray
-			} else {
-				backgroundColor = Theme.current.cellDark
-			}
+			backgroundColor = isSelected ? .darkGray : Theme.current.cellDark
 		}
 	}
 
-	var nameLabel: UILabel = {
-		let label = UILabel(frame: .zero)
-		label.textColor = .white
-		label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-		label.allowsDefaultTighteningForTruncation = true
-		return label
-	}()
-
-	var addressLabel: UILabel = {
-		let label = UILabel(frame: .zero)
-		label.textColor = .white
-		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-		return label
-	}()
+	private var	nameLabel = UILabel(text: "Name", font: .systemFont(ofSize: 16, weight: .bold), textColor: .white)
+	private var	addressLabel = UILabel(text: "", font: .systemFont(ofSize: 10, weight: .bold), textColor: .white)
 
 	private func setUpView() {
 
 		let stackview = UIStackView(arrangedSubviews: [
 			VerticalStackView(arrangedSubviews: [nameLabel, addressLabel], spacing: 10)
 		])
+
+		nameLabel.allowsDefaultTighteningForTruncation = true
 
 		stackview.alignment = .center
 		stackview.spacing = 8

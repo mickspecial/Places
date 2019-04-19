@@ -30,21 +30,8 @@ class FindDetailsView: UIView {
 		return tf
 	}()
 
-	private var	nameLabel: UILabel = {
-		let label = UILabel(frame: .zero)
-		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-		label.textColor = Theme.current.highlight
-		label.text = "Name"
-		return label
-	}()
-
-	private var categoryLabel: UILabel = {
-		let label = UILabel(frame: .zero)
-		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-		label.textColor = Theme.current.highlight
-		label.text = "Category"
-		return label
-	}()
+	private var	nameLabel = UILabel(text: "Name", font: .systemFont(ofSize: 10, weight: .bold), textColor: Theme.current.highlight)
+	private var	categoryLabel = UILabel(text: "Category", font: .systemFont(ofSize: 10, weight: .bold), textColor: Theme.current.highlight)
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)

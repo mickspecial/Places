@@ -31,20 +31,8 @@ class PlaceCell: UICollectionViewCell {
 		}
 	}
 
-	var nameLabel: UILabel = {
-		let label = UILabel(frame: .zero)
-		label.textColor = .white
-		label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-		label.allowsDefaultTighteningForTruncation = true
-		return label
-	}()
-
-	var addressLabel: UILabel = {
-		let label = UILabel(frame: .zero)
-		label.textColor = .white
-		label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
-		return label
-	}()
+	private var	nameLabel = UILabel(text: "Name", font: .systemFont(ofSize: 16, weight: .bold), textColor: .white)
+	private var	addressLabel = UILabel(text: "", font: .systemFont(ofSize: 10, weight: .bold), textColor: .white)
 
 	let showOnMapBtn: UIButton = {
 		let button = UIButton(type: .system)
@@ -73,6 +61,8 @@ class PlaceCell: UICollectionViewCell {
 			VerticalStackView(arrangedSubviews: [nameLabel, addressLabel], spacing: 10),
 			showOnMapBtn
 		])
+
+		nameLabel.allowsDefaultTighteningForTruncation = true
 
 		stackview.alignment = .center
 		stackview.spacing = 12
