@@ -10,19 +10,8 @@ import UIKit
 
 class PinCalloutView: UIView {
 
-	let titleLabel: UILabel = {
-		let tf = UILabel()
-		tf.text = "titleLabel"
-		tf.font = UIFont.preferredFont(forTextStyle: .title2)
-		return tf
-	}()
-
-	let subLabel: UILabel = {
-		let tf = UILabel()
-		tf.text = "subLabel"
-		tf.font = UIFont.preferredFont(forTextStyle: .callout)
-		return tf
-	}()
+	var titleLabel = UILabel(text: "", font: .preferredFont(forTextStyle: .title2))
+	var subLabel = UILabel(text: "", font: .preferredFont(forTextStyle: .callout))
 
 	init(place: Place) {
 		super.init(frame: .zero)

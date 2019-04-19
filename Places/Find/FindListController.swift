@@ -23,14 +23,7 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 		return sctrl
 	}()
 
-	private var	searchLabel: UILabel = {
-		let label = UILabel(frame: .zero)
-		label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-		label.textAlignment = .center
-		label.textColor = Theme.current.highlight
-		label.text = "Search for location above"
-		return label
-	}()
+	var searchLabel = UILabel(text: "Search for location above", font: .boldSystemFont(ofSize: 20), textColor: Theme.current.highlight)
 
 	lazy private var searchCompleter: MKLocalSearchCompleter = {
 		let searchCompleter = MKLocalSearchCompleter()
@@ -39,7 +32,6 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 	}()
 
 	private var searchResults = [MKLocalSearchCompletion]()
-
 	let coordinator: FindCoordinator
 	private let cellId = "cellId"
 
@@ -65,6 +57,7 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 		collectionView.scrollIndicatorInsets = .init(top: 10, left: 0, bottom: 10, right: 0)
 		view.addSubview(searchLabel)
 		searchLabel.fillSuperview()
+		searchLabel.textAlignment = .center
 	}
 
 	private func setUpNavBar() {

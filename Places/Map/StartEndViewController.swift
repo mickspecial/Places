@@ -24,19 +24,8 @@ class StartEndViewController: UIViewController {
 		return button
 	}()
 
-	var startLabel: UILabel = {
-		let label = UILabel(frame: .zero)
-		label.textColor = .white
-		label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-		return label
-	}()
-
-	var endLabel: UILabel = {
-		let label = UILabel(frame: .zero)
-		label.textColor = .white
-		label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-		return label
-	}()
+	var startLabel = UILabel(text: "", font: .boldSystemFont(ofSize: 13), textColor: .white)
+	var endLabel = UILabel(text: "", font: .boldSystemFont(ofSize: 13), textColor: .white)
 
 	enum ButtonTag: Int {
 		case start, end
