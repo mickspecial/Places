@@ -16,7 +16,7 @@ class PlaceDetailsView: UIView {
 	let nameTF: UITextField = {
 		let tf = UITextField()
 		tf.textColor = .white
-		tf.heightAnchor.constraint(equalToConstant: 50).isActive = true
+		tf.constrainHeight(constant: 50)
 		return tf
 	}()
 
@@ -25,7 +25,7 @@ class PlaceDetailsView: UIView {
 		tf.textColor = .white
 		tf.inputAssistantItem.leadingBarButtonGroups.removeAll()
 		tf.inputAssistantItem.trailingBarButtonGroups.removeAll()
-		tf.heightAnchor.constraint(equalToConstant: 50).isActive = true
+		tf.constrainHeight(constant: 50)
 		return tf
 	}()
 
@@ -71,6 +71,6 @@ class PlaceDetailsView: UIView {
 		categoryLabel.anchor(top: nameTF.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
 		categoryTF.anchor(top: categoryLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
 		deleteButton.anchor(top: nil, leading: nil, bottom: bottomAnchor, trailing: nil, padding: .init(top: 0, left: 0, bottom: 20, right: 0), size: .init(width: 80, height: 40))
-		deleteButton.centerX()
+		deleteButton.centerXInSuperview()
 	}
 }
