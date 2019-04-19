@@ -33,6 +33,7 @@
 		00A3F96F225962A7003EFD3B /* PlacesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F96E225962A7003EFD3B /* PlacesTests.swift */; };
 		00A3F97C225964D4003EFD3B /* PlaceListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F97B225964D4003EFD3B /* PlaceListController.swift */; };
 		00A3F97E225964E4003EFD3B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F97D225964E4003EFD3B /* MapViewController.swift */; };
+		00A96BCB2269B011007D4CDE /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A96BCA2269B011007D4CDE /* VerticalStackView.swift */; };
 		00B2E97E225B316D005A8DDD /* PlaceListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B2E97D225B316D005A8DDD /* PlaceListCoordinator.swift */; };
 		00B2E980225B31E9005A8DDD /* PlaceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B2E97F225B31E9005A8DDD /* PlaceDetailsViewController.swift */; };
 		00BA6913225B50AF00D22C41 /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BA6912225B50AF00D22C41 /* PlaceCell.swift */; };
@@ -86,6 +87,7 @@
 		00A3F970225962A7003EFD3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00A3F97B225964D4003EFD3B /* PlaceListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListController.swift; sourceTree = "<group>"; };
 		00A3F97D225964E4003EFD3B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		00A96BCA2269B011007D4CDE /* VerticalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
 		00B2E97D225B316D005A8DDD /* PlaceListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCoordinator.swift; sourceTree = "<group>"; };
 		00B2E97F225B31E9005A8DDD /* PlaceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsViewController.swift; sourceTree = "<group>"; };
 		00BA6912225B50AF00D22C41 /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
@@ -141,7 +143,6 @@
 				00E3F2D72259701400133301 /* FindListController.swift */,
 				00737F0D225DF7D70054F35F /* FindDetailsViewController.swift */,
 				00737F0F225DF8080054F35F /* FindDetailsView.swift */,
-				004E12612263DDE3006EE16F /* FindCell.swift */,
 			);
 			path = Find;
 			sourceTree = "<group>";
@@ -175,6 +176,7 @@
 				00495043225DC4D000051498 /* AlertService.swift */,
 				0051D735225F47500057B9B0 /* Theme.swift */,
 				0051D737225FEEF60057B9B0 /* BarButton-Extension.swift */,
+				00A96BCA2269B011007D4CDE /* VerticalStackView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -193,6 +195,8 @@
 		006C794F225AB6A9002A586A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				00BA6912225B50AF00D22C41 /* PlaceCell.swift */,
+				004E12612263DDE3006EE16F /* FindCell.swift */,
 				006C794D225AB6A0002A586A /* PinCalloutView.swift */,
 			);
 			path = Views;
@@ -267,7 +271,6 @@
 			isa = PBXGroup;
 			children = (
 				00A3F97B225964D4003EFD3B /* PlaceListController.swift */,
-				00BA6912225B50AF00D22C41 /* PlaceCell.swift */,
 			);
 			path = "Place List";
 			sourceTree = "<group>";
@@ -493,6 +496,7 @@
 				006C794E225AB6A0002A586A /* PinCalloutView.swift in Sources */,
 				00495044225DC4D000051498 /* AlertService.swift in Sources */,
 				00737F12225DF84C0054F35F /* FindCoordinator.swift in Sources */,
+				00A96BCB2269B011007D4CDE /* VerticalStackView.swift in Sources */,
 				0073CB12225EA84F00C342FD /* CategoryViewController.swift in Sources */,
 				00B2E97E225B316D005A8DDD /* PlaceListCoordinator.swift in Sources */,
 			);

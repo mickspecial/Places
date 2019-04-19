@@ -45,15 +45,8 @@ class SearchCell: UICollectionViewCell {
 
 	private func setUpView() {
 
-		let labelsStackView = UIStackView(arrangedSubviews: [
-			nameLabel, addressLabel
-		])
-
-		labelsStackView.axis = .vertical
-		labelsStackView.spacing = 10
-
 		let stackview = UIStackView(arrangedSubviews: [
-			labelsStackView
+			VerticalStackView(arrangedSubviews: [nameLabel, addressLabel], spacing: 10)
 		])
 
 		stackview.alignment = .center
