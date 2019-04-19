@@ -16,6 +16,8 @@ class PlaceCell: UICollectionViewCell {
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
+		backgroundColor = Theme.current.cellDark
+		layer.cornerRadius = 10
 		setUpView()
 	}
 
@@ -49,6 +51,8 @@ class PlaceCell: UICollectionViewCell {
 		button.setImage(#imageLiteral(resourceName: "marker"), for: .normal)
 		button.tintColor = Theme.current.highlight
 		button.backgroundColor = .clear
+		button.heightAnchor.constraint(equalToConstant: 80).isActive = true
+		button.widthAnchor.constraint(equalToConstant: 80).isActive = true
 		return button
 	}()
 
@@ -56,6 +60,8 @@ class PlaceCell: UICollectionViewCell {
 		let logoView = UIImageView()
 		logoView.image = #imageLiteral(resourceName: "white")
 		logoView.contentMode = .scaleAspectFit
+		logoView.heightAnchor.constraint(equalToConstant: 20).isActive = true
+		logoView.widthAnchor.constraint(equalToConstant: 20).isActive = true
 		return logoView
 	}()
 
@@ -63,18 +69,23 @@ class PlaceCell: UICollectionViewCell {
 	weak var delegate: PlaceCellDelegate?
 
 	private func setUpView() {
-		let theViews = [markerImageView, nameLabel, addressLabel, showOnMapBtn]
-		theViews.forEach({ addSubview($0)})
-		backgroundColor = Theme.current.cellDark
-		markerImageView.anchor(top: nil, leading: leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0), size: CGSize(width: 20, height: 20))
-		markerImageView.centerY()
-		nameLabel.anchor(top: topAnchor, leading: markerImageView.trailingAnchor, bottom: addressLabel.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
-		addressLabel.anchor(top: nameLabel.bottomAnchor, leading: markerImageView.trailingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 10, right: 10))
-		showOnMapBtn.anchor(top: topAnchor, leading: nil, bottom: bottomAnchor, trailing: trailingAnchor, size: .init(width: 80, height: 0))
 
+		let labelsStackView = UIStackView(arrangedSubviews: [
+			nameLabel, addressLabel
+		])
+
+		labelsStackView.axis = .vertical
+		labelsStackView.spacing = 10
+
+		let stackview = UIStackView(arrangedSubviews: [
+			markerImageView, labelsStackView, showOnMapBtn
+		])
+
+		stackview.alignment = .center
+		stackview.spacing = 12
+		addSubview(stackview)
+		stackview.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 0))
 		showOnMapBtn.addTarget(self, action: #selector(showMapPressed), for: .touchUpInside)
-
-		layer.cornerRadius = 10
 	}
 
 	@objc func showMapPressed() {
@@ -88,6 +99,7 @@ class PlaceCell: UICollectionViewCell {
 		nameLabel.text = place.name
 		addressLabel.text = place.address
 		markerImageView.image = place.markerImage
+		addressLabel.isHidden = place.address.isEmpty
 	}
 
 	required init?(coder aDecoder: NSCoder) {
