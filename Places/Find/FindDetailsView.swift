@@ -23,6 +23,9 @@ class FindDetailsView: UIView {
 	let categoryTF: UITextField = {
 		let tf = UITextField()
 		tf.textColor = .white
+		// remove copy paste icons
+		tf.inputAssistantItem.leadingBarButtonGroups.removeAll()
+		tf.inputAssistantItem.trailingBarButtonGroups.removeAll()
 		tf.heightAnchor.constraint(equalToConstant: 50).isActive = true
 		return tf
 	}()
