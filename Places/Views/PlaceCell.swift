@@ -23,11 +23,7 @@ class PlaceCell: UICollectionViewCell {
 
 	override var isSelected: Bool {
 		didSet {
-			if self.isSelected {
-				backgroundColor = .darkGray
-			} else {
-				backgroundColor = Theme.current.cellDark
-			}
+			backgroundColor = isSelected ? .darkGray : Theme.current.cellDark
 		}
 	}
 
