@@ -7,11 +7,14 @@
 //
 
 import UIKit
+import MapKit
 
 class SearchCell: UICollectionViewCell {
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
+		backgroundColor = Theme.current.cellDark
+		layer.cornerRadius = 10
 		setUpView()
 	}
 
@@ -41,12 +44,28 @@ class SearchCell: UICollectionViewCell {
 	}()
 
 	private func setUpView() {
-		let theViews = [nameLabel, addressLabel]
-		theViews.forEach({ addSubview($0)})
-		backgroundColor = Theme.current.cellDark
-		nameLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: addressLabel.topAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))
-		addressLabel.anchor(top: nameLabel.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 10, right: 10))
-		layer.cornerRadius = 10
+
+		let labelsStackView = UIStackView(arrangedSubviews: [
+			nameLabel, addressLabel
+		])
+
+		labelsStackView.axis = .vertical
+		labelsStackView.spacing = 10
+
+		let stackview = UIStackView(arrangedSubviews: [
+			labelsStackView
+		])
+
+		stackview.alignment = .center
+		stackview.spacing = 8
+		addSubview(stackview)
+		stackview.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16))
+	}
+
+	func fillCell(_ searchResult: MKLocalSearchCompletion) {
+		nameLabel.attributedText = NSAttributedString.highlightedText(searchResult.title, ranges: searchResult.titleHighlightRanges, size: 17)
+		addressLabel.attributedText = NSAttributedString.highlightedText(searchResult.subtitle, ranges: searchResult.subtitleHighlightRanges, size: 12)
+		addressLabel.isHidden = searchResult.subtitle.isEmpty
 	}
 
 	required init?(coder aDecoder: NSCoder) {

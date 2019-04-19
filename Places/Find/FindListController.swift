@@ -83,10 +83,7 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 	override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		collectionView.deselectItem(at: indexPath, animated: true)
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SearchCell
-		let searchResult = searchResults[indexPath.row]
-		// show search letters in bold
-		cell.nameLabel.attributedText = NSAttributedString.highlightedText(searchResult.title, ranges: searchResult.titleHighlightRanges, size: 17)
-		cell.addressLabel.attributedText = NSAttributedString.highlightedText(searchResult.subtitle, ranges: searchResult.subtitleHighlightRanges, size: 12)
+		cell.fillCell(searchResults[indexPath.row])
 		return cell
 	}
 
