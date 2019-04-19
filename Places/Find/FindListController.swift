@@ -30,12 +30,10 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 
 	private var searchResults = [MKLocalSearchCompletion]()
 
-	let placesController: PlacesController
 	let coordinator: FindCoordinator
 	private let cellId = "cellId"
 
-	init(placesCtrl: PlacesController, coordinator: FindCoordinator) {
-		self.placesController = placesCtrl
+	init(coordinator: FindCoordinator) {
 		self.coordinator = coordinator
 		let layout = UICollectionViewFlowLayout()
 		layout.scrollDirection = .vertical

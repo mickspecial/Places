@@ -10,13 +10,11 @@ import UIKit
 
 class PlaceListController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
-	let placesController: PlacesController
 	let coordinator: PlaceListCoordinator
 	private let cellId = "cellId"
 	private var places = [Place]()
 
-	init(placesCtrl: PlacesController, coordinator: PlaceListCoordinator) {
-		self.placesController = placesCtrl
+	init(coordinator: PlaceListCoordinator) {
 		self.coordinator = coordinator
 		let layout = UICollectionViewFlowLayout()
 		layout.scrollDirection = .vertical

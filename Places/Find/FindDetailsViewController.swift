@@ -14,15 +14,13 @@ class FindDetailsViewController: UIViewController {
 	private let detailsView = FindDetailsView()
 	let coordinator: FindCoordinator
 	let item: MKMapItem
-	let categoriesController: CategoryController
 	let locationPicker = UIPickerView()
 	var pickerData = [(key: MarkerColor, value: String)]()
 	var selectedMarker: MarkerColor?
 
-	init(coordinator: FindCoordinator, item: MKMapItem, categoriesController: CategoryController) {
+	init(coordinator: FindCoordinator, item: MKMapItem) {
 		self.coordinator = coordinator
 		self.item = item
-		self.categoriesController = categoriesController
 		super.init(nibName: nil, bundle: nil)
 	}
 

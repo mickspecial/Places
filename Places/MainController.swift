@@ -18,8 +18,6 @@ class MainTabBarController: UITabBarController {
 
 	var homeCoordinator: PlaceListCoordinator!
 	var mapSeachCoordinator: FindCoordinator!
-	var placesController: PlacesController!
-	var categoriesController: CategoryController!
 	var mapVC: MapViewController!
 
 	override func viewDidLoad() {
@@ -27,21 +25,19 @@ class MainTabBarController: UITabBarController {
 		tabBar.isTranslucent = false
 
 		// set up controllers with user data
-		placesController = PlacesController(places: User.current.places)
 		// placesController.addTestData()
 
-		categoriesController = CategoryController(categories: User.current.categories)
 		// if VC needs more advanced actions set it up with a coordinator
 
 		// Home Tab
-		homeCoordinator = PlaceListCoordinator(placesCtrl: placesController, categoryCtrl: categoriesController, tabCtrl: self)
+		homeCoordinator = PlaceListCoordinator(tabCtrl: self)
 
 		// Map Tap
-		mapVC = MapViewController(placesCtrl: placesController)
+		mapVC = MapViewController()
 		mapVC.tabBarItem = UITabBarItem(title: "Map", image: #imageLiteral(resourceName: "marker"), tag: 1)
 
 		// Find Location Tap
-		mapSeachCoordinator = FindCoordinator(placesCtrl: placesController, categoriesCtrl: categoriesController)
+		mapSeachCoordinator = FindCoordinator()
 
 		viewControllers = [
 			homeCoordinator.navigationController,

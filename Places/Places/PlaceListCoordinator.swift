@@ -12,26 +12,22 @@ class PlaceListCoordinator: Coordinator {
 
 	var childCoordinators = [Coordinator]()
 	var navigationController: UINavigationController
-	var placesCtrl: PlacesController
-	var categoryCtrl: CategoryController
 	var tabCtrl: MainTabBarController
 
-	init(navigationController: UINavigationController = UINavigationController(), placesCtrl: PlacesController, categoryCtrl: CategoryController, tabCtrl: MainTabBarController) {
+	init(navigationController: UINavigationController = UINavigationController(), tabCtrl: MainTabBarController) {
 		self.navigationController = navigationController
-		self.placesCtrl = placesCtrl
-		self.categoryCtrl = categoryCtrl
 		self.tabCtrl = tabCtrl
 
 		self.navigationController.navigationBar.prefersLargeTitles = true
 		self.navigationController.navigationBar.isTranslucent = false
 
-		let home = PlaceListController(placesCtrl: placesCtrl, coordinator: self)
+		let home = PlaceListController(coordinator: self)
 		home.tabBarItem = UITabBarItem(title: "Places", image: #imageLiteral(resourceName: "list"), tag: 0)
 		navigationController.viewControllers = [home]
 	}
 
 	func showDetails(_ place: Place) {
-		let homeVC = PlaceDetailsViewController(coordinator: self, place: place, categoriesController: categoryCtrl)
+		let homeVC = PlaceDetailsViewController(coordinator: self, place: place)
 		navigationController.pushViewController(homeVC, animated: true)
 	}
 
@@ -46,7 +42,7 @@ class PlaceListCoordinator: Coordinator {
 	}
 
 	func showCategories() {
-		let catVC = CategoryViewController(categoryCtrl: categoryCtrl, coordinator: self)
+		let catVC = CategoryViewController(coordinator: self)
 		navigationController.pushViewController(catVC, animated: true)
 	}
 

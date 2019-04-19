@@ -27,7 +27,6 @@
 		00737F10225DF8080054F35F /* FindDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00737F0F225DF8080054F35F /* FindDetailsView.swift */; };
 		00737F12225DF84C0054F35F /* FindCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00737F11225DF84C0054F35F /* FindCoordinator.swift */; };
 		0073CB12225EA84F00C342FD /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0073CB11225EA84F00C342FD /* CategoryViewController.swift */; };
-		00993F32225ABBC2006EDA83 /* PlacesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00993F31225ABBC2006EDA83 /* PlacesController.swift */; };
 		00A3F95A225962A6003EFD3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F959225962A6003EFD3B /* AppDelegate.swift */; };
 		00A3F961225962A7003EFD3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00A3F960225962A7003EFD3B /* Assets.xcassets */; };
 		00A3F964225962A7003EFD3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00A3F962225962A7003EFD3B /* LaunchScreen.storyboard */; };
@@ -77,7 +76,6 @@
 		00737F0F225DF8080054F35F /* FindDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindDetailsView.swift; sourceTree = "<group>"; };
 		00737F11225DF84C0054F35F /* FindCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCoordinator.swift; sourceTree = "<group>"; };
 		0073CB11225EA84F00C342FD /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
-		00993F31225ABBC2006EDA83 /* PlacesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesController.swift; sourceTree = "<group>"; };
 		00A3F956225962A6003EFD3B /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00A3F959225962A6003EFD3B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		00A3F960225962A7003EFD3B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -232,7 +230,6 @@
 			isa = PBXGroup;
 			children = (
 				000EB02A2259D426008D0DD1 /* MainController.swift */,
-				00993F31225ABBC2006EDA83 /* PlacesController.swift */,
 				000EB02D2259D44F008D0DD1 /* Places */,
 				000EB02E2259D458008D0DD1 /* Map */,
 				000EB02C2259D446008D0DD1 /* Find */,
@@ -486,7 +483,6 @@
 				004E12622263DDE3006EE16F /* FindCell.swift in Sources */,
 				00495042225DC46600051498 /* SCLExtensions.swift in Sources */,
 				006C7949225AA6C3002A586A /* Place.swift in Sources */,
-				00993F32225ABBC2006EDA83 /* PlacesController.swift in Sources */,
 				0051D73E226160530057B9B0 /* RouteDetails.swift in Sources */,
 				0051D738225FEEF60057B9B0 /* BarButton-Extension.swift in Sources */,
 				00B2E980225B31E9005A8DDD /* PlaceDetailsViewController.swift in Sources */,

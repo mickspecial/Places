@@ -14,7 +14,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 	var mapView: MKMapView!
 	private var places = [Place]()
-	let placesController: PlacesController
 	let locationManager = CLLocationManager()
 	let startEndViewCtrl = StartEndViewController()
 
@@ -67,8 +66,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		}
 	}
 
-	init(placesCtrl: PlacesController) {
-		placesController = placesCtrl
+	init() {
 		super.init(nibName: nil, bundle: nil)
 	}
 	

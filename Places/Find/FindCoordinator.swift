@@ -13,24 +13,20 @@ class FindCoordinator: Coordinator {
 
 	var childCoordinators = [Coordinator]()
 	var navigationController: UINavigationController
-	var placesCtrl: PlacesController
-	var categoriesCtrl: CategoryController
 
-	init(navigationController: UINavigationController = UINavigationController(), placesCtrl: PlacesController, categoriesCtrl: CategoryController) {
+	init(navigationController: UINavigationController = UINavigationController()) {
 		self.navigationController = navigationController
-		self.placesCtrl = placesCtrl
-		self.categoriesCtrl = categoriesCtrl
 
 		self.navigationController.navigationBar.prefersLargeTitles = true
 		self.navigationController.navigationBar.isTranslucent = false
 
-		let findVC = FindListController(placesCtrl: placesCtrl, coordinator: self)
+		let findVC = FindListController(coordinator: self)
 		findVC.tabBarItem = UITabBarItem(title: "Find", image: #imageLiteral(resourceName: "find"), tag: 2)
 		navigationController.viewControllers = [findVC]
 	}
 
 	func showDetails(_ item: MKMapItem) {
-		let detailsVC = FindDetailsViewController(coordinator: self, item: item, categoriesController: categoriesCtrl)
+		let detailsVC = FindDetailsViewController(coordinator: self, item: item)
 		navigationController.pushViewController(detailsVC, animated: true)
 	}
 

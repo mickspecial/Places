@@ -13,17 +13,15 @@ class PlaceDetailsViewController: UIViewController {
 
 	private let detailsView = PlaceDetailsView()
 	let coordinator: PlaceListCoordinator
-	let categoriesController: CategoryController
 	let place: Place
 	let markerPicker = UIPickerView()
 	var pickerData = [(key: MarkerColor, value: String)]()
 	var markerColor: MarkerColor!
 
-	init(coordinator: PlaceListCoordinator, place: Place, categoriesController: CategoryController) {
+	init(coordinator: PlaceListCoordinator, place: Place) {
 		self.coordinator = coordinator
 		self.place = place
 		self.markerColor = place.category
-		self.categoriesController = categoriesController
 		super.init(nibName: nil, bundle: nil)
 	}
 

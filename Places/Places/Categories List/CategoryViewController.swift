@@ -36,12 +36,10 @@ struct GroupedItem {
 class CategoryViewController: UITableViewController {
 
 	let coordinator: PlaceListCoordinator
-	let categoryCtrl: CategoryController
 	var items = [GroupedItem]()
 	private var exportButton: UIBarButtonItem?
 
-	init(categoryCtrl: CategoryController, coordinator: PlaceListCoordinator) {
-		self.categoryCtrl = categoryCtrl
+	init(coordinator: PlaceListCoordinator) {
 		self.coordinator = coordinator
 		super.init(nibName: nil, bundle: nil)
 	}
