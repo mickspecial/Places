@@ -51,7 +51,6 @@ class PlaceCell: UICollectionViewCell {
 		button.setImage(#imageLiteral(resourceName: "marker"), for: .normal)
 		button.tintColor = Theme.current.highlight
 		button.backgroundColor = .clear
-		button.heightAnchor.constraint(equalToConstant: 80).isActive = true
 		button.widthAnchor.constraint(equalToConstant: 80).isActive = true
 		return button
 	}()
