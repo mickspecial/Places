@@ -19,7 +19,17 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 		sctrl.hidesNavigationBarDuringPresentation = false
 		sctrl.searchResultsUpdater = self
 		sctrl.searchBar.delegate = self
+		sctrl.dimsBackgroundDuringPresentation = false
 		return sctrl
+	}()
+
+	private var	searchLabel: UILabel = {
+		let label = UILabel(frame: .zero)
+		label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+		label.textAlignment = .center
+		label.textColor = Theme.current.highlight
+		label.text = "Search for location above"
+		return label
 	}()
 
 	lazy private var searchCompleter: MKLocalSearchCompleter = {
@@ -53,6 +63,8 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 		collectionView.delegate = self
 		collectionView.contentInset = .init(top: 10, left: 0, bottom: 10, right: 0)
 		collectionView.scrollIndicatorInsets = .init(top: 10, left: 0, bottom: 10, right: 0)
+		view.addSubview(searchLabel)
+		searchLabel.fillSuperview()
 	}
 
 	private func setUpNavBar() {
@@ -77,6 +89,7 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 	}
 
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		searchLabel.isHidden = !searchResults.isEmpty
 		return searchResults.count
 	}
 
