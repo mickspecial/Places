@@ -59,7 +59,7 @@ class SearchCell: UICollectionViewCell {
 		stackview.alignment = .center
 		stackview.spacing = 8
 		addSubview(stackview)
-		stackview.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 16, bottom: 0, right: 16))
+		stackview.fillSuperview(padding: .init(top: 0, left: 16, bottom: 0, right: 16))
 	}
 
 	func fillCell(_ searchResult: MKLocalSearchCompletion) {
