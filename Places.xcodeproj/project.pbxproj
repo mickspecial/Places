@@ -34,6 +34,7 @@
 		00A3F97C225964D4003EFD3B /* PlaceListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F97B225964D4003EFD3B /* PlaceListController.swift */; };
 		00A3F97E225964E4003EFD3B /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A3F97D225964E4003EFD3B /* MapViewController.swift */; };
 		00A96BCB2269B011007D4CDE /* VerticalStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A96BCA2269B011007D4CDE /* VerticalStackView.swift */; };
+		00B1C20E226A8CB6009B14E5 /* UILabel-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B1C20D226A8CB6009B14E5 /* UILabel-Extension.swift */; };
 		00B2E97E225B316D005A8DDD /* PlaceListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B2E97D225B316D005A8DDD /* PlaceListCoordinator.swift */; };
 		00B2E980225B31E9005A8DDD /* PlaceDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00B2E97F225B31E9005A8DDD /* PlaceDetailsViewController.swift */; };
 		00BA6913225B50AF00D22C41 /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00BA6912225B50AF00D22C41 /* PlaceCell.swift */; };
@@ -88,6 +89,7 @@
 		00A3F97B225964D4003EFD3B /* PlaceListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListController.swift; sourceTree = "<group>"; };
 		00A3F97D225964E4003EFD3B /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		00A96BCA2269B011007D4CDE /* VerticalStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalStackView.swift; sourceTree = "<group>"; };
+		00B1C20D226A8CB6009B14E5 /* UILabel-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel-Extension.swift"; sourceTree = "<group>"; };
 		00B2E97D225B316D005A8DDD /* PlaceListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCoordinator.swift; sourceTree = "<group>"; };
 		00B2E97F225B31E9005A8DDD /* PlaceDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsViewController.swift; sourceTree = "<group>"; };
 		00BA6912225B50AF00D22C41 /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				0051D73922613E4E0057B9B0 /* Double-Extension.swift */,
 				0051D73B22614A9E0057B9B0 /* Map-Extensions.swift */,
 				00E181F22261CE2200632F36 /* VC-Extension.swift */,
+				00B1C20D226A8CB6009B14E5 /* UILabel-Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -485,6 +488,7 @@
 				0051D73C22614A9E0057B9B0 /* Map-Extensions.swift in Sources */,
 				004E12622263DDE3006EE16F /* FindCell.swift in Sources */,
 				00495042225DC46600051498 /* SCLExtensions.swift in Sources */,
+				00B1C20E226A8CB6009B14E5 /* UILabel-Extension.swift in Sources */,
 				006C7949225AA6C3002A586A /* Place.swift in Sources */,
 				0051D73E226160530057B9B0 /* RouteDetails.swift in Sources */,
 				0051D738225FEEF60057B9B0 /* BarButton-Extension.swift in Sources */,
