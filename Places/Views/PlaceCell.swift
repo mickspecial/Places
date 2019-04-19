@@ -68,16 +68,10 @@ class PlaceCell: UICollectionViewCell {
 	weak var delegate: PlaceCellDelegate?
 
 	private func setUpView() {
-
-		let labelsStackView = UIStackView(arrangedSubviews: [
-			nameLabel, addressLabel
-		])
-
-		labelsStackView.axis = .vertical
-		labelsStackView.spacing = 10
-
 		let stackview = UIStackView(arrangedSubviews: [
-			markerImageView, labelsStackView, showOnMapBtn
+			markerImageView,
+			VerticalStackView(arrangedSubviews: [nameLabel, addressLabel], spacing: 10),
+			showOnMapBtn
 		])
 
 		stackview.alignment = .center
