@@ -121,6 +121,7 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 
 			DispatchQueue.main.async { [weak self] in
 				self?.coordinator.showDetails(item)
+				self?.searchController.searchBar.text = ""
 			}
 		}
 	}
