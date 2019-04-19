@@ -32,7 +32,6 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: cellId)
 		collectionView.dataSource = self
 		collectionView.delegate = self
-		collectionView.contentInset = .init(top: 10, left: 0, bottom: 10, right: 0)
 		navigationItem.leftBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(showCategoriesView), imageName: "bullets", size: .large)
     }
 
@@ -75,6 +74,10 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		collectionView.deselectItem(at: indexPath, animated: true)
 		let place = places[indexPath.row]
 		coordinator.showDetails(place)
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+		return .init(top: 10, left: 0, bottom: 10, right: 0)
 	}
 }
 

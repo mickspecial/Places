@@ -53,8 +53,6 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 		collectionView.register(SearchCell.self, forCellWithReuseIdentifier: cellId)
 		collectionView.dataSource = self
 		collectionView.delegate = self
-		collectionView.contentInset = .init(top: 10, left: 0, bottom: 10, right: 0)
-		collectionView.scrollIndicatorInsets = .init(top: 10, left: 0, bottom: 10, right: 0)
 		view.addSubview(searchLabel)
 		searchLabel.fillSuperview()
 		searchLabel.textAlignment = .center
@@ -114,9 +112,13 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 
 			DispatchQueue.main.async { [weak self] in
 				self?.coordinator.showDetails(item)
-				self?.searchController.searchBar.text = ""
+//				self?.searchController.searchBar.text = ""
 			}
 		}
+	}
+
+	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+		return .init(top: 10, left: 0, bottom: 10, right: 0)
 	}
 }
 
