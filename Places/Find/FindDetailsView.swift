@@ -16,7 +16,7 @@ class FindDetailsView: UIView {
 	let nameTF: UITextField = {
 		let tf = UITextField()
 		tf.textColor = .white
-		tf.heightAnchor.constraint(equalToConstant: 50).isActive = true
+		tf.constrainHeight(constant: 50)
 		return tf
 	}()
 
@@ -26,7 +26,7 @@ class FindDetailsView: UIView {
 		// remove copy paste icons
 		tf.inputAssistantItem.leadingBarButtonGroups.removeAll()
 		tf.inputAssistantItem.trailingBarButtonGroups.removeAll()
-		tf.heightAnchor.constraint(equalToConstant: 50).isActive = true
+		tf.constrainHeight(constant: 50)
 		return tf
 	}()
 
