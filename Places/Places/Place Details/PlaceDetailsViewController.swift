@@ -44,6 +44,7 @@ class PlaceDetailsViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		detailsView.nameTF.delegate = self
 		detailsView.layer.cornerRadius = 10
 		navigationController?.navigationBar.isHidden = true
 		setUpView()
@@ -111,7 +112,11 @@ class PlaceDetailsViewController: UIViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		let selectedMarker = pickerData[markerPicker.selectedRow(inComponent: 0)]
-		assert(selectedMarker.value == detailsView.categoryTF.string)
+		if selectedMarker.value != detailsView.categoryTF.string {
+			print("JUNK")
+			// pasted in junk
+			return
+		}
 		coordinator.updatePlace(place, name: detailsView.nameTF.string, category: selectedMarker.key)
 	}
 
@@ -152,5 +157,13 @@ extension PlaceDetailsViewController: UIPickerViewDelegate, UIPickerViewDataSour
 
 	func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
 		return User.current.categories.count
+	}
+}
+
+extension PlaceDetailsViewController: UITextFieldDelegate {
+
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.endEditing(true)
+		return true
 	}
 }

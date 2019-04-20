@@ -16,6 +16,7 @@ class PlaceDetailsView: UIView {
 	let nameTF: UITextField = {
 		let tf = UITextField()
 		tf.textColor = .white
+		tf.returnKeyType = .done
 		tf.constrainHeight(constant: 50)
 		return tf
 	}()
@@ -51,7 +52,6 @@ class PlaceDetailsView: UIView {
 	}
 
 	private func setupView() {
-
 		mapView = MKMapView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 		mapView.isUserInteractionEnabled = false
 
