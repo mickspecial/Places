@@ -8,6 +8,12 @@
 
 import UIKit
 
+extension PlaceListController: PlaceDetailsViewControllerDelegate {
+	func dismissChildViewController() {
+		dismissAnimateFromScreen()
+	}
+}
+
 class PlaceListController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
 	let coordinator: PlaceListCoordinator
@@ -93,8 +99,8 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 	func setUpDetailsVCScreen(_ indexPath: IndexPath) {
 		let place = places[indexPath.row]
 		childVC = coordinator.showDetailsVC(place)
-		childVC?.parentViewCtrl = self
-		childVC?.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellWasTapped)))
+		childVC?.delegate = self
+		childVC?.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissAnimateFromScreen)))
 	}
 
 	var anchoredConstraints: AnchoredConstraints?
@@ -119,14 +125,10 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		}, completion: nil)
 	}
 
-	@objc func cellWasTapped() {
-		navigationController?.navigationBar.isHidden = false
-		dismissAnimateFromScreen()
-	}
-
-	func dismissAnimateFromScreen() {
+	@objc func dismissAnimateFromScreen() {
 		guard let startingPoint = self.startingFrame else { return }
 		guard let vc = self.childVC else { return }
+		navigationController?.navigationBar.isHidden = false
 		vc.makeScreenBlack()
 
 		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {

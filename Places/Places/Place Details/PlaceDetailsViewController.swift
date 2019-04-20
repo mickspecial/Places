@@ -9,6 +9,10 @@
 import UIKit
 import MapKit
 
+protocol PlaceDetailsViewControllerDelegate: AnyObject {
+	func dismissChildViewController()
+}
+
 class PlaceDetailsViewController: UIViewController {
 
 	private let detailsView = PlaceDetailsView()
@@ -17,7 +21,7 @@ class PlaceDetailsViewController: UIViewController {
 	let markerPicker = UIPickerView()
 	var pickerData = [(key: MarkerColor, value: String)]()
 	var markerColor: MarkerColor!
-	weak var parentViewCtrl: PlaceListController?
+	weak var delegate: PlaceDetailsViewControllerDelegate?
 
 	init(coordinator: PlaceListCoordinator, place: Place) {
 		self.coordinator = coordinator
@@ -38,9 +42,6 @@ class PlaceDetailsViewController: UIViewController {
 		detailsView.subviews.forEach { (view) in
 			view.isHidden = true
 		}
-
-//		detailsView.backgroundColor = Theme.current.cellDark
-//		detailsView.layer.cornerRadius = 10
 	}
 
 	override func viewDidLoad() {
@@ -110,13 +111,13 @@ class PlaceDetailsViewController: UIViewController {
 	@objc func deletePlace() {
 		let alert = SCLAlertView(appearance: AlertService.standardNoCloseButtonH)
 
-		alert.addButton("Delete") {
-			self.coordinator.deletePlace(self.place)
-			self.parentViewCtrl?.cellWasTapped()
-		}
-
 		alert.addButton("Cancel", backgroundColor: Theme.current.cellDark, textColor: .white, showTimeout: nil) {
 			return
+		}
+
+		alert.addButton("Delete") {
+			guard let delegate = self.delegate else { return }
+			self.coordinator.deletePlace(self.place, delegate: delegate)
 		}
 
 		alert.showError("Delete Place?")
@@ -126,7 +127,6 @@ class PlaceDetailsViewController: UIViewController {
 		super.viewWillDisappear(animated)
 		let selectedMarker = pickerData[markerPicker.selectedRow(inComponent: 0)]
 		if selectedMarker.value != detailsView.categoryTF.string {
-			print("JUNK")
 			// pasted in junk
 			return
 		}

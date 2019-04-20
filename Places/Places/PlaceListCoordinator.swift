@@ -26,11 +26,6 @@ class PlaceListCoordinator: Coordinator {
 		navigationController.viewControllers = [home]
 	}
 
-//	func showDetails(_ place: Place) {
-//		let homeVC = PlaceDetailsViewController(coordinator: self, place: place)
-//		navigationController.pushViewController(homeVC, animated: true)
-//	}
-
 	func showDetailsVC(_ place: Place) -> PlaceDetailsViewController {
 		let homeVC = PlaceDetailsViewController(coordinator: self, place: place)
 		return homeVC
@@ -40,10 +35,9 @@ class PlaceListCoordinator: Coordinator {
 		tabCtrl.changeTabZoomToPlace(place: place)
 	}
 
-	func deletePlace(_ place: Place) {
-		print("Delete - \(place.name)")
+	func deletePlace(_ place: Place, delegate: PlaceDetailsViewControllerDelegate) {
 		User.current.markAsDeletedPlace(place)
-		//navigationController.popViewController(animated: true)
+		delegate.dismissChildViewController()
 	}
 
 	func showCategories() {
@@ -56,7 +50,6 @@ class PlaceListCoordinator: Coordinator {
 			return
 		}
 
-		print("Update - \(place.name)")
 		User.current.updatePlace(place: place, name: name, category: category)
 	}
 
