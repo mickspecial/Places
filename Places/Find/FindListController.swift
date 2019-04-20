@@ -75,8 +75,6 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-		if searchResults.isEmpty { return }
-		collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
 		searchController.searchBar.becomeFirstResponder()
 	}
 
