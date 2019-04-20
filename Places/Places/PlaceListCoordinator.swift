@@ -31,6 +31,11 @@ class PlaceListCoordinator: Coordinator {
 		navigationController.pushViewController(homeVC, animated: true)
 	}
 
+	func showDetailsVC(_ place: Place) -> UIViewController {
+		let homeVC = PlaceDetailsViewController(coordinator: self, place: place)
+		return homeVC
+	}
+
 	func showOnMap(_ place: Place) {
 		tabCtrl.changeTabZoomToPlace(place: place)
 	}

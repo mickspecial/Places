@@ -9,19 +9,6 @@
 import UIKit
 import MapKit
 
-class PlaceDetailsTVC: UITableViewController {
-
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		view.backgroundColor = .red
-	}
-
-//	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//		return
-//	}
-
-}
-
 class PlaceDetailsViewController: UIViewController {
 
 	private let detailsView = PlaceDetailsView()

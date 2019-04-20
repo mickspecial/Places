@@ -72,6 +72,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		return CGSize(width: view.frame.width - 20, height: 60)
 	}
 
+	var childVC: UIViewController?
 	var startingFrame: CGRect?
 	var topCons: NSLayoutConstraint?
 	var leadCons: NSLayoutConstraint?
@@ -89,16 +90,18 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		guard let startingFrame = self.startingFrame else { return }
 
 		// add cell
-		let redCell = UIView()
-		redCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellWasTapped)))
-		view.addSubview(redCell)
-		redCell.backgroundColor = .red
-		redCell.translatesAutoresizingMaskIntoConstraints = false
+		let place = places[indexPath.row]
+		//coordinator.showDetails(place)
+		childVC = coordinator.showDetailsVC(place)
+		addChildToVC(childVC!)
+		childVC?.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellWasTapped)))
 
-		topCons = redCell.topAnchor.constraint(equalTo: view.topAnchor, constant: startingFrame.origin.y)
-		leadCons = redCell.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startingFrame.origin.x)
-		widthCons = redCell.widthAnchor.constraint(equalToConstant: startingFrame.width)
-		heightCons = redCell.heightAnchor.constraint(equalToConstant: startingFrame.height)
+		childVC?.view.translatesAutoresizingMaskIntoConstraints = false
+
+		topCons = childVC?.view.topAnchor.constraint(equalTo: view.topAnchor, constant: startingFrame.origin.y)
+		leadCons = childVC?.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startingFrame.origin.x)
+		widthCons = childVC?.view.widthAnchor.constraint(equalToConstant: startingFrame.width)
+		heightCons = childVC?.view.heightAnchor.constraint(equalToConstant: startingFrame.height)
 
 		[topCons, leadCons, widthCons, heightCons].forEach({ $0?.isActive = true })
 		self.view.layoutIfNeeded()
@@ -119,7 +122,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 	}
 
 	@objc func cellWasTapped(gesture: UITapGestureRecognizer) {
-		guard let startingPoint = self.startingFrame, let view = gesture.view else { return }
+		guard let startingPoint = self.startingFrame else { return }
 		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
 			self.topCons?.constant = startingPoint.origin.y
 			self.leadCons?.constant = startingPoint.origin.x
@@ -128,7 +131,8 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 			self.view.layoutIfNeeded()
 			self.tabBarController?.tabBar.transform = .identity
 		}, completion: { _ in
-			view.removeFromSuperview()
+			guard let vc = self.childVC else { return }
+			vc.removeChildFromVC()
 		})
 	}
 
@@ -140,5 +144,20 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 extension PlaceListController: PlaceCellDelegate {
 	func placeCellMapPressed(place: Place) {
 		coordinator.showOnMap(place)
+	}
+}
+
+@nonobjc extension UIViewController {
+
+	func addChildToVC(_ child: UIViewController) {
+		addChild(child)
+		view.addSubview(child.view)
+		child.didMove(toParent: self)
+	}
+
+	func removeChildFromVC() {
+		willMove(toParent: nil)
+		view.removeFromSuperview()
+		removeFromParent()
 	}
 }
