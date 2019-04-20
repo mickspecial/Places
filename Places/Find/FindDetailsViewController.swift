@@ -46,6 +46,7 @@ class FindDetailsViewController: UIViewController {
 	}
 
 	private func setUpView() {
+		detailsView.nameTF.delegate = self
 		view.backgroundColor = Theme.current.primary
 		title = item.name ?? ""
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(savePlace))
@@ -137,5 +138,10 @@ extension FindDetailsViewController: UITextFieldDelegate {
 			detailsView.categoryTF.text = pickerData.first!.value
 			selectedMarker = pickerData.first!.key
 		}
+	}
+
+	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		textField.endEditing(true)
+		return true
 	}
 }

@@ -16,6 +16,7 @@ class FindDetailsView: UIView {
 	let nameTF: UITextField = {
 		let tf = UITextField()
 		tf.textColor = .white
+		tf.returnKeyType = .done
 		tf.constrainHeight(constant: 50)
 		return tf
 	}()
