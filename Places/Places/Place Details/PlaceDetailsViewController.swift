@@ -9,6 +9,19 @@
 import UIKit
 import MapKit
 
+class PlaceDetailsTVC: UITableViewController {
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		view.backgroundColor = .red
+	}
+
+//	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//		return
+//	}
+
+}
+
 class PlaceDetailsViewController: UIViewController {
 
 	private let detailsView = PlaceDetailsView()
@@ -62,6 +75,11 @@ class PlaceDetailsViewController: UIViewController {
 		title = place.name
 		detailsView.deleteButton.addTarget(self, action: #selector(deletePlace), for: .touchUpInside)
 		detailsView.mapView.delegate = self
+	}
+
+	func removeMap() {
+		detailsView.mapView.removeConstraints(detailsView.mapView.constraints)
+		detailsView.mapView.constrainHeight(constant: 1)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {

@@ -22,7 +22,7 @@ class MainTabBarController: UITabBarController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		tabBar.isTranslucent = false
+		tabBar.isTranslucent = true
 
 		// set up controllers with user data
 		// placesController.addTestData()

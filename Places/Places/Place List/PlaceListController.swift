@@ -28,6 +28,8 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
     override func viewDidLoad() {
         super.viewDidLoad()
 		collectionView.backgroundColor = Theme.current.primary
+		view.backgroundColor = Theme.current.primary
+
 		title = "Places"
 		collectionView.register(PlaceCell.self, forCellWithReuseIdentifier: cellId)
 		collectionView.dataSource = self
@@ -70,10 +72,42 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		return CGSize(width: view.frame.width - 20, height: 60)
 	}
 
+	var startingFrame: CGRect?
+
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		collectionView.deselectItem(at: indexPath, animated: true)
-		let place = places[indexPath.row]
-		coordinator.showDetails(place)
+
+		// set starting frame
+		guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+		// guard let fullScreen = cell.superview?.convert(cell.frame, to: nil) else { return }
+		self.startingFrame = cell.frame
+
+		// add cell
+		let redCell = UIView()
+		redCell.frame = cell.frame
+		redCell.backgroundColor = .red
+		redCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellWasTapped)))
+		view.addSubview(redCell)
+
+		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+			redCell.frame = self.collectionView.frame
+			self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
+		}, completion: { _ in
+			print("Animation Ended")
+		})
+
+		//let place = places[indexPath.row]
+		//coordinator.showDetails(place)
+	}
+
+	@objc func cellWasTapped(gesture: UITapGestureRecognizer) {
+		guard let startingPoint = self.startingFrame, let view = gesture.view else { return }
+		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+			view.frame = startingPoint
+			self.tabBarController?.tabBar.transform = .identity
+		}, completion: { _ in
+			view.removeFromSuperview()
+		})
 	}
 
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
