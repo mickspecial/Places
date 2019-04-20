@@ -31,7 +31,7 @@ class PlaceListCoordinator: Coordinator {
 //		navigationController.pushViewController(homeVC, animated: true)
 //	}
 
-	func showDetailsVC(_ place: Place) -> UIViewController {
+	func showDetailsVC(_ place: Place) -> PlaceDetailsViewController {
 		let homeVC = PlaceDetailsViewController(coordinator: self, place: place)
 		return homeVC
 	}
@@ -43,7 +43,7 @@ class PlaceListCoordinator: Coordinator {
 	func deletePlace(_ place: Place) {
 		print("Delete - \(place.name)")
 		User.current.markAsDeletedPlace(place)
-		navigationController.popViewController(animated: true)
+		//navigationController.popViewController(animated: true)
 	}
 
 	func showCategories() {

@@ -72,7 +72,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		return CGSize(width: view.frame.width - 20, height: 60)
 	}
 
-	var childVC: UIViewController?
+	var childVC: PlaceDetailsViewController?
 	var startingFrame: CGRect?
 	var topCons: NSLayoutConstraint?
 	var leadCons: NSLayoutConstraint?
@@ -92,6 +92,7 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		// add cell
 		let place = places[indexPath.row]
 		childVC = coordinator.showDetailsVC(place)
+		childVC?.parentViewCtrl = self
 		addChildToVC(childVC!)
 		childVC?.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellWasTapped)))
 
@@ -116,9 +117,9 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		}, completion: nil)
 	}
 
-	@objc func cellWasTapped(gesture: UITapGestureRecognizer) {
+	@objc func cellWasTapped() {
 		guard let startingPoint = self.startingFrame else { return }
-		guard let vc = self.childVC as? PlaceDetailsViewController else { return }
+		guard let vc = self.childVC else { return }
 		vc.makeScreenBlack()
 		navigationController?.navigationBar.isHidden = false
 

@@ -17,6 +17,7 @@ class PlaceDetailsViewController: UIViewController {
 	let markerPicker = UIPickerView()
 	var pickerData = [(key: MarkerColor, value: String)]()
 	var markerColor: MarkerColor!
+	weak var parentViewCtrl: PlaceListController?
 
 	init(coordinator: PlaceListCoordinator, place: Place) {
 		self.coordinator = coordinator
@@ -100,6 +101,7 @@ class PlaceDetailsViewController: UIViewController {
 
 		alert.addButton("Delete") {
 			self.coordinator.deletePlace(self.place)
+			self.parentViewCtrl?.cellWasTapped()
 		}
 
 		alert.addButton("Cancel", backgroundColor: Theme.current.cellDark, textColor: .white, showTimeout: nil) {
