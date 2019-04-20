@@ -80,7 +80,7 @@ class CategoryViewController: UITableViewController {
 
 		if let encodedUser = try? encoder.encode(User.current!) {
 			let dataseturl = exportToFileURL(data: encodedUser)
-			let activityViewController = UIActivityViewController(activityItems: ["Export Data", dataseturl], applicationActivities: nil)
+			let activityViewController = UIActivityViewController(activityItems: [dataseturl], applicationActivities: nil)
 
 			if let popoverPresentationController = activityViewController.popoverPresentationController {
 				popoverPresentationController.barButtonItem = exportButton
