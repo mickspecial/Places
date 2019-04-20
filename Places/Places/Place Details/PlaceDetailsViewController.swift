@@ -33,6 +33,15 @@ class PlaceDetailsViewController: UIViewController {
 		view.endEditing(true)
 	}
 
+	@objc func makeScreenBlack() {
+		detailsView.subviews.forEach { (view) in
+			view.isHidden = true
+		}
+
+		detailsView.backgroundColor = Theme.current.cellDark
+		detailsView.layer.cornerRadius = 10
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setUpView()
@@ -85,17 +94,20 @@ class PlaceDetailsViewController: UIViewController {
 	}
 
 	@objc func deletePlace() {
-		let alert = SCLAlertView(appearance: AlertService.standardNoCloseButtonH)
 
-		alert.addButton("Delete") {
-			self.coordinator.deletePlace(self.place)
-		}
+		makeScreenBlack()
 
-		alert.addButton("Cancel", backgroundColor: Theme.current.cellDark, textColor: .white, showTimeout: nil) {
-			return
-		}
-
-		alert.showError("Delete Place?")
+//		let alert = SCLAlertView(appearance: AlertService.standardNoCloseButtonH)
+//
+//		alert.addButton("Delete") {
+//			self.coordinator.deletePlace(self.place)
+//		}
+//
+//		alert.addButton("Cancel", backgroundColor: Theme.current.cellDark, textColor: .white, showTimeout: nil) {
+//			return
+//		}
+//
+//		alert.showError("Delete Place?")
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {

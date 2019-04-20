@@ -123,7 +123,11 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 
 	@objc func cellWasTapped(gesture: UITapGestureRecognizer) {
 		guard let startingPoint = self.startingFrame else { return }
+		guard let vc = self.childVC as? PlaceDetailsViewController else { return }
+		vc.makeScreenBlack()
+
 		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+			vc.view.alpha = 0.3
 			self.topCons?.constant = startingPoint.origin.y
 			self.leadCons?.constant = startingPoint.origin.x
 			self.heightCons?.constant = startingPoint.height
@@ -131,7 +135,6 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 			self.view.layoutIfNeeded()
 			self.tabBarController?.tabBar.transform = .identity
 		}, completion: { _ in
-			guard let vc = self.childVC else { return }
 			vc.removeChildFromVC()
 		})
 	}
