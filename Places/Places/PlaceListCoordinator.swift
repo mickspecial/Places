@@ -26,10 +26,10 @@ class PlaceListCoordinator: Coordinator {
 		navigationController.viewControllers = [home]
 	}
 
-	func showDetails(_ place: Place) {
-		let homeVC = PlaceDetailsViewController(coordinator: self, place: place)
-		navigationController.pushViewController(homeVC, animated: true)
-	}
+//	func showDetails(_ place: Place) {
+//		let homeVC = PlaceDetailsViewController(coordinator: self, place: place)
+//		navigationController.pushViewController(homeVC, animated: true)
+//	}
 
 	func showDetailsVC(_ place: Place) -> UIViewController {
 		let homeVC = PlaceDetailsViewController(coordinator: self, place: place)

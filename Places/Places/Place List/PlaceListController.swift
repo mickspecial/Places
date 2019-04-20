@@ -91,7 +91,6 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 
 		// add cell
 		let place = places[indexPath.row]
-		//coordinator.showDetails(place)
 		childVC = coordinator.showDetailsVC(place)
 		addChildToVC(childVC!)
 		childVC?.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellWasTapped)))
@@ -109,33 +108,35 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
 			self.topCons?.constant = 0
 			self.leadCons?.constant = 0
-			self.heightCons?.constant = self.view.frame.height
+			self.heightCons?.constant = self.view.superview?.frame.height ?? 0
 			self.widthCons?.constant = self.view.frame.width
 			self.view.layoutIfNeeded()
 			self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
-		}, completion: { _ in
-			print("Animation Ended")
-		})
-
-		//let place = places[indexPath.row]
-		//coordinator.showDetails(place)
+			self.navigationController?.navigationBar.transform = CGAffineTransform(translationX: 0, y: -200)
+		}, completion: nil)
 	}
 
 	@objc func cellWasTapped(gesture: UITapGestureRecognizer) {
 		guard let startingPoint = self.startingFrame else { return }
 		guard let vc = self.childVC as? PlaceDetailsViewController else { return }
 		vc.makeScreenBlack()
+		navigationController?.navigationBar.isHidden = false
 
 		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
-			vc.view.alpha = 0.3
+			vc.view.alpha = 0
 			self.topCons?.constant = startingPoint.origin.y
 			self.leadCons?.constant = startingPoint.origin.x
 			self.heightCons?.constant = startingPoint.height
 			self.widthCons?.constant = startingPoint.width
 			self.view.layoutIfNeeded()
 			self.tabBarController?.tabBar.transform = .identity
+			self.navigationController?.navigationBar.transform = .identity
+
 		}, completion: { _ in
 			vc.removeChildFromVC()
+			DispatchQueue.main.async {
+				self.prepareData()
+			}
 		})
 	}
 

@@ -56,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		tabBarController = MainTabBarController()
 		window = UIWindow(frame: UIScreen.main.bounds)
+		window?.backgroundColor = Theme.current.primary
 		window?.rootViewController = tabBarController
 		window?.tintColor = .darkGray
 		window?.makeKeyAndVisible()

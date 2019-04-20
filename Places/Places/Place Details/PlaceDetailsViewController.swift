@@ -38,14 +38,15 @@ class PlaceDetailsViewController: UIViewController {
 			view.isHidden = true
 		}
 
-		detailsView.backgroundColor = Theme.current.cellDark
-		detailsView.layer.cornerRadius = 10
+//		detailsView.backgroundColor = Theme.current.cellDark
+//		detailsView.layer.cornerRadius = 10
 	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		detailsView.layer.cornerRadius = 10
+		navigationController?.navigationBar.isHidden = true
 		setUpView()
-
 		// convert dict to tuple so can easily manage data
 		pickerData = User.current.categories.map { (key: MarkerColor, value: String) in
 			return (key, value)
@@ -67,7 +68,7 @@ class PlaceDetailsViewController: UIViewController {
 	}
 
 	private func setUpView() {
-		view.backgroundColor = Theme.current.primary
+		view.backgroundColor = Theme.current.primaryDark
 		title = place.name
 		detailsView.deleteButton.addTarget(self, action: #selector(deletePlace), for: .touchUpInside)
 		detailsView.mapView.delegate = self
@@ -94,20 +95,17 @@ class PlaceDetailsViewController: UIViewController {
 	}
 
 	@objc func deletePlace() {
+		let alert = SCLAlertView(appearance: AlertService.standardNoCloseButtonH)
 
-		makeScreenBlack()
+		alert.addButton("Delete") {
+			self.coordinator.deletePlace(self.place)
+		}
 
-//		let alert = SCLAlertView(appearance: AlertService.standardNoCloseButtonH)
-//
-//		alert.addButton("Delete") {
-//			self.coordinator.deletePlace(self.place)
-//		}
-//
-//		alert.addButton("Cancel", backgroundColor: Theme.current.cellDark, textColor: .white, showTimeout: nil) {
-//			return
-//		}
-//
-//		alert.showError("Delete Place?")
+		alert.addButton("Cancel", backgroundColor: Theme.current.cellDark, textColor: .white, showTimeout: nil) {
+			return
+		}
+
+		alert.showError("Delete Place?")
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
