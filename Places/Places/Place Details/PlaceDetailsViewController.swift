@@ -96,7 +96,7 @@ class PlaceDetailsViewController: UIViewController {
 			self.detailsView.mapHeightCons?.constant = 300
 			self.detailsView.layoutIfNeeded()
 		}, completion: { _ in
-
+			// nil
 		})
 	}
 

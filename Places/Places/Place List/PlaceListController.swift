@@ -81,39 +81,38 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		collectionView.deselectItem(at: indexPath, animated: true)
+		showDetailsVC(indexPath)
+	}
 
-		// set starting frame
-		guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-		// guard let fullScreen = cell.superview?.convert(cell.frame, to: nil) else { return }
+	func showDetailsVC(_ indexPath: IndexPath) {
+		setUpDetailsVCScreen(indexPath)
+		setUpDetailsStartingPostition(indexPath)
+		animateToScreen()
+	}
 
-		self.startingFrame = cell.frame
-		guard let startingFrame = self.startingFrame else { return }
-
-		// add cell
+	func setUpDetailsVCScreen(_ indexPath: IndexPath) {
 		let place = places[indexPath.row]
 		childVC = coordinator.showDetailsVC(place)
 		childVC?.parentViewCtrl = self
-		addChildToVC(childVC!)
 		childVC?.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellWasTapped)))
+	}
 
-		childVC?.view.translatesAutoresizingMaskIntoConstraints = false
+	var anchoredConstraints: AnchoredConstraints?
 
-		topCons = childVC?.view.topAnchor.constraint(equalTo: view.topAnchor, constant: startingFrame.origin.y)
-		leadCons = childVC?.view.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startingFrame.origin.x)
-		widthCons = childVC?.view.widthAnchor.constraint(equalToConstant: startingFrame.width)
-		heightCons = childVC?.view.heightAnchor.constraint(equalToConstant: startingFrame.height)
-
-		[topCons, leadCons, widthCons, heightCons].forEach({ $0?.isActive = true })
-		self.view.layoutIfNeeded()
-		animateToScreen()
+	func setUpDetailsStartingPostition(_ indexPath: IndexPath) {
+		guard let cell = collectionView.cellForItem(at: indexPath), let childVC = childVC, let sv = view.superview else { return }
+		addChildToVC(childVC)
+		startingFrame = cell.frame
+		anchoredConstraints = childVC.view.anchor(top: sv.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, padding: .init(top: startingFrame!.origin.y, left: startingFrame!.origin.x, bottom: 0, right: 0), size: .init(width: startingFrame!.width, height: startingFrame!.height))
+		view.layoutIfNeeded()
 	}
 
 	func animateToScreen() {
 		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
-			self.topCons?.constant = 0
-			self.leadCons?.constant = 0
-			self.heightCons?.constant = self.view.superview?.frame.height ?? 0
-			self.widthCons?.constant = self.view.frame.width
+			self.anchoredConstraints?.top?.constant = 0
+			self.anchoredConstraints?.leading?.constant = 0
+			self.anchoredConstraints?.height?.constant = self.view.superview?.frame.height ?? 0
+			self.anchoredConstraints?.width?.constant = self.view.frame.width
 			self.view.layoutIfNeeded()
 			self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
 			self.navigationController?.navigationBar.transform = CGAffineTransform(translationX: 0, y: -200)
@@ -121,17 +120,21 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 	}
 
 	@objc func cellWasTapped() {
+		navigationController?.navigationBar.isHidden = false
+		dismissAnimateFromScreen()
+	}
+
+	func dismissAnimateFromScreen() {
 		guard let startingPoint = self.startingFrame else { return }
 		guard let vc = self.childVC else { return }
 		vc.makeScreenBlack()
-		navigationController?.navigationBar.isHidden = false
 
 		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
 			vc.view.alpha = 0
-			self.topCons?.constant = startingPoint.origin.y
-			self.leadCons?.constant = startingPoint.origin.x
-			self.heightCons?.constant = startingPoint.height
-			self.widthCons?.constant = startingPoint.width
+			self.anchoredConstraints?.top?.constant = startingPoint.origin.y
+			self.anchoredConstraints?.leading?.constant = startingPoint.origin.x
+			self.anchoredConstraints?.height?.constant = startingPoint.height
+			self.anchoredConstraints?.width?.constant = startingPoint.width
 			self.view.layoutIfNeeded()
 			self.tabBarController?.tabBar.transform = .identity
 			self.navigationController?.navigationBar.transform = .identity
