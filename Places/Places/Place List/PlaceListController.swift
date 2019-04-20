@@ -73,6 +73,10 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 	}
 
 	var startingFrame: CGRect?
+	var topCons: NSLayoutConstraint?
+	var leadCons: NSLayoutConstraint?
+	var widthCons: NSLayoutConstraint?
+	var heightCons: NSLayoutConstraint?
 
 	override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 		collectionView.deselectItem(at: indexPath, animated: true)
@@ -91,19 +95,19 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		redCell.backgroundColor = .red
 		redCell.translatesAutoresizingMaskIntoConstraints = false
 
-		let topCons = redCell.topAnchor.constraint(equalTo: view.topAnchor, constant: startingFrame.origin.y)
-		let leadCons = redCell.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startingFrame.origin.x)
-		let widthCons = redCell.widthAnchor.constraint(equalToConstant: startingFrame.width)
-		let heightCons = redCell.heightAnchor.constraint(equalToConstant: startingFrame.height)
+		topCons = redCell.topAnchor.constraint(equalTo: view.topAnchor, constant: startingFrame.origin.y)
+		leadCons = redCell.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startingFrame.origin.x)
+		widthCons = redCell.widthAnchor.constraint(equalToConstant: startingFrame.width)
+		heightCons = redCell.heightAnchor.constraint(equalToConstant: startingFrame.height)
 
-		[topCons, leadCons, widthCons, heightCons].forEach({ $0.isActive = true })
+		[topCons, leadCons, widthCons, heightCons].forEach({ $0?.isActive = true })
 		self.view.layoutIfNeeded()
 
 		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
-			topCons.constant = 0
-			leadCons.constant = 0
-			heightCons.constant = self.view.frame.height
-			widthCons.constant = self.view.frame.width
+			self.topCons?.constant = 0
+			self.leadCons?.constant = 0
+			self.heightCons?.constant = self.view.frame.height
+			self.widthCons?.constant = self.view.frame.width
 			self.view.layoutIfNeeded()
 			self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
 		}, completion: { _ in
@@ -117,7 +121,11 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 	@objc func cellWasTapped(gesture: UITapGestureRecognizer) {
 		guard let startingPoint = self.startingFrame, let view = gesture.view else { return }
 		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
-			view.frame = startingPoint
+			self.topCons?.constant = startingPoint.origin.y
+			self.leadCons?.constant = startingPoint.origin.x
+			self.heightCons?.constant = startingPoint.height
+			self.widthCons?.constant = startingPoint.width
+			self.view.layoutIfNeeded()
 			self.tabBarController?.tabBar.transform = .identity
 		}, completion: { _ in
 			view.removeFromSuperview()
