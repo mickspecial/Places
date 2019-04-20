@@ -61,7 +61,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
 		let places = mapView.annotations.compactMap({ $0 as? Place })
 		if let zoomTo = places.first(where: { $0.id == place.id }) {
-			//mapView.showAnnotations([zoomTo], animated: true)
+			mapView.showAnnotations([zoomTo], animated: true)
 			mapView.selectAnnotation(zoomTo, animated: true)
 		}
 	}
