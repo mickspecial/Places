@@ -27,6 +27,15 @@ class PlaceCell: UICollectionViewCell {
 		}
 	}
 
+	override var isHighlighted: Bool {
+		didSet {
+			let tf: CGAffineTransform = isHighlighted ? .init(scaleX: 0.95, y: 0.95) : .identity
+			UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+				self.transform = tf
+			}, completion: nil)
+		}
+	}
+
 	private var	nameLabel = UILabel(text: "Name", font: .systemFont(ofSize: 16, weight: .bold), textColor: .white)
 	private var	addressLabel = UILabel(text: "", font: .systemFont(ofSize: 10, weight: .bold), textColor: .white)
 
