@@ -80,17 +80,31 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		// set starting frame
 		guard let cell = collectionView.cellForItem(at: indexPath) else { return }
 		// guard let fullScreen = cell.superview?.convert(cell.frame, to: nil) else { return }
+
 		self.startingFrame = cell.frame
+		guard let startingFrame = self.startingFrame else { return }
 
 		// add cell
 		let redCell = UIView()
-		redCell.frame = cell.frame
-		redCell.backgroundColor = .red
 		redCell.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cellWasTapped)))
 		view.addSubview(redCell)
+		redCell.backgroundColor = .red
+		redCell.translatesAutoresizingMaskIntoConstraints = false
+
+		let topCons = redCell.topAnchor.constraint(equalTo: view.topAnchor, constant: startingFrame.origin.y)
+		let leadCons = redCell.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: startingFrame.origin.x)
+		let widthCons = redCell.widthAnchor.constraint(equalToConstant: startingFrame.width)
+		let heightCons = redCell.heightAnchor.constraint(equalToConstant: startingFrame.height)
+
+		[topCons, leadCons, widthCons, heightCons].forEach({ $0.isActive = true })
+		self.view.layoutIfNeeded()
 
 		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
-			redCell.frame = self.collectionView.frame
+			topCons.constant = 0
+			leadCons.constant = 0
+			heightCons.constant = self.view.frame.height
+			widthCons.constant = self.view.frame.width
+			self.view.layoutIfNeeded()
 			self.tabBarController?.tabBar.transform = CGAffineTransform(translationX: 0, y: 100)
 		}, completion: { _ in
 			print("Animation Ended")
