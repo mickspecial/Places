@@ -105,7 +105,10 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 
 		[topCons, leadCons, widthCons, heightCons].forEach({ $0?.isActive = true })
 		self.view.layoutIfNeeded()
+		animateToScreen()
+	}
 
+	func animateToScreen() {
 		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
 			self.topCons?.constant = 0
 			self.leadCons?.constant = 0

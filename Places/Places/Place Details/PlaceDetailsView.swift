@@ -51,6 +51,8 @@ class PlaceDetailsView: UIView {
 		setupView()
 	}
 
+	var mapHeightCons: NSLayoutConstraint?
+
 	private func setupView() {
 		mapView = MKMapView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 		mapView.isUserInteractionEnabled = false
@@ -61,7 +63,12 @@ class PlaceDetailsView: UIView {
 		addSubview(categoryTF)
 		addSubview(categoryLabel)
 		addSubview(deleteButton)
-		mapView.constrainHeight(constant: 300)
+
+		mapView.translatesAutoresizingMaskIntoConstraints = false
+		mapHeightCons = mapView.heightAnchor.constraint(equalToConstant: 0)
+		mapHeightCons?.isActive = true
+
+		//mapView.constrainHeight(constant: 60)
 		mapView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor)
 		nameLabel.anchor(top: mapView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
 		nameTF.anchor(top: nameLabel.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 10, bottom: 0, right: 10))

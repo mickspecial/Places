@@ -83,10 +83,21 @@ class PlaceDetailsViewController: UIViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		detailsView.mapView.addAnnotation(place)
-		detailsView.mapView.showAnnotations([place], animated: false)
+		self.detailsView.mapView.addAnnotation(self.place)
+		self.detailsView.mapView.showAnnotations([self.place], animated: true)
 		detailsView.nameTF.text = place.name
 		detailsView.categoryTF.text = User.current.categories[place.category]
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		UIView.animate(withDuration: 0.7, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.7, options: .curveEaseOut, animations: {
+			self.detailsView.mapHeightCons?.constant = 300
+			self.detailsView.layoutIfNeeded()
+		}, completion: { _ in
+
+		})
 	}
 
 	@objc func goToPlace() {
