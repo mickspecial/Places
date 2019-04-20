@@ -54,7 +54,8 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 		collectionView.dataSource = self
 		collectionView.delegate = self
 		view.addSubview(searchLabel)
-		searchLabel.fillSuperview()
+		searchLabel.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0))
+		searchLabel.centerXInSuperview()
 		searchLabel.textAlignment = .center
 	}
 
