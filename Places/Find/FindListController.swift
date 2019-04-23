@@ -57,6 +57,13 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 		searchLabel.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0))
 		searchLabel.centerXInSuperview()
 		searchLabel.textAlignment = .center
+		let tappableView = UIView(frame: collectionView.bounds)
+		collectionView.backgroundView = tappableView
+		collectionView.backgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapDismiss)))
+	}
+
+	@objc func tapDismiss() {
+		searchController.searchBar.endEditing(true)
 	}
 
 	private func setUpNavBar() {
@@ -119,11 +126,20 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 	func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
 		return .init(top: 10, left: 0, bottom: 10, right: 0)
 	}
+
+	private func updateTitle() {
+		title = searchCompleter.isSearching ? "Add Location ⏳" : "Add Location"
+	}
 }
 
 extension FindListController: UISearchBarDelegate {
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		searchCompleter.queryFragment = searchText
+		if let text = searchBar.text, text.isEmpty {
+			searchCompleter.cancel()
+		} else {
+			searchCompleter.queryFragment = searchText
+		}
+		updateTitle()
 	}
 }
 
@@ -131,6 +147,7 @@ extension FindListController: MKLocalSearchCompleterDelegate {
 	func completerDidUpdateResults(_ completer: MKLocalSearchCompleter) {
 		searchResults = completer.results
 		collectionView.reloadData()
+		updateTitle()
 	}
 }
 
