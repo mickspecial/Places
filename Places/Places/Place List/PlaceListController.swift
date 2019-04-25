@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Lottie
 
 extension PlaceListController: PlaceDetailsViewControllerDelegate {
 	func dismissChildViewController() {
@@ -18,7 +19,15 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 
 	let coordinator: PlaceListCoordinator
 	private let cellId = "cellId"
-	private var places = [Place]()
+	private var places = [Place]() {
+		didSet {
+			addLabel.isHidden = !places.isEmpty
+			markerAnimation.isHidden = !places.isEmpty
+		}
+	}
+
+	var addLabel = UILabel(text: "Add locations in seach tab", font: .systemFont(ofSize: 20), textColor: Theme.current.highlight)
+	let markerAnimation = AnimationView(name: "place")
 
 	init(coordinator: PlaceListCoordinator) {
 		self.coordinator = coordinator
@@ -41,7 +50,21 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 		collectionView.dataSource = self
 		collectionView.delegate = self
 		navigationItem.leftBarButtonItem = UIBarButtonItem.menuButton(self, action: #selector(showCategoriesView), imageName: "bullets", size: .large)
+		addInfoToBackground()
     }
+
+	func addInfoToBackground() {
+		view.addSubview(addLabel)
+		addLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 30, left: 0, bottom: 0, right: 0))
+		addLabel.centerXInSuperview()
+		addLabel.textAlignment = .center
+
+		markerAnimation.loopMode = .loop
+		view.addSubview(markerAnimation)
+		markerAnimation.anchor(top: addLabel.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 200, height: 120))
+		markerAnimation.centerXInSuperview()
+		markerAnimation.play()
+	}
 
 	@objc func showCategoriesView() {
 		coordinator.showCategories()

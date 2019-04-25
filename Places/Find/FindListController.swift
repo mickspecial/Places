@@ -25,7 +25,7 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 	}()
 
 	var searchLabel = UILabel(text: "Search for location above", font: .systemFont(ofSize: 20), textColor: Theme.current.highlight)
-	let markerAnimation = AnimationView(name: "markerAnimation")
+	let markerAnimation = AnimationView(name: "place")
 
 	lazy private var searchCompleter: MKLocalSearchCompleter = {
 		let searchCompleter = MKLocalSearchCompleter()
@@ -74,7 +74,7 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 	func setUpMarkerAnimation() {
 		markerAnimation.loopMode = .loop
 		view.addSubview(markerAnimation)
-		markerAnimation.anchor(top: searchLabel.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 200, height: 150))
+		markerAnimation.anchor(top: searchLabel.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 10, left: 0, bottom: 0, right: 0), size: CGSize(width: 200, height: 120))
 		markerAnimation.centerXInSuperview()
 		markerAnimation.play()
 	}

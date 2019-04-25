@@ -21,7 +21,7 @@ class FindCoordinator: Coordinator {
 		self.navigationController.navigationBar.isTranslucent = false
 
 		let findVC = FindListController(coordinator: self)
-		findVC.tabBarItem = UITabBarItem(title: "Find", image: #imageLiteral(resourceName: "find"), tag: 2)
+		findVC.tabBarItem = UITabBarItem(title: "Search", image: #imageLiteral(resourceName: "find"), tag: 2)
 		navigationController.viewControllers = [findVC]
 	}
 
