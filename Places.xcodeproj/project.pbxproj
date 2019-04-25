@@ -43,6 +43,7 @@
 		00E181F72261D40200632F36 /* PlaceSetOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E181F62261D40200632F36 /* PlaceSetOptions.swift */; };
 		00E3F2D82259701400133301 /* FindListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E3F2D72259701400133301 /* FindListController.swift */; };
 		00EAA3B9225C6AA9006240FD /* PlaceDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00EAA3B8225C6AA9006240FD /* PlaceDetailsView.swift */; };
+		00EC0B7122712CD00057B418 /* markerAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = 00EC0B7022712CD00057B418 /* markerAnimation.json */; };
 		49963380535ED3E219C3CD8F /* Pods_Places.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC5897D54B78B967E18E3619 /* Pods_Places.framework */; };
 		FFA2D4D246A9AF80E06C6ADB /* Pods_PlacesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07ED4216221222B89B4CFB86 /* Pods_PlacesTests.framework */; };
 /* End PBXBuildFile section */
@@ -98,6 +99,7 @@
 		00E181F62261D40200632F36 /* PlaceSetOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSetOptions.swift; sourceTree = "<group>"; };
 		00E3F2D72259701400133301 /* FindListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindListController.swift; sourceTree = "<group>"; };
 		00EAA3B8225C6AA9006240FD /* PlaceDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetailsView.swift; sourceTree = "<group>"; };
+		00EC0B7022712CD00057B418 /* markerAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = markerAnimation.json; sourceTree = "<group>"; };
 		07ED4216221222B89B4CFB86 /* Pods_PlacesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PlacesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EB3C41833C263ED99CE4937 /* Pods-Places.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Places.debug.xcconfig"; path = "Target Support Files/Pods-Places/Pods-Places.debug.xcconfig"; sourceTree = "<group>"; };
 		5BF2CBCDE01DA3A9A060A021 /* Pods-PlacesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PlacesTests.release.xcconfig"; path = "Target Support Files/Pods-PlacesTests/Pods-PlacesTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				006C794F225AB6A9002A586A /* Views */,
 				0049503C225DC44B00051498 /* Helpers */,
 				00A3F960225962A7003EFD3B /* Assets.xcassets */,
+				00EC0B7022712CD00057B418 /* markerAnimation.json */,
 				00A3F962225962A7003EFD3B /* LaunchScreen.storyboard */,
 				00A3F959225962A6003EFD3B /* AppDelegate.swift */,
 				00A3F965225962A7003EFD3B /* Info.plist */,
@@ -310,6 +313,7 @@
 				00A3F953225962A6003EFD3B /* Frameworks */,
 				00A3F954225962A6003EFD3B /* Resources */,
 				00F5CD952259682100953C48 /* ShellScript */,
+				0D53AEE67E9B46FACF856BE8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -389,6 +393,7 @@
 			files = (
 				00A3F964225962A7003EFD3B /* LaunchScreen.storyboard in Resources */,
 				00A3F961225962A7003EFD3B /* Assets.xcassets in Resources */,
+				00EC0B7122712CD00057B418 /* markerAnimation.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -418,6 +423,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
+		0D53AEE67E9B46FACF856BE8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Places/Pods-Places-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/lottie-ios/Lottie.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Lottie.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Places/Pods-Places-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		94DC39EC7E4065EE93461F8A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

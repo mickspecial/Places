@@ -9,6 +9,7 @@ target 'Places' do
 
   # Pods for Places
   pod 'SwiftLint'
+  pod 'lottie-ios'
 
   target 'PlacesTests' do
     inherit! :search_paths

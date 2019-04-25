@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import Lottie
 
 class FindListController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
@@ -23,7 +24,8 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 		return sctrl
 	}()
 
-	var searchLabel = UILabel(text: "Search for location above", font: .boldSystemFont(ofSize: 20), textColor: Theme.current.highlight)
+	var searchLabel = UILabel(text: "Search for location above", font: .systemFont(ofSize: 20), textColor: Theme.current.highlight)
+	let markerAnimation = AnimationView(name: "markerAnimation")
 
 	lazy private var searchCompleter: MKLocalSearchCompleter = {
 		let searchCompleter = MKLocalSearchCompleter()
@@ -49,17 +51,32 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setUpNavBar()
+		
 		collectionView.backgroundColor = Theme.current.primary
 		collectionView.register(SearchCell.self, forCellWithReuseIdentifier: cellId)
 		collectionView.dataSource = self
 		collectionView.delegate = self
 		view.addSubview(searchLabel)
-		searchLabel.anchor(top: view.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 50, left: 0, bottom: 0, right: 0))
+		searchLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 30, left: 0, bottom: 0, right: 0))
 		searchLabel.centerXInSuperview()
 		searchLabel.textAlignment = .center
 		let tappableView = UIView(frame: collectionView.bounds)
 		collectionView.backgroundView = tappableView
 		collectionView.backgroundView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapDismiss)))
+		setUpMarkerAnimation()
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		searchController.searchBar.becomeFirstResponder()
+	}
+
+	func setUpMarkerAnimation() {
+		markerAnimation.loopMode = .loop
+		view.addSubview(markerAnimation)
+		markerAnimation.anchor(top: searchLabel.bottomAnchor, leading: nil, bottom: nil, trailing: nil, padding: .init(top: 0, left: 0, bottom: 0, right: 0), size: CGSize(width: 200, height: 150))
+		markerAnimation.centerXInSuperview()
+		markerAnimation.play()
 	}
 
 	@objc func tapDismiss() {
@@ -69,24 +86,16 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 	private func setUpNavBar() {
 		title = "Add Location"
 		definesPresentationContext = true
+		// fixed the resizing of my view after popping the details view
+		extendedLayoutIncludesOpaqueBars = true
 		navigationItem.hidesBackButton = false
 		navigationItem.searchController = searchController
 		navigationItem.hidesSearchBarWhenScrolling = false
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		navigationItem.largeTitleDisplayMode = .always
-		navigationController?.navigationBar.prefersLargeTitles = true
-	}
-
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		searchController.searchBar.becomeFirstResponder()
-	}
-
 	override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		searchLabel.isHidden = !searchResults.isEmpty
+		markerAnimation.isHidden = !searchResults.isEmpty
 		return searchResults.count
 	}
 
