@@ -44,6 +44,17 @@ class PlaceDetailsViewController: UIViewController {
 		}
 	}
 
+	@objc func keyboardDidAppear() {
+		canBeDismissed = false
+	}
+
+	@objc func keyboardDidDisappear() {
+		canBeDismissed = true
+	}
+
+	// pop the VC only when there is no KB showing - otherwise dismiss the KB only
+	var canBeDismissed = true
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		detailsView.nameTF.delegate = self
@@ -88,6 +99,9 @@ class PlaceDetailsViewController: UIViewController {
 		self.detailsView.mapView.showAnnotations([self.place], animated: true)
 		detailsView.nameTF.text = place.name
 		detailsView.categoryTF.text = User.current.categories[place.category]
+
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidDisappear), name: UIResponder.keyboardDidHideNotification, object: nil)
+		NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidAppear), name: UIResponder.keyboardDidShowNotification, object: nil)
 	}
 
 	override func viewDidAppear(_ animated: Bool) {

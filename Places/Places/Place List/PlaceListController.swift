@@ -150,7 +150,8 @@ class PlaceListController: UICollectionViewController, UICollectionViewDelegateF
 
 	@objc func dismissAnimateFromScreen() {
 		guard let startingPoint = self.startingFrame else { return }
-		guard let vc = self.childVC else { return }
+		guard let vc = self.childVC, vc.canBeDismissed else { return }
+
 		navigationController?.navigationBar.isHidden = false
 		vc.makeScreenBlack()
 
