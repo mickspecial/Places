@@ -37,17 +37,8 @@ class SearchCell: UICollectionViewCell {
 	private var	addressLabel = UILabel(text: "", font: .systemFont(ofSize: 10, weight: .bold), textColor: .white)
 
 	private func setUpView() {
-
-		let stackview = UIStackView(arrangedSubviews: [
-			VerticalStackView(arrangedSubviews: [nameLabel, addressLabel], spacing: 10)
-		])
-
-		nameLabel.allowsDefaultTighteningForTruncation = true
-
-		stackview.alignment = .center
-		stackview.spacing = 8
-		addSubview(stackview)
-		stackview.fillSuperview(padding: .init(top: 0, left: 16, bottom: 0, right: 16))
+		let sv = stack(.vertical, views: nameLabel, addressLabel).withMargins(.init(top: 10, left: 16, bottom: 10, right: 16))
+		sv.distribution = .fillEqually
 	}
 
 	func fillCell(_ searchResult: MKLocalSearchCompletion) {

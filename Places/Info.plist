@@ -7,19 +7,13 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string></string>
-			</array>
+			<key>CFBundleTypeIconFiles</key>
+			<array/>
 			<key>CFBundleTypeName</key>
-			<string>Places Shared Data</string>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSHandlerRank</key>
-			<string>Owner</string>
+			<string>PLCS</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>com.michaelschembri.places.plcs</string>
+				<string>com.michaelschembri.plcs</string>
 			</array>
 		</dict>
 	</array>
@@ -43,6 +37,8 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Show Current Location On Map</string>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -66,23 +62,27 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>UTExportedTypeDeclarations</key>
+	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
 				<string>public.data</string>
+				<string>public.archive</string>
 			</array>
 			<key>UTTypeDescription</key>
-			<string>Places Shared Data</string>
+			<string>Places</string>
+			<key>UTTypeIconFiles</key>
+			<array/>
 			<key>UTTypeIdentifier</key>
-			<string>com.michaelschembri.places.plcs</string>
+			<string>com.michaelschembri.plcs</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
-				<key>New item</key>
-				<string>application/places</string>
 				<key>public.filename-extension</key>
-				<string>plcs</string>
+				<array>
+					<string>PLCS</string>
+					<string>plcs</string>
+				</array>
 			</dict>
 		</dict>
 	</array>

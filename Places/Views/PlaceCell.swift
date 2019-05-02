@@ -61,18 +61,10 @@ class PlaceCell: UICollectionViewCell {
 	weak var delegate: PlaceCellDelegate?
 
 	private func setUpView() {
-		let stackview = UIStackView(arrangedSubviews: [
-			markerImageView,
-			VerticalStackView(arrangedSubviews: [nameLabel, addressLabel], spacing: 10),
-			showOnMapBtn
-		])
-
+		let sv = stack(.horizontal, views: markerImageView, stack(views: nameLabel, addressLabel, spacing: 10), showOnMapBtn, spacing: 12)
+		sv.alignment = .center
+		sv.padLeft(16)
 		nameLabel.allowsDefaultTighteningForTruncation = true
-
-		stackview.alignment = .center
-		stackview.spacing = 12
-		addSubview(stackview)
-		stackview.fillSuperview(padding: .init(top: 0, left: 16, bottom: 0, right: 0))
 		showOnMapBtn.addTarget(self, action: #selector(showMapPressed), for: .touchUpInside)
 	}
 

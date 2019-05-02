@@ -124,6 +124,11 @@ extension Place: MKAnnotation {
 extension Place {
 
 	static func importData(from url: URL) {
+
+		let needTo = url.startAccessingSecurityScopedResource()
+		// https://littlebitesofcocoa.com/321-opening-files-from-the-files-app
+		// https://www.infragistics.com/community/blogs/b/stevez/posts/ios-tips-and-tricks-associate-a-file-type-with-your-app-part-2
+
 		guard let data = try? Data(contentsOf: url) else {
 			SCLAlertView(appearance: AlertService.standard).showError("Import Error")
 			return
@@ -137,6 +142,10 @@ extension Place {
 			User.current.save()
 		} else {
 			SCLAlertView(appearance: AlertService.standard).showError("Import Error")
+		}
+
+		if needTo {
+			url.stopAccessingSecurityScopedResource()
 		}
 	}
 }
