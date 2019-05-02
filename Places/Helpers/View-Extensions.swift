@@ -44,4 +44,8 @@ extension UIView {
 		return stackView
 	}
 
+	func addSubviews(views: UIView...) {
+		views.forEach { addSubview($0) }
+	}
+
 }

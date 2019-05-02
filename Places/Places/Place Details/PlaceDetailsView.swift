@@ -57,12 +57,7 @@ class PlaceDetailsView: UIView {
 		mapView = MKMapView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 		mapView.isUserInteractionEnabled = false
 
-		addSubview(mapView)
-		addSubview(nameTF)
-		addSubview(nameLabel)
-		addSubview(categoryTF)
-		addSubview(categoryLabel)
-		addSubview(deleteButton)
+		addSubviews(views: mapView, nameTF, nameLabel, categoryTF, categoryLabel, deleteButton)
 
 		mapView.translatesAutoresizingMaskIntoConstraints = false
 		mapHeightCons = mapView.heightAnchor.constraint(equalToConstant: 0)
