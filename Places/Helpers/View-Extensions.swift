@@ -47,5 +47,17 @@ extension UIView {
 	func addSubviews(views: UIView...) {
 		views.forEach { addSubview($0) }
 	}
+	
+	func setupShadow(opacity: Float = 0, radius: CGFloat = 0, offset: CGSize = .zero, color: UIColor = .black) {
+		layer.shadowOpacity = opacity
+		layer.shadowRadius = radius
+		layer.shadowOffset = offset
+		layer.shadowColor = color.cgColor
+	}
+
+	convenience init(backgroundColor: UIColor = .clear) {
+		self.init(frame: .zero)
+		self.backgroundColor = backgroundColor
+	}
 
 }
