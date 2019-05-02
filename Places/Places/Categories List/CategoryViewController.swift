@@ -75,6 +75,9 @@ class CategoryViewController: UITableViewController {
 
 	@objc func exportData() {
 
+		saveCatagories()
+		User.current.save()
+
 		let encoder = JSONEncoder()
 		encoder.dateEncodingStrategy = .iso8601
 
@@ -145,10 +148,14 @@ class CategoryViewController: UITableViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	override func viewWillDisappear(_ animated: Bool) {
+	private func saveCatagories() {
 		for item in items {
 			save(item)
 		}
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		saveCatagories()
 	}
 
 	func save(_ item: GroupedItem) {
