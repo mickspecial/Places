@@ -14,32 +14,14 @@ protocol StartEndViewControllerDelegate: AnyObject {
 
 class StartEndViewController: UIViewController {
 
-	let start: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitle("Start", for: .normal)
-		button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-		button.setTitleColor(.white, for: .normal)
-		button.backgroundColor = .clear
-		button.tag = ButtonTag.start.rawValue
-		return button
-	}()
-
+	let start = UIButton(title: "Start", titleColor: .white, font: UIFont.boldSystemFont(ofSize: 14), target: self, action: #selector(startEndButtonTapped))
+	let end = UIButton(title: "End", titleColor: .white, font: UIFont.boldSystemFont(ofSize: 14), target: self, action: #selector(startEndButtonTapped))
 	var startLabel = UILabel(text: "", font: .boldSystemFont(ofSize: 13), textColor: .white)
 	var endLabel = UILabel(text: "", font: .boldSystemFont(ofSize: 13), textColor: .white)
 
 	enum ButtonTag: Int {
 		case start, end
 	}
-
-	let end: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitle("End", for: .normal)
-		button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-		button.setTitleColor(.white, for: .normal)
-		button.backgroundColor = .clear
-		button.tag = ButtonTag.end.rawValue
-		return button
-	}()
 
 	weak var delegate: StartEndViewControllerDelegate?
 
@@ -64,16 +46,12 @@ class StartEndViewController: UIViewController {
 	}
 
 	private func addToFromButtons() {
-		view.addSubview(start)
-		view.addSubview(end)
-		view.addSubview(startLabel)
-		view.addSubview(endLabel)
+		start.tag = ButtonTag.start.rawValue
+		end.tag = ButtonTag.end.rawValue
+
+		view.addSubviews(start, end, startLabel, endLabel)
 		start.anchor(top: view.safeAreaLayoutGuide.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: nil, size: .init(width: 80, height: 40))
 		end.anchor(top: nil, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: nil, size: .init(width: 80, height: 40))
-
-		end.addTarget(self, action: #selector(startEndButtonTapped), for: .touchUpInside)
-		start.addTarget(self, action: #selector(startEndButtonTapped), for: .touchUpInside)
-
 		startLabel.anchor(top: start.topAnchor, leading: start.trailingAnchor, bottom: start.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0))
 		endLabel.anchor(top: end.topAnchor, leading: end.trailingAnchor, bottom: end.bottomAnchor, trailing: nil, padding: .init(top: 0, left: 10, bottom: 0, right: 0))
 	}

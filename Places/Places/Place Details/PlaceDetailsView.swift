@@ -32,14 +32,7 @@ class PlaceDetailsView: UIView {
 
 	private var	nameLabel = UILabel(text: "Name", font: .systemFont(ofSize: 10, weight: .bold), textColor: Theme.current.highlight)
 	private var	categoryLabel = UILabel(text: "Category", font: .systemFont(ofSize: 10, weight: .bold), textColor: Theme.current.highlight)
-
-	let deleteButton: UIButton = {
-		let button = UIButton(type: .system)
-		button.setTitle("Delete", for: .normal)
-		button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16)
-		button.setTitleColor(UIColor.FlatColor.Red.Valencia, for: .normal)
-		return button
-	}()
+	let deleteButton = UIButton(title: "Delete", titleColor: UIColor.FlatColor.Red.Valencia)
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -59,13 +52,13 @@ class PlaceDetailsView: UIView {
 		mapHeightCons = mapView.heightAnchor.constraint(equalToConstant: 0)
 		mapHeightCons?.isActive = true
 
-		addSubviews(views: mapView, deleteButton)
+		addSubviews(mapView, deleteButton)
 		mapView.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor)
 
 		let namesContainer = UIView()
 		let categoryContainer = UIView()
 		let container = UIView()
-		container.stack(views: namesContainer.stack(views: nameLabel, nameTF), categoryContainer.stack(views: categoryLabel, categoryTF))
+		container.stack(namesContainer.stack(nameLabel, nameTF), categoryContainer.stack(categoryLabel, categoryTF))
 		addSubview(container)
 		container.anchor(top: mapView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
 

@@ -37,7 +37,7 @@ class SearchCell: UICollectionViewCell {
 	private var	addressLabel = UILabel(text: "", font: .systemFont(ofSize: 10, weight: .bold), textColor: .white)
 
 	private func setUpView() {
-		let sv = stack(.vertical, views: nameLabel, addressLabel).withMargins(.init(top: 10, left: 16, bottom: 10, right: 16))
+		let sv = stack(nameLabel, addressLabel).withMargins(.init(top: 10, left: 16, bottom: 10, right: 16))
 		sv.distribution = .fillEqually
 	}
 

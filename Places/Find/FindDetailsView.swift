@@ -52,14 +52,14 @@ class FindDetailsView: UIView {
 	private func setupView() {
 		mapView = MKMapView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
 		mapView.isUserInteractionEnabled = false
-		addSubviews(views: mapView)
+		addSubview(mapView)
 		mapView.anchor(top: safeAreaLayoutGuide.topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor)
 
 		let namesContainer = UIView()
 		let categoryContainer = UIView()
 		let container = UIView()
 
-		container.stack(views: namesContainer.stack(views: nameLabel, nameTF), categoryContainer.stack(views: categoryLabel, categoryTF))
+		container.stack(namesContainer.stack(nameLabel, nameTF), categoryContainer.stack(categoryLabel, categoryTF))
 		addSubview(container)
 		container.anchor(top: mapView.bottomAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 10, left: 10, bottom: 0, right: 10))
 	}

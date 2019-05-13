@@ -23,7 +23,6 @@
 		006C7949225AA6C3002A586A /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C7948225AA6C3002A586A /* Place.swift */; };
 		006C794C225AA8A2002A586A /* UIView-Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C794B225AA8A2002A586A /* UIView-Extension.swift */; };
 		006C794E225AB6A0002A586A /* PinCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C794D225AB6A0002A586A /* PinCalloutView.swift */; };
-		0072F892227A8606007CB4DF /* View-Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0072F891227A8606007CB4DF /* View-Extensions.swift */; };
 		00737F0E225DF7D70054F35F /* FindDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00737F0D225DF7D70054F35F /* FindDetailsViewController.swift */; };
 		00737F10225DF8080054F35F /* FindDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00737F0F225DF8080054F35F /* FindDetailsView.swift */; };
 		00737F12225DF84C0054F35F /* FindCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00737F11225DF84C0054F35F /* FindCoordinator.swift */; };
@@ -76,7 +75,6 @@
 		006C7948225AA6C3002A586A /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
 		006C794B225AA8A2002A586A /* UIView-Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView-Extension.swift"; sourceTree = "<group>"; };
 		006C794D225AB6A0002A586A /* PinCalloutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCalloutView.swift; sourceTree = "<group>"; };
-		0072F891227A8606007CB4DF /* View-Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View-Extensions.swift"; sourceTree = "<group>"; };
 		00737F0D225DF7D70054F35F /* FindDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindDetailsViewController.swift; sourceTree = "<group>"; };
 		00737F0F225DF8080054F35F /* FindDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindDetailsView.swift; sourceTree = "<group>"; };
 		00737F11225DF84C0054F35F /* FindCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCoordinator.swift; sourceTree = "<group>"; };
@@ -139,6 +137,7 @@
 				0051D73B22614A9E0057B9B0 /* Map-Extensions.swift */,
 				00E181F22261CE2200632F36 /* VC-Extension.swift */,
 				00B1C20D226A8CB6009B14E5 /* UILabel-Extension.swift */,
+				0051D737225FEEF60057B9B0 /* BarButton-Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -182,8 +181,6 @@
 				0049503F225DC46600051498 /* SCLExtensions.swift */,
 				00495043225DC4D000051498 /* AlertService.swift */,
 				0051D735225F47500057B9B0 /* Theme.swift */,
-				0051D737225FEEF60057B9B0 /* BarButton-Extension.swift */,
-				0072F891227A8606007CB4DF /* View-Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -505,7 +502,6 @@
 				00E181F72261D40200632F36 /* PlaceSetOptions.swift in Sources */,
 				00BA6913225B50AF00D22C41 /* PlaceCell.swift in Sources */,
 				00737F10225DF8080054F35F /* FindDetailsView.swift in Sources */,
-				0072F892227A8606007CB4DF /* View-Extensions.swift in Sources */,
 				00316F53226442580023E4AA /* User.swift in Sources */,
 				0051D736225F47500057B9B0 /* Theme.swift in Sources */,
 				00E181F32261CE2200632F36 /* VC-Extension.swift in Sources */,
