@@ -16,25 +16,14 @@ struct EditPlaceView: View {
     @Environment(\.presentationMode) var presentationMode
 	@EnvironmentObject var appState: AppState
 	@State private var hasLoaded = false
-	var pickerData = [(key: MarkerColor, value: String)]()
+	@State private var userColorsMarkers: [UserMarker]
 
 	init(place: Place) {
-
+		let cats = User.current.categories
 		self.place = place
-
-		pickerData = User.current.categories.map { (key: MarkerColor, value: String) in
-			return (key, value)
-		}
-
-		pickerData.sort(by: { $0.value < $1.value })
-
-		if let index = pickerData.firstIndex(where: { $0.key == place.category }) {
-			_selectedColor = State(initialValue: index)
-		} else {
-			_selectedColor = State(initialValue: 0)
-		}
-
+		_userColorsMarkers = State(initialValue: MarkerColor.sortedUserMarkers(userData: cats))
 		_newName = State(initialValue: place.name)
+		_selectedColor = State(initialValue: MarkerColor.indexForMarker(userData: cats, markerColor: place.category))
 	}
 
     var body: some View {
@@ -54,8 +43,8 @@ struct EditPlaceView: View {
 					.modifier(ClearButton(text: $newName))
 
 				Picker(selection: $selectedColor, label: Text("")) {
-					ForEach(0 ..< pickerData.count) { i in
-						Text(User.current.categories[self.pickerData[i].key] ?? "")
+					ForEach(0 ..< userColorsMarkers.count) { i in
+						Text(self.userColorsMarkers[i].customText)
 							.font(.body)
 							.padding()
 							.tag(i)
@@ -77,8 +66,7 @@ struct EditPlaceView: View {
 		}
 		.edgesIgnoringSafeArea(.top)
 		.onDisappear {
-			let selected = self.pickerData[self.selectedColor]
-			self.updatePlace(self.place, name: self.newName, category: selected.key)
+			self.updatePlace(self.place, name: self.newName, category: self.userColorsMarkers[self.selectedColor].color)
 		}
     }
 

@@ -213,32 +213,15 @@ struct ZoomMapViewSwiftUI2: UIViewRepresentable {
 				return nil
 			}
 
-			// ?? how to do??
-
 			private func placeAnnotationView(for annotation: MKAnnotation, map: MKMapView) -> MKAnnotationView {
 				guard let placeAnnotation = annotation as? Place else { fatalError() }
 				let identifier = "Annotation"
 				var annotationView = map.dequeueReusableAnnotationView(withIdentifier: identifier)
-//
-//				if annotationView == nil {
-					annotationView = MKAnnotationView(annotation: placeAnnotation, reuseIdentifier: identifier)
-//					annotationView!.canShowCallout = true
-//				} else {
-//					annotationView!.annotation = placeAnnotation
-//				}
-
-				// add pin image
+				annotationView = MKAnnotationView(annotation: placeAnnotation, reuseIdentifier: identifier)
 				annotationView!.image = placeAnnotation.markerImage
-
-				// add callout view
-//				let callout = PinCalloutView(place: placeAnnotation)
-//				annotationView!.detailCalloutAccessoryView = callout
-//				callout.centerInSuperview(size: CGSize(width: 150, height: 60))
 
 				return annotationView!
 			}
 
 	}
-
-
 }

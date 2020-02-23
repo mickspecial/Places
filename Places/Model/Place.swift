@@ -9,11 +9,50 @@
 import Foundation
 import MapKit
 
+struct UserMarker {
+	let color: MarkerColor
+	let customText: String
+}
+
 enum MarkerColor: String, CaseIterable, Codable {
 	case red, green, cyan, blue, white, orange, purple
 
 	var markerImage: UIImage {
 		return UIImage(named: self.rawValue)!
+	}
+
+	static func sortedUserMarkers(userData: [MarkerColor: String]) -> [UserMarker] {
+
+		let pickerData = userData.map { (key: MarkerColor, value: String) in
+			return UserMarker(color: key, customText: value)
+		}
+
+		return pickerData.sorted(by: { $0.customText < $1.customText })
+	}
+
+	static func sortedUserMarkersList(userData: [MarkerColor: String]) -> [String] {
+
+		let data = MarkerColor.sortedUserMarkers(userData: userData)
+
+		return data.map({ $0.customText })
+	}
+
+	static func customNameForMarker(userData: [MarkerColor: String], markerColor: MarkerColor) -> String {
+
+		let data = MarkerColor.sortedUserMarkers(userData: userData)
+
+		let r = data.first(where: { $0.color == markerColor })
+
+		return r?.customText ?? ""
+	}
+
+	static func indexForMarker(userData: [MarkerColor: String], markerColor: MarkerColor) -> Int {
+
+		let data = MarkerColor.sortedUserMarkers(userData: userData)
+
+		let r = data.firstIndex(where: { $0.color == markerColor })
+
+		return r ?? 0
 	}
 }
 

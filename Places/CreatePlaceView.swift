@@ -18,8 +18,17 @@ struct CreatePlaceView: View {
 	@State private var selectedColor = 0
     @Environment(\.presentationMode) var presentationMode
 	@EnvironmentObject var appState: AppState
-
 	@State var selectedPlace: [Place] = []
+	@State private var userColorsMarkers: [UserMarker]
+
+	init(place: MKLocalSearchCompletion) {
+		self.place = place
+		let cats = User.current.categories
+		//self.place = place
+		_userColorsMarkers = State(initialValue: MarkerColor.sortedUserMarkers(userData: cats))
+		//_newName = State(initialValue: place.name)
+		//_selectedColor = State(initialValue: MarkerColor.indexForMarker(userData: cats, markerColor: place.category))
+	}
 
     var body: some View {
 		NavigationView {
@@ -48,10 +57,11 @@ struct CreatePlaceView: View {
 						.modifier(ClearButton(text: $newName))
 
 					Picker(selection: $selectedColor, label: Text("")) {
-						ForEach(0 ..< MarkerColor.allCases.count) { i in
-							Text(User.current.categories[MarkerColor.allCases[i]] ?? "")
+						ForEach(0 ..< userColorsMarkers.count) { i in
+							Text(self.userColorsMarkers[i].customText)
 								.font(.body)
 								.padding()
+								.tag(i)
 						}
 					}
 					.labelsHidden()
@@ -99,7 +109,7 @@ struct CreatePlaceView: View {
 			fatalError()
 		}
 
-		let newPlace = Place(mapItem: mapItem, name: self.newName, category: MarkerColor.allCases[selectedColor])
+		let newPlace = Place(mapItem: mapItem, name: newName, category: userColorsMarkers[selectedColor].color)
 		User.current.addPlace(newPlace)
 
 		appState.places = User.current.places
