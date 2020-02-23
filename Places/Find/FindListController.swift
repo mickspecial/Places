@@ -20,7 +20,7 @@ class FindListController: UICollectionViewController, UICollectionViewDelegateFl
 		sctrl.hidesNavigationBarDuringPresentation = false
 		sctrl.searchResultsUpdater = self
 		sctrl.searchBar.delegate = self
-		sctrl.dimsBackgroundDuringPresentation = false
+//		sctrl.dimsBackgroundDuringPresentation = false
 		return sctrl
 	}()
 

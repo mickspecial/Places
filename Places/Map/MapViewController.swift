@@ -207,18 +207,18 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 		}
 	}
 
-	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-		if let annotation = annotation as? RouteDetails {
-			return annotation.annotationView
-		}
-
-		if annotation is Place {
-			let annotationView = placeAnnotationView(for: annotation)
-			return annotationView
-		}
-
-		return nil
-	}
+//	func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//		if let annotation = annotation as? RouteDetails {
+//			return annotation.annotationView
+//		}
+//
+//		if annotation is Place {
+//			let annotationView = placeAnnotationView(for: annotation)
+//			return annotationView
+//		}
+//
+//		return nil
+//	}
 
 	private func placeAnnotationView(for annotation: MKAnnotation) -> MKAnnotationView {
 		guard let placeAnnotation = annotation as? Place else { fatalError() }

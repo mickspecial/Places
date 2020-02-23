@@ -60,7 +60,7 @@ class FindDetailsViewController: UIViewController {
 	}
 
 	func categoryPickerSetUp() {
-		locationPicker.showsSelectionIndicator = true
+//		locationPicker.showsSelectionIndicator = true
 		locationPicker.delegate = self
 		locationPicker.dataSource = self
 		detailsView.categoryTF.inputView = locationPicker

@@ -8,6 +8,15 @@
 
 import Foundation
 
+class AppState: ObservableObject {
+
+	@Published var places: [Place]
+
+	init(user: User) {
+		self.places = user.places
+	}
+}
+
 final class User: Codable {
 	// created with an empty slate
 	private (set) var places = [Place]()

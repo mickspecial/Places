@@ -72,7 +72,7 @@ class PlaceDetailsViewController: UIViewController {
 	}
 
 	func categoryPickerSetUp() {
-		markerPicker.showsSelectionIndicator = true
+//		markerPicker.showsSelectionIndicator = true
 		markerPicker.delegate = self
 		markerPicker.dataSource = self
 		detailsView.categoryTF.inputView = markerPicker

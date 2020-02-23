@@ -213,11 +213,8 @@ open class SCLAlertView: UIViewController {
 		
 		// Actions
 		var hideWhenBackgroundViewIsTapped: Bool
-		
-		// Activity indicator
-		var activityIndicatorStyle: UIActivityIndicatorView.Style
-		
-		public init(kDefaultShadowOpacity: CGFloat = 0.7, kCircleTopPosition: CGFloat = 0.0, kCircleBackgroundTopPosition: CGFloat = 6.0, kCircleHeight: CGFloat = 56.0, kCircleIconHeight: CGFloat = 20.0, kTitleHeight: CGFloat = 25.0, kWindowWidth: CGFloat = 240.0, kWindowHeight: CGFloat = 178.0, kTextHeight: CGFloat = 90.0, kTextFieldHeight: CGFloat = 30.0, kTextViewdHeight: CGFloat = 80.0, kButtonHeight: CGFloat = 35.0, kTitleFont: UIFont = UIFont.systemFont(ofSize: 20), kTitleMinimumScaleFactor: CGFloat = 1.0, kTextFont: UIFont = UIFont.systemFont(ofSize: 14), kButtonFont: UIFont = UIFont.boldSystemFont(ofSize: 14), showCloseButton: Bool = true, showCircularIcon: Bool = true, shouldAutoDismiss: Bool = true, contentViewCornerRadius: CGFloat = 5.0, fieldCornerRadius: CGFloat = 3.0, buttonCornerRadius: CGFloat = 3.0, hideWhenBackgroundViewIsTapped: Bool = false, circleBackgroundColor: UIColor = UIColor.white, contentViewColor: UIColor = UIColorFromRGB(0xFFFFFF), contentViewBorderColor: UIColor = UIColorFromRGB(0xCCCCCC), titleColor: UIColor = UIColorFromRGB(0x4D4D4D), subTitleColor: UIColor = UIColorFromRGB(0x4D4D4D), margin: Margin = Margin(), dynamicAnimatorActive: Bool = false, disableTapGesture: Bool = false, buttonsLayout: SCLAlertButtonLayout = .vertical, activityIndicatorStyle: UIActivityIndicatorView.Style = .white) {
+
+		public init(kDefaultShadowOpacity: CGFloat = 0.7, kCircleTopPosition: CGFloat = 0.0, kCircleBackgroundTopPosition: CGFloat = 6.0, kCircleHeight: CGFloat = 56.0, kCircleIconHeight: CGFloat = 20.0, kTitleHeight: CGFloat = 25.0, kWindowWidth: CGFloat = 240.0, kWindowHeight: CGFloat = 178.0, kTextHeight: CGFloat = 90.0, kTextFieldHeight: CGFloat = 30.0, kTextViewdHeight: CGFloat = 80.0, kButtonHeight: CGFloat = 35.0, kTitleFont: UIFont = UIFont.systemFont(ofSize: 20), kTitleMinimumScaleFactor: CGFloat = 1.0, kTextFont: UIFont = UIFont.systemFont(ofSize: 14), kButtonFont: UIFont = UIFont.boldSystemFont(ofSize: 14), showCloseButton: Bool = true, showCircularIcon: Bool = true, shouldAutoDismiss: Bool = true, contentViewCornerRadius: CGFloat = 5.0, fieldCornerRadius: CGFloat = 3.0, buttonCornerRadius: CGFloat = 3.0, hideWhenBackgroundViewIsTapped: Bool = false, circleBackgroundColor: UIColor = UIColor.white, contentViewColor: UIColor = UIColorFromRGB(0xFFFFFF), contentViewBorderColor: UIColor = UIColorFromRGB(0xCCCCCC), titleColor: UIColor = UIColorFromRGB(0x4D4D4D), subTitleColor: UIColor = UIColorFromRGB(0x4D4D4D), margin: Margin = Margin(), dynamicAnimatorActive: Bool = false, disableTapGesture: Bool = false, buttonsLayout: SCLAlertButtonLayout = .vertical) {
 			
 			self.kDefaultShadowOpacity = kDefaultShadowOpacity
 			self.kCircleTopPosition = kCircleTopPosition
@@ -255,8 +252,6 @@ open class SCLAlertView: UIViewController {
 			self.hideWhenBackgroundViewIsTapped = hideWhenBackgroundViewIsTapped
 			self.dynamicAnimatorActive = dynamicAnimatorActive
 			self.buttonsLayout = buttonsLayout
-			
-			self.activityIndicatorStyle = activityIndicatorStyle
 		}
 		
 		mutating func setkWindowHeight(_ kWindowHeight: CGFloat) {
@@ -391,7 +386,7 @@ open class SCLAlertView: UIViewController {
 	
 	override open func viewWillLayoutSubviews() {
 		super.viewWillLayoutSubviews()
-		let rv = UIApplication.shared.keyWindow! as UIWindow
+		let rv = UIApplication.shared.windows.filter { $0.isKeyWindow }.first!
 		let sz = rv.frame.size
 		
 		// Set background frame
@@ -754,7 +749,7 @@ open class SCLAlertView: UIViewController {
 		view.alpha = 0
 		view.tag = uniqueTag
 		view.accessibilityIdentifier = uniqueAccessibilityIdentifier
-		let rv = UIApplication.shared.keyWindow! as UIWindow
+		let rv = UIApplication.shared.windows.filter { $0.isKeyWindow }.first!
 		rv.addSubview(view)
 		view.frame = rv.bounds
 		baseView.frame = rv.bounds
@@ -821,9 +816,7 @@ open class SCLAlertView: UIViewController {
 		
 		// Spinner / icon
 		if style == .wait {
-			let indicator = UIActivityIndicatorView(style: appearance.activityIndicatorStyle)
-			indicator.startAnimating()
-			circleIconView = indicator
+			// do nothing....
 		} else {
 			if let iconTintColor = iconTintColor {
 				circleIconView = UIImageView(image: iconImage!.withRenderingMode(.alwaysTemplate))
@@ -881,8 +874,8 @@ open class SCLAlertView: UIViewController {
 	
 	// Show animation in the alert view
 	fileprivate func showAnimation(_ animationStyle: SCLAnimationStyle = .topToBottom, animationStartOffset: CGFloat = -400.0, boundingAnimationOffset: CGFloat = 15.0, animationDuration: TimeInterval = 0.2) {
-		
-		let rv = UIApplication.shared.keyWindow! as UIWindow
+
+		let rv = UIApplication.shared.windows.filter { $0.isKeyWindow }.first!
 		var animationStartOrigin = self.baseView.frame.origin
 		var animationCenter: CGPoint = rv.center
 		
@@ -1029,13 +1022,15 @@ open class SCLAlertView: UIViewController {
 	
 	//Return true if a SCLAlertView is already being shown, false otherwise
 	open func isShowing() -> Bool {
-		if let subviews = UIApplication.shared.keyWindow?.subviews {
-			for view in subviews {
-				if view.tag == uniqueTag && view.accessibilityIdentifier == uniqueAccessibilityIdentifier {
-					return true
-				}
+
+		let keywindow = UIApplication.shared.windows.filter { $0.isKeyWindow }.first!
+
+		for view in keywindow.subviews {
+			if view.tag == uniqueTag && view.accessibilityIdentifier == uniqueAccessibilityIdentifier {
+				return true
 			}
 		}
+
 		return false
 	}
 }
