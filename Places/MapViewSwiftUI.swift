@@ -14,6 +14,7 @@ struct MapViewSwiftUI: UIViewRepresentable {
 	@Binding var places: [Place]
 	@Binding var highlighted: Place?
     @Binding var selectedPin: Place?
+    @State var firstLoad: Bool = true
 
 	var locationManager = CLLocationManager()
 
@@ -24,32 +25,31 @@ struct MapViewSwiftUI: UIViewRepresentable {
 	}
 
 	func updateUIView(_ uiView: MKMapView, context: Context) {
-		updateAnnotations(from: uiView)
-	}
+		uiView.addAnnotations(places)
 
-	private func updateAnnotations(from mapView: MKMapView) {
-		mapView.addAnnotations(places)
-
-		if self.highlighted != nil {
-			// zooms to specific one
-			mapView.showAnnotations([highlighted!], animated: true)
-			mapView.selectAnnotation(highlighted!, animated: true)
-			// then turn off
-		} else {
-			if selectedPin == nil {
-				// zoom level to show all on map at best scale
-				mapView.showAnnotations(mapView.annotations, animated: true)
+		if firstLoad {
+			if highlighted == nil {
+				// show all
+				uiView.showAnnotations(uiView.annotations, animated: true)
 			} else {
-				// dont move the view port when tapping on item
+				// zoom into highlighted
+				let coordinate = highlighted!.coordinate
+				let span = MKCoordinateSpan(latitudeDelta: 0.08, longitudeDelta: 0.08)
+				let region = MKCoordinateRegion(center: coordinate, span: span)
+				uiView.setRegion(region, animated: true)
+				uiView.selectAnnotation(highlighted!, animated: true)
 			}
 
+			DispatchQueue.main.async {
+				self.firstLoad = false
+			}
 		}
 
-		assert(places.count == mapView.annotations.count)
+		assert(places.count == uiView.annotations.count)
 	}
 
 	func makeCoordinator() -> Coordinator {
-		Coordinator(selectedPin: $selectedPin)
+		Coordinator(selectedPin: $selectedPin, highlighted: $highlighted)
 	}
 
 	func makeUIView(context: Context) -> MKMapView {
@@ -68,6 +68,7 @@ struct MapViewSwiftUI: UIViewRepresentable {
 		let locationManager = CLLocationManager()
 
 		@Binding var selectedPin: Place?
+		@Binding var highlighted: Place?
 
 		func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 //			guard let coordinates = view.annotation?.coordinate else { return }
@@ -86,8 +87,9 @@ struct MapViewSwiftUI: UIViewRepresentable {
 			}
 		}
 
-		init(selectedPin: Binding<Place?>) {
+		init(selectedPin: Binding<Place?>, highlighted: Binding<Place?>) {
             _selectedPin = selectedPin
+			_highlighted = highlighted
         }
 
 		func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -106,6 +108,7 @@ struct MapViewSwiftUI: UIViewRepresentable {
 		func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
 			print("DESELETED")
 			self.selectedPin = nil
+			self.highlighted = nil
 		}
 
 		private func placeAnnotationView(for annotation: MKAnnotation, map: MKMapView) -> MKAnnotationView {

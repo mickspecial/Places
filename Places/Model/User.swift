@@ -16,8 +16,6 @@ class AppState: ObservableObject {
 
 	init(user: User) {
 		self.selected = 0
-
-
 		self.places = user.places.filter({ $0.isDeleted == false })
 
 		self.places.first!.action = {
