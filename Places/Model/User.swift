@@ -13,7 +13,7 @@ class AppState: ObservableObject {
 	@Published var places: [Place]
 
 	init(user: User) {
-		self.places = user.places
+		self.places = user.places.filter({ $0.isDeleted == false })
 	}
 }
 

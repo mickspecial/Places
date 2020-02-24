@@ -56,7 +56,7 @@ enum MarkerColor: String, CaseIterable, Codable {
 	}
 }
 
-class Place: NSObject, Codable {
+class Place: NSObject, Codable, Identifiable {
 	let name: String
 	let address: String
 	let lat: Double

@@ -19,9 +19,15 @@ struct PlacesListView: View {
 			ZStack(alignment: .bottomTrailing) {
 
 				VStack {
-					List(appState.places.sorted(by: { $0.name < $1.name }), id: \.self) { place in
+					List(appState.places.sorted(by: { $0.name < $1.name })) { place in
 						NavigationLink(destination: EditPlaceView(place: place)) {
+							Image(uiImage: place.markerImage)
+								.resizable()
+								.frame(width: 30, height: 30)
+								.scaledToFit()
+								.padding(.trailing, 4)
 							Text(place.name)
+
 						}
 					}
 				}
@@ -34,6 +40,7 @@ struct PlacesListView: View {
 			}
 
 			.navigationBarTitle("Places")
+			.navigationViewStyle(StackNavigationViewStyle())
 		}
 	}
 }

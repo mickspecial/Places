@@ -64,6 +64,7 @@ struct EditPlaceView: View {
 				}
 			}
 		}
+		.navigationViewStyle(StackNavigationViewStyle())
 		.edgesIgnoringSafeArea(.top)
 		.onDisappear {
 			self.updatePlace(self.place, name: self.newName, category: self.userColorsMarkers[self.selectedColor].color)
@@ -77,12 +78,13 @@ struct EditPlaceView: View {
 
 		User.current.updatePlace(place: place, name: name, category: category)
 
-		appState.places = User.current.places
+		appState.places = User.current.places.filter({ $0.isDeleted == false })
 	}
 
 	func deletePlace() {
+		print("DELETE")
 		User.current.markAsDeletedPlace(self.place)
-		appState.places = User.current.places
+		appState.places = User.current.places.filter({ $0.isDeleted == false })
 	}
 }
 

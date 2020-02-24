@@ -24,10 +24,7 @@ struct CreatePlaceView: View {
 	init(place: MKLocalSearchCompletion) {
 		self.place = place
 		let cats = User.current.categories
-		//self.place = place
 		_userColorsMarkers = State(initialValue: MarkerColor.sortedUserMarkers(userData: cats))
-		//_newName = State(initialValue: place.name)
-		//_selectedColor = State(initialValue: MarkerColor.indexForMarker(userData: cats, markerColor: place.category))
 	}
 
     var body: some View {
@@ -80,7 +77,7 @@ struct CreatePlaceView: View {
 			.navigationBarHidden(true)
 			.navigationBarTitle("")
 		}
-		.navigationViewStyle(StackNavigationViewStyle())
+		.navigationViewStyle(StackNavigationViewStyle()) // fix picker offset bug
 		.edgesIgnoringSafeArea(.top)
 		.onAppear {
 			self.completeTheSearch()
@@ -112,7 +109,9 @@ struct CreatePlaceView: View {
 		let newPlace = Place(mapItem: mapItem, name: newName, category: userColorsMarkers[selectedColor].color)
 		User.current.addPlace(newPlace)
 
-		appState.places = User.current.places
+		//appState.places = User.current.places
+		appState.places = User.current.places.filter({ $0.isDeleted == false })
+
 	}
 }
 
