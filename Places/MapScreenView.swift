@@ -13,7 +13,15 @@ struct MapScreenView: View {
 	@EnvironmentObject var appState: AppState
 
     var body: some View {
-		MapViewSwiftUI(places: self.$appState.places)
+		VStack {
+			MapViewSwiftUI(places: self.$appState.places, highlighted: self.$appState.highlighted)
+
+			if self.appState.highlighted == nil {
+				Text("Missing").font(.largeTitle)
+			} else {
+				Text("\(self.appState.highlighted!.name)").font(.largeTitle)
+			}
+		}
 	}
 }
 

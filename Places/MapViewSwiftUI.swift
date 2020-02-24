@@ -12,6 +12,12 @@ import MapKit
 struct MapViewSwiftUI: UIViewRepresentable {
 
 	@Binding var places: [Place]
+	@Binding var highlighted: Place?
+
+	init(places: Binding<[Place]>, highlighted: Binding<Place?>) {
+		_places = places
+		_highlighted = highlighted
+	}
 
 	var locationManager = CLLocationManager()
 
@@ -23,8 +29,16 @@ struct MapViewSwiftUI: UIViewRepresentable {
 
 	func updateUIView(_ uiView: MKMapView, context: Context) {
 		updateAnnotations(from: uiView)
-		// zoom level to show all on map at best scale
-		uiView.showAnnotations(uiView.annotations, animated: true)
+
+		if self.highlighted != nil {
+			// zooms to specific one
+			uiView.showAnnotations([highlighted!], animated: true)
+			uiView.selectAnnotation(highlighted!, animated: true)
+			// then turn off
+		} else {
+			// zoom level to show all on map at best scale
+			uiView.showAnnotations(uiView.annotations, animated: true)
+		}
 	}
 
 	private func updateAnnotations(from mapView: MKMapView) {
@@ -37,17 +51,24 @@ struct MapViewSwiftUI: UIViewRepresentable {
 	}
 
 	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+		print("SELC")
+
 		guard let coordinates = view.annotation?.coordinate else { return }
 		let span = mapView.region.span
 		let region = MKCoordinateRegion(center: coordinates, span: span)
 		mapView.setRegion(region, animated: true)
 	}
 
+
+
+
+
 	func makeUIView(context: Context) -> MKMapView {
 		setupManager()
 
 		let map = MKMapView()
 		map.delegate = context.coordinator
+		map.isRotateEnabled = false
 
 		map.showsUserLocation = true
 		return map
@@ -107,8 +128,10 @@ struct MapViewSwiftUI_Previews: PreviewProvider {
 		Place(name: "1", address: "ww", lat: -33.852222, long: 151.21, id: "22", category: .red, isDeleted: false)
 	]
 
+	static let highlights: Place? = nil
+
     static var previews: some View {
-		MapViewSwiftUI(places: .constant(lm))
+		MapViewSwiftUI(places: .constant(lm), highlighted: .constant(highlights))
 			.edgesIgnoringSafeArea(.vertical)
     }
 }

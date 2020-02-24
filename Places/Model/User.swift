@@ -11,9 +11,17 @@ import Foundation
 class AppState: ObservableObject {
 
 	@Published var places: [Place]
+	@Published var highlighted: Place?
+	@Published var selected: Int
 
 	init(user: User) {
+		self.selected = 0
 		self.places = user.places.filter({ $0.isDeleted == false })
+		//self.highlighted = user.places.filter({ $0.isDeleted == false }).first!
+
+//		DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
+//			self.highlighted = user.places.filter({ $0.isDeleted == false }).first!
+//		}
 	}
 }
 

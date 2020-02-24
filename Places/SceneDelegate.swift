@@ -27,7 +27,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //		window?.tintColor = .darkGray
 //		window?.makeKeyAndVisible()
 
-		let contentView = MyHome().environmentObject(AppState(user: User.current))
+		let state = AppState(user: User.current)
+
+		let contentView = MyHome().environmentObject(state)
 
 		if let windowScene = scene as? UIWindowScene {
 			let window = UIWindow(windowScene: windowScene)

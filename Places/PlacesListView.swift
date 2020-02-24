@@ -26,6 +26,13 @@ struct PlacesListView: View {
 								.frame(width: 30, height: 30)
 								.scaledToFit()
 								.padding(.trailing, 4)
+								.onTapGesture {
+									print("TAP image")
+									//withAnimation {
+										self.appState.highlighted = place
+										self.appState.selected = 1
+									//}
+								}
 							Text(place.name)
 
 						}
@@ -41,6 +48,10 @@ struct PlacesListView: View {
 
 			.navigationBarTitle("Places")
 			.navigationViewStyle(StackNavigationViewStyle())
+			.onAppear {
+				print("remove any highlighted")
+				self.appState.highlighted = nil
+			}
 		}
 	}
 }

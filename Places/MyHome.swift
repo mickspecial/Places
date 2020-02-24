@@ -11,8 +11,7 @@ import MapKit
 struct MyHome: View {
 
 	@EnvironmentObject var appState: AppState
-
-	@State private var selected: Int = 0
+	//@State var selected: Int
 
 	//@State private var lm: [Place] = User.current.places
 		//Place(name: "1", address: "ww", lat: -33.852222, long: 151.21, id: "22", category: .red, isDeleted: false)
@@ -20,11 +19,11 @@ struct MyHome: View {
 
     var body: some View {
 		VStack {
-			if selected == 0 {
+			if self.appState.selected == 0 {
 				PlacesListView().environmentObject(appState)
 			}
 
-			if selected == 1 {
+			if self.appState.selected == 1 {
 				MapScreenView()
 					.environmentObject(appState)
 					.edgesIgnoringSafeArea(.top)
@@ -36,15 +35,15 @@ struct MyHome: View {
 
 			Spacer()
 
-			BottomTab(selected: $selected)
+			BottomTab(selected: self.$appState.selected)
 		}.onAppear {
 			//self.lm = User.current.places
 		}
     }
 }
 
-struct MyHome_Previews: PreviewProvider {
-    static var previews: some View {
-        MyHome()
-    }
-}
+//struct MyHome_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyHome()
+//    }
+//}
