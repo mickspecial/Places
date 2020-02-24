@@ -19,7 +19,9 @@ struct PlacesListView: View {
 			ZStack(alignment: .bottomTrailing) {
 
 				VStack {
-					List(appState.places.sorted(by: { $0.name < $1.name })) { place in
+					List {
+						ForEach(appState.places.sorted(by: { $0.name < $1.name }), id: \.id) { place in
+
 						NavigationLink(destination: EditPlaceView(place: place)) {
 							Image(uiImage: place.markerImage)
 								.resizable()
@@ -34,7 +36,7 @@ struct PlacesListView: View {
 									//}
 								}
 							Text(place.name)
-
+						}
 						}
 					}
 				}

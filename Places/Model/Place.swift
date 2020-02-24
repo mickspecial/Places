@@ -64,6 +64,11 @@ class Place: NSObject, Codable, Identifiable {
 	let id: String
 	let category: MarkerColor
 	let isDeleted: Bool
+	var action: (() -> Void)? = nil
+
+	private enum CodingKeys: String, CodingKey {
+        case name, address, lat, long, id, category, isDeleted
+    }
 
 	var markerImage: UIImage {
 		return category.markerImage

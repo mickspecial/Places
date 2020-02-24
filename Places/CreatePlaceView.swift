@@ -54,7 +54,7 @@ struct CreatePlaceView: View {
 						.modifier(ClearButton(text: $newName))
 
 					Picker(selection: $selectedColor, label: Text("")) {
-						ForEach(0 ..< userColorsMarkers.count) { i in
+						ForEach(0 ..< userColorsMarkers.count, id: \.self) { i in
 							Text(self.userColorsMarkers[i].customText)
 								.font(.body)
 								.padding()

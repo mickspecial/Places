@@ -13,11 +13,7 @@ struct MapViewSwiftUI: UIViewRepresentable {
 
 	@Binding var places: [Place]
 	@Binding var highlighted: Place?
-
-	init(places: Binding<[Place]>, highlighted: Binding<Place?>) {
-		_places = places
-		_highlighted = highlighted
-	}
+    @Binding var selectedPin: Place?
 
 	var locationManager = CLLocationManager()
 
@@ -29,39 +25,32 @@ struct MapViewSwiftUI: UIViewRepresentable {
 
 	func updateUIView(_ uiView: MKMapView, context: Context) {
 		updateAnnotations(from: uiView)
-
-		if self.highlighted != nil {
-			// zooms to specific one
-			uiView.showAnnotations([highlighted!], animated: true)
-			uiView.selectAnnotation(highlighted!, animated: true)
-			// then turn off
-		} else {
-			// zoom level to show all on map at best scale
-			uiView.showAnnotations(uiView.annotations, animated: true)
-		}
 	}
 
 	private func updateAnnotations(from mapView: MKMapView) {
-		mapView.removeAnnotations(mapView.annotations)
 		mapView.addAnnotations(places)
+
+		if self.highlighted != nil {
+			// zooms to specific one
+			mapView.showAnnotations([highlighted!], animated: true)
+			mapView.selectAnnotation(highlighted!, animated: true)
+			// then turn off
+		} else {
+			if selectedPin == nil {
+				// zoom level to show all on map at best scale
+				mapView.showAnnotations(mapView.annotations, animated: true)
+			} else {
+				// dont move the view port when tapping on item
+			}
+
+		}
+
+		assert(places.count == mapView.annotations.count)
 	}
 
 	func makeCoordinator() -> Coordinator {
-		Coordinator(self)
+		Coordinator(selectedPin: $selectedPin)
 	}
-
-	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-		print("SELC")
-
-		guard let coordinates = view.annotation?.coordinate else { return }
-		let span = mapView.region.span
-		let region = MKCoordinateRegion(center: coordinates, span: span)
-		mapView.setRegion(region, animated: true)
-	}
-
-
-
-
 
 	func makeUIView(context: Context) -> MKMapView {
 		setupManager()
@@ -75,12 +64,31 @@ struct MapViewSwiftUI: UIViewRepresentable {
 	}
 
 	final class Coordinator: NSObject, MKMapViewDelegate {
-		var control: MapViewSwiftUI
+		//var control: MapViewSwiftUI
 		let locationManager = CLLocationManager()
 
-		init(_ control: MapViewSwiftUI) {
-			self.control = control
+		@Binding var selectedPin: Place?
+
+		func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+//			guard let coordinates = view.annotation?.coordinate else { return }
+//			let span = mapView.region.span
+//			let region = MKCoordinateRegion(center: coordinates, span: span)
+//			mapView.setRegion(region, animated: true)
+			print("TAP.....")
+
+			guard let pin = view.annotation as? Place else {
+				return
+			}
+
+			DispatchQueue.main.async {
+				pin.action?()
+				self.selectedPin = pin
+			}
 		}
+
+		init(selectedPin: Binding<Place?>) {
+            _selectedPin = selectedPin
+        }
 
 		func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 			if let annotation = annotation as? RouteDetails {
@@ -95,7 +103,10 @@ struct MapViewSwiftUI: UIViewRepresentable {
 			return nil
 		}
 
-		// ?? how to do??
+		func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+			print("DESELETED")
+			self.selectedPin = nil
+		}
 
 		private func placeAnnotationView(for annotation: MKAnnotation, map: MKMapView) -> MKAnnotationView {
 			guard let placeAnnotation = annotation as? Place else { fatalError() }
@@ -122,19 +133,19 @@ struct MapViewSwiftUI: UIViewRepresentable {
 	}
 }
 
-struct MapViewSwiftUI_Previews: PreviewProvider {
-
-	static let lm = [
-		Place(name: "1", address: "ww", lat: -33.852222, long: 151.21, id: "22", category: .red, isDeleted: false)
-	]
-
-	static let highlights: Place? = nil
-
-    static var previews: some View {
-		MapViewSwiftUI(places: .constant(lm), highlighted: .constant(highlights))
-			.edgesIgnoringSafeArea(.vertical)
-    }
-}
+//struct MapViewSwiftUI_Previews: PreviewProvider {
+//
+//	static let lm = [
+//		Place(name: "1", address: "ww", lat: -33.852222, long: 151.21, id: "22", category: .red, isDeleted: false)
+//	]
+//
+//	static let highlights: Place? = nil
+//
+//    static var previews: some View {
+//		MapViewSwiftUI(places: .constant(lm), highlighted: .constant(highlights))
+//			.edgesIgnoringSafeArea(.vertical)
+//    }
+//}
 
 struct ZoomMapViewSwiftUI: UIViewRepresentable {
 

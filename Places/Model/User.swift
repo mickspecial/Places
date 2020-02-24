@@ -16,7 +16,14 @@ class AppState: ObservableObject {
 
 	init(user: User) {
 		self.selected = 0
+
+
 		self.places = user.places.filter({ $0.isDeleted == false })
+
+		self.places.first!.action = {
+			print("TEST")
+		}
+
 		//self.highlighted = user.places.filter({ $0.isDeleted == false }).first!
 
 //		DispatchQueue.main.asyncAfter(deadline: .now() + 6) {
