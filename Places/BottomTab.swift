@@ -18,14 +18,14 @@ struct BottomTab: View {
 
 			Button(action: { self.selected = 0 }) {
 				Image(systemName: "list.dash")
-					.foregroundColor(self.selected == 0 ? .red : .blue)
+					.foregroundColor(self.selected == 0 ? .blue : .gray)
 			}
 
 			Spacer(minLength: 20)
 
 			Button(action: { self.selected = 1 }) {
 				Image(systemName: "map.fill")
-					.foregroundColor(self.selected == 1 ? .red : .blue)
+					.foregroundColor(self.selected == 1 ? .blue : .gray)
 			}
 
 //			Spacer(minLength: 20)

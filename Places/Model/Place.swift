@@ -74,6 +74,18 @@ class Place: NSObject, Codable, Identifiable {
 		return category.markerImage
 	}
 
+	var startImage: UIImage {
+		return UIImage(named: "greenLeft")!
+	}
+
+	var selectedImage: UIImage {
+		return MarkerColor.white.markerImage
+	}
+
+	var endImage: UIImage {
+		return UIImage(named: "redRight")!
+	}
+
 	init(name: String, address: String, lat: Double, long: Double, id: String, category: MarkerColor, isDeleted: Bool) {
 		self.name = name
 		self.address = address

@@ -14,6 +14,8 @@ struct MapViewSwiftUI: UIViewRepresentable {
 	@Binding var places: [Place]
 	@Binding var highlighted: Place?
     @Binding var selectedPin: Place?
+	@Binding var startPin: Place?
+	@Binding var endPin: Place?
     @State var firstLoad: Bool = true
 
 	var locationManager = CLLocationManager()
@@ -25,6 +27,8 @@ struct MapViewSwiftUI: UIViewRepresentable {
 	}
 
 	func updateUIView(_ uiView: MKMapView, context: Context) {
+
+		print("UPDATED")
 		uiView.addAnnotations(places)
 
 		if firstLoad {
@@ -45,11 +49,37 @@ struct MapViewSwiftUI: UIViewRepresentable {
 			}
 		}
 
+		// check the start and end pins and change image as required
+		// do i need this as well as in selected and deseleted ???
+		for annotation in uiView.annotations {
+			guard let placeAnnotation = annotation as? Place else { return }
+
+			// normal image
+			if let myView = uiView.view(for: annotation) {
+				myView.image = placeAnnotation.markerImage
+				myView.centerOffset = CGPoint(x: 0, y: 0)
+			}
+
+			if let startPin = self.startPin, startPin == placeAnnotation {
+				if let myView = uiView.view(for: annotation) {
+					myView.image = placeAnnotation.startImage
+					myView.centerOffset = CGPoint(x: 0, y: -myView.frame.size.height / 2)
+				}
+			}
+
+			if let endPin = self.endPin, endPin == placeAnnotation {
+				if let myView = uiView.view(for: annotation) {
+					myView.image = placeAnnotation.endImage
+					myView.centerOffset = CGPoint(x: 0, y: -myView.frame.size.height / 2)
+				}
+			}
+		}
+
 		assert(places.count == uiView.annotations.count)
 	}
 
 	func makeCoordinator() -> Coordinator {
-		Coordinator(selectedPin: $selectedPin, highlighted: $highlighted)
+		Coordinator(selectedPin: $selectedPin, highlighted: $highlighted, startPin: $startPin, endPin: $endPin)
 	}
 
 	func makeUIView(context: Context) -> MKMapView {
@@ -69,6 +99,16 @@ struct MapViewSwiftUI: UIViewRepresentable {
 
 		@Binding var selectedPin: Place?
 		@Binding var highlighted: Place?
+		@Binding var startPin: Place?
+		@Binding var endPin: Place? {
+			didSet {
+				dosomeStuff()
+			}
+		}
+
+		func dosomeStuff() {
+			print("do it .....")
+		}
 
 		func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 //			guard let coordinates = view.annotation?.coordinate else { return }
@@ -82,14 +122,27 @@ struct MapViewSwiftUI: UIViewRepresentable {
 			}
 
 			DispatchQueue.main.async {
-				pin.action?()
+				//	pin.action?()
 				self.selectedPin = pin
+
+//				for annotation in mapView.annotations {
+//					guard let placeAnnotation = annotation as? Place else { return }
+//
+//					if placeAnnotation == self.selectedPin! {
+//						if let myView = mapView.view(for: annotation) {
+//							myView.image = placeAnnotation.selectedImage
+//							//myView.centerOffset = CGPoint(x: 0, y: -myView.frame.size.height / 2)
+//						}
+//					}
+//				}
 			}
 		}
 
-		init(selectedPin: Binding<Place?>, highlighted: Binding<Place?>) {
+		init(selectedPin: Binding<Place?>, highlighted: Binding<Place?>, startPin: Binding<Place?>, endPin: Binding<Place?>) {
             _selectedPin = selectedPin
 			_highlighted = highlighted
+			_startPin = startPin
+			_endPin = endPin
         }
 
 		func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -107,8 +160,26 @@ struct MapViewSwiftUI: UIViewRepresentable {
 
 		func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
 			print("DESELETED")
-			self.selectedPin = nil
-			self.highlighted = nil
+
+			DispatchQueue.main.async {
+
+				self.selectedPin = nil
+				self.highlighted = nil
+
+			}
+
+//			for annotation in mapView.annotations {
+//				print("Check")
+//				guard let placeAnnotation = annotation as? Place else { return }
+//
+//				if let myView = mapView.view(for: annotation) {
+//					// reset
+//					myView.image = placeAnnotation.markerImage
+//					myView.centerOffset = CGPoint(x: 0, y: 0)
+//
+//				}
+//			}
+
 		}
 
 		private func placeAnnotationView(for annotation: MKAnnotation, map: MKMapView) -> MKAnnotationView {
