@@ -29,14 +29,10 @@ struct EditPlaceView: View {
 	}
 
     var body: some View {
-		VStack {
+		VStack(spacing: 0) {
+
 			DetailsViewMapViewSwiftUI(place: self.$place, marker: self.$marker)
 				.frame(height: 300)
-
-			Text(place.name)
-				.padding()
-				.font(.system(size: 22, weight: .black))
-				.multilineTextAlignment(.center)
 
 			Form {
 				Section {
@@ -68,12 +64,9 @@ struct EditPlaceView: View {
 					.disabled(self.newName.isEmpty)
 				}
 			}
-			.navigationViewStyle(StackNavigationViewStyle())
-
 		}
 		.navigationViewStyle(StackNavigationViewStyle())
-		.navigationBarTitle("", displayMode: .inline)
-		.edgesIgnoringSafeArea(.top)
+		.navigationBarTitle(Text(self.place.name), displayMode: .inline)
 		.onDisappear {
 			#warning("fix")
 			print("Gone...when go to picker this is fired")
