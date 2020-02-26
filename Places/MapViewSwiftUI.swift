@@ -49,33 +49,100 @@ struct MapViewSwiftUI: UIViewRepresentable {
 			}
 		}
 
-		// check the start and end pins and change image as required
-		// do i need this as well as in selected and deseleted ???
-		for annotation in uiView.annotations {
-			guard let placeAnnotation = annotation as? Place else { return }
+		uiView.annotations.forEach { annotation in
 
+			guard let placeAnnotation = annotation as? Place else { return }
 			// normal image
 			if let myView = uiView.view(for: annotation) {
 				myView.image = placeAnnotation.markerImage
-				myView.centerOffset = CGPoint(x: 0, y: 0)
+				myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+//				myView.centerOffset = CGPoint(x: 0, y: 0)
+				print("normal pins")
+
 			}
 
 			if let startPin = self.startPin, startPin == placeAnnotation {
 				if let myView = uiView.view(for: annotation) {
 					myView.image = placeAnnotation.startImage
-					myView.centerOffset = CGPoint(x: 0, y: -myView.frame.size.height / 2)
+					myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+					myView.tintColor = .systemGreen
+
+//					myView.centerOffset = CGPoint(x: 0, y: -myView.frame.size.height / 2)
+					print("start pin")
+
 				}
 			}
 
 			if let endPin = self.endPin, endPin == placeAnnotation {
 				if let myView = uiView.view(for: annotation) {
 					myView.image = placeAnnotation.endImage
-					myView.centerOffset = CGPoint(x: 0, y: -myView.frame.size.height / 2)
+					myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+					myView.tintColor = .systemRed
+
+//					myView.centerOffset = CGPoint(x: 0, y: -myView.frame.size.height / 2)
+					print("end pin")
+
 				}
 			}
+
 		}
 
-		assert(places.count == uiView.annotations.count)
+		// check the start and end pins and change image as required
+		// do i need this as well as in selected and deseleted ???
+
+		drawRoute(map: uiView)
+
+		if self.endPin == nil || self.startPin == nil {
+			self.removeOverlays(from: uiView)
+		}
+
+		//assert(places.count == uiView.annotations.count)
+	}
+
+	func drawRoute(map: MKMapView) {
+		guard let start = startPin, let end = endPin else {
+//			self.removeOverlays(from: map)
+			return
+		}
+
+		if start == end {
+			return
+		}
+
+		let directionRequest = MKDirections.Request()
+		directionRequest.source = start.placeMapItem
+		directionRequest.destination = end.placeMapItem
+		directionRequest.transportType = .automobile
+
+		let directions = MKDirections(request: directionRequest)
+
+		directions.calculate { (response, _ ) -> Void in
+			guard let response = response else { return }
+			let route = response.routes[0]
+			self.addRoute(route: route, to: map)
+		}
+	}
+
+	func addRoute(route: MKRoute, to mapView: MKMapView) {
+		self.removeOverlays(from: mapView)
+
+		print("ADD ROUTE")
+		let polyline = route.polyline
+		mapView.addOverlay(polyline, level: .aboveRoads)
+
+		let routeInfo = RouteDetails(route: route)
+		mapView.addAnnotation(routeInfo)
+
+		// 	if want to zoom into route
+		//	let rect = route.polyline.boundingMapRect
+		//	self.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+	}
+
+	func removeOverlays(from mapView: MKMapView) {
+		mapView.removeOverlays(mapView.overlays)
+		if let routeInfo = mapView.annotations.first(where: { $0 is RouteDetails }) {
+			mapView.removeAnnotation(routeInfo)
+		}
 	}
 
 	func makeCoordinator() -> Coordinator {
@@ -94,29 +161,14 @@ struct MapViewSwiftUI: UIViewRepresentable {
 	}
 
 	final class Coordinator: NSObject, MKMapViewDelegate {
-		//var control: MapViewSwiftUI
 		let locationManager = CLLocationManager()
 
 		@Binding var selectedPin: Place?
 		@Binding var highlighted: Place?
 		@Binding var startPin: Place?
-		@Binding var endPin: Place? {
-			didSet {
-				dosomeStuff()
-			}
-		}
-
-		func dosomeStuff() {
-			print("do it .....")
-		}
+		@Binding var endPin: Place?
 
 		func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-//			guard let coordinates = view.annotation?.coordinate else { return }
-//			let span = mapView.region.span
-//			let region = MKCoordinateRegion(center: coordinates, span: span)
-//			mapView.setRegion(region, animated: true)
-			print("TAP.....")
-
 			guard let pin = view.annotation as? Place else {
 				return
 			}
@@ -124,17 +176,6 @@ struct MapViewSwiftUI: UIViewRepresentable {
 			DispatchQueue.main.async {
 				//	pin.action?()
 				self.selectedPin = pin
-
-//				for annotation in mapView.annotations {
-//					guard let placeAnnotation = annotation as? Place else { return }
-//
-//					if placeAnnotation == self.selectedPin! {
-//						if let myView = mapView.view(for: annotation) {
-//							myView.image = placeAnnotation.selectedImage
-//							//myView.centerOffset = CGPoint(x: 0, y: -myView.frame.size.height / 2)
-//						}
-//					}
-//				}
 			}
 		}
 
@@ -144,6 +185,13 @@ struct MapViewSwiftUI: UIViewRepresentable {
 			_startPin = startPin
 			_endPin = endPin
         }
+
+		func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+			let renderer = MKPolylineRenderer(overlay: overlay)
+			renderer.strokeColor = UIColor.FlatColor.Red.Cinnabar
+			renderer.lineWidth = 3.0
+			return renderer
+		}
 
 		func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
 			if let annotation = annotation as? RouteDetails {
@@ -161,25 +209,19 @@ struct MapViewSwiftUI: UIViewRepresentable {
 		func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
 			print("DESELETED")
 
-			DispatchQueue.main.async {
-
-				self.selectedPin = nil
-				self.highlighted = nil
-
-			}
-
 //			for annotation in mapView.annotations {
-//				print("Check")
 //				guard let placeAnnotation = annotation as? Place else { return }
 //
 //				if let myView = mapView.view(for: annotation) {
-//					// reset
 //					myView.image = placeAnnotation.markerImage
 //					myView.centerOffset = CGPoint(x: 0, y: 0)
-//
 //				}
 //			}
 
+			DispatchQueue.main.async {
+				self.selectedPin = nil
+				self.highlighted = nil
+			}
 		}
 
 		private func placeAnnotationView(for annotation: MKAnnotation, map: MKMapView) -> MKAnnotationView {
@@ -196,6 +238,7 @@ struct MapViewSwiftUI: UIViewRepresentable {
 
 			// add pin image
 			annotationView!.image = placeAnnotation.markerImage
+			annotationView!.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
 
 			// add callout view
 			let callout = PinCalloutView(place: placeAnnotation)

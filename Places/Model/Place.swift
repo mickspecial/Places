@@ -8,6 +8,7 @@
 
 import Foundation
 import MapKit
+import SwiftUI
 
 struct UserMarker {
 	let color: MarkerColor
@@ -75,7 +76,7 @@ class Place: NSObject, Codable, Identifiable {
 	}
 
 	var startImage: UIImage {
-		return UIImage(named: "greenLeft")!
+		return UIImage(named: "greenFlag")!
 	}
 
 	var selectedImage: UIImage {
@@ -83,7 +84,7 @@ class Place: NSObject, Codable, Identifiable {
 	}
 
 	var endImage: UIImage {
-		return UIImage(named: "redRight")!
+		return UIImage(named: "redFlag")!
 	}
 
 	init(name: String, address: String, lat: Double, long: Double, id: String, category: MarkerColor, isDeleted: Bool) {

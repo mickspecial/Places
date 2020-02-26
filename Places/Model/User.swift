@@ -18,9 +18,9 @@ class AppState: ObservableObject {
 		self.selected = 0
 		self.places = user.places.filter({ $0.isDeleted == false })
 
-		self.places.first!.action = {
-			print("TEST")
-		}
+//		self.places.first!.action = {
+//			print("TEST")
+//		}
 
 		//self.highlighted = user.places.filter({ $0.isDeleted == false }).first!
 
