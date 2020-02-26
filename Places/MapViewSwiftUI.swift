@@ -305,36 +305,33 @@ struct ZoomMapViewSwiftUI: UIViewRepresentable {
 		init(_ control: ZoomMapViewSwiftUI) {
 			self.control = control
 		}
-
 	}
 }
 
-struct ZoomMapViewSwiftUI2: UIViewRepresentable {
+struct DetailsViewMapViewSwiftUI: UIViewRepresentable {
 
-	var place: Place
+	@Binding var place: Place
+	@Binding var marker: MarkerColor
 
 	func updateUIView(_ uiView: MKMapView, context: Context) {
-		updateAnnotations(from: uiView)
+
+		uiView.addAnnotations([place])
+
 		let coordinate = place.coordinate
 		let span = MKCoordinateSpan(latitudeDelta: 0.005, longitudeDelta: 0.005)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         uiView.setRegion(region, animated: true)
-	}
 
-	private func updateAnnotations(from mapView: MKMapView) {
-		mapView.removeAnnotations(mapView.annotations)
-		mapView.addAnnotations([place])
+		uiView.annotations.forEach { annotation in
+			if let myView = uiView.view(for: annotation) {
+				myView.image = marker.markerImage
+				myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+			}
+		}
 	}
 
 	func makeCoordinator() -> Coordinator {
-		Coordinator(self)
-	}
-
-	func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-		guard let coordinates = view.annotation?.coordinate else { return }
-		let span = mapView.region.span
-		let region = MKCoordinateRegion(center: coordinates, span: span)
-		mapView.setRegion(region, animated: true)
+		Coordinator(place: $place, marker: $marker)
 	}
 
 	func makeUIView(context: Context) -> MKMapView {
@@ -345,34 +342,39 @@ struct ZoomMapViewSwiftUI2: UIViewRepresentable {
 	}
 
 	final class Coordinator: NSObject, MKMapViewDelegate {
-		var control: ZoomMapViewSwiftUI2
 
-		init(_ control: ZoomMapViewSwiftUI2) {
-			self.control = control
+		@Binding var place: Place
+		@Binding var marker: MarkerColor
+
+		init(place: Binding<Place>, marker: Binding<MarkerColor>) {
+            _place = place
+			_marker = marker
+        }
+
+		func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+			let renderer = MKPolylineRenderer(overlay: overlay)
+			renderer.strokeColor = UIColor.FlatColor.Red.Cinnabar
+			renderer.lineWidth = 3.0
+			return renderer
 		}
 
 		func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-				if let annotation = annotation as? RouteDetails {
-					return annotation.annotationView
-				}
-
-				if annotation is Place {
-					let annotationView = placeAnnotationView(for: annotation, map: mapView)
-					return annotationView
-				}
-
-				return nil
+			if annotation is Place {
+				let annotationView = placeAnnotationView(for: annotation, map: mapView)
+				return annotationView
 			}
 
-			private func placeAnnotationView(for annotation: MKAnnotation, map: MKMapView) -> MKAnnotationView {
-				guard let placeAnnotation = annotation as? Place else { fatalError() }
-				let identifier = "Annotation"
-				var annotationView = map.dequeueReusableAnnotationView(withIdentifier: identifier)
-				annotationView = MKAnnotationView(annotation: placeAnnotation, reuseIdentifier: identifier)
-				annotationView!.image = placeAnnotation.markerImage
+			return nil
+		}
 
-				return annotationView!
-			}
-
+		private func placeAnnotationView(for annotation: MKAnnotation, map: MKMapView) -> MKAnnotationView {
+			guard let placeAnnotation = annotation as? Place else { fatalError() }
+			let identifier = "Annotation"
+			var annotationView = map.dequeueReusableAnnotationView(withIdentifier: identifier)
+			annotationView = MKAnnotationView(annotation: placeAnnotation, reuseIdentifier: identifier)
+			annotationView!.image = marker.markerImage
+			annotationView!.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+			return annotationView!
+		}
 	}
 }
