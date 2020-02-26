@@ -18,6 +18,7 @@ struct EditPlaceView: View {
 	@EnvironmentObject var appState: AppState
 	@State private var hasLoaded = false
 	@State private var userColorsMarkers: [UserMarker]
+	@State private var willDelete = false
 
 	init(place: Place) {
 		let cats = User.current.categories
@@ -70,7 +71,10 @@ struct EditPlaceView: View {
 		.onDisappear {
 			#warning("fix")
 			print("Gone...when go to picker this is fired")
-			self.updatePlace(self.place, name: self.newName, category: self.userColorsMarkers[self.selectedColor].color)
+			if !self.willDelete {
+				print("qucik hack as to fix as changing color then delete wont actaully delete ")
+				self.updatePlace(self.place, name: self.newName, category: self.userColorsMarkers[self.selectedColor].color)
+			}
 		}
 		.onAppear {
 			// update the map
@@ -90,6 +94,7 @@ struct EditPlaceView: View {
 	func deletePlace() {
 		User.current.markAsDeletedPlace(place)
 		appState.places = User.current.places.filter({ $0.isDeleted == false })
+		self.willDelete = true
 	}
 }
 
