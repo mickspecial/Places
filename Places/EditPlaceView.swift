@@ -146,8 +146,6 @@ final class KeyboardResponder: ObservableObject {
     }
 }
 
-
-
 extension Animation {
     static func ripple(index: Int) -> Animation {
         Animation.spring(dampingFraction: 0.5)

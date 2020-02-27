@@ -20,7 +20,6 @@ struct TagEditView: View {
 	@State var purple: String = ""
 	@ObservedObject private var keyboard = KeyboardResponder()
 
-
 	init() {
 		let cats = User.current.categories
 		_red = State(initialValue: cats[.red] ?? "")

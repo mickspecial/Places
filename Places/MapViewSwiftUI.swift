@@ -52,36 +52,13 @@ struct MapViewSwiftUI: UIViewRepresentable {
 		uiView.annotations.forEach { annotation in
 
 			if let placeAnnotation = annotation as? Place {
-				// normal image
-				if let myView = uiView.view(for: annotation) {
-					myView.image = placeAnnotation.markerImage
-					myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
-					print("normal pins")
-				}
+				self.colorPlaceMarker(uiView, placeAnnotation: placeAnnotation)
+			}
 
-				if let startPin = self.startPin, startPin == placeAnnotation {
-					if let myView = uiView.view(for: annotation) {
-						myView.image = placeAnnotation.startImage
-						myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
-						myView.tintColor = .systemGreen
-						print("start pin")
-
-					}
-				}
-
-				if let endPin = self.endPin, endPin == placeAnnotation {
-					if let myView = uiView.view(for: annotation) {
-						myView.image = placeAnnotation.endImage
-						myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
-						myView.tintColor = .systemRed
-						print("end pin")
-					}
-				}
+			if let marker = annotation as? MKUserLocation {
+				self.colorUserMarker(uiView, marker: marker)
 			}
 		}
-
-		// check the start and end pins and change image as required
-		// do i need this as well as in selected and deseleted ???
 
 		drawRoute(map: uiView)
 
@@ -94,7 +71,7 @@ struct MapViewSwiftUI: UIViewRepresentable {
 
 	func drawRoute(map: MKMapView) {
 		guard let start = startPin, let end = endPin else {
-//			self.removeOverlays(from: map)
+			self.removeOverlays(from: map)
 			return
 		}
 
@@ -153,8 +130,57 @@ struct MapViewSwiftUI: UIViewRepresentable {
 		return map
 	}
 
+	func colorPlaceMarker(_ uiView: MKMapView, placeAnnotation: Place) {
+		// normal image
+		if let myView = uiView.view(for: placeAnnotation) {
+			myView.image = placeAnnotation.markerImage
+			myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+			print("normal pins")
+		}
+
+		if let startPin = self.startPin, startPin == placeAnnotation {
+			if let myView = uiView.view(for: placeAnnotation) {
+				myView.image = placeAnnotation.startImage
+				myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+				myView.tintColor = .systemGreen
+				print("start pin")
+
+			}
+		}
+
+		if let endPin = self.endPin, endPin == placeAnnotation {
+			if let myView = uiView.view(for: placeAnnotation) {
+				myView.image = placeAnnotation.endImage
+				myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+				myView.tintColor = .systemRed
+				print("end pin")
+			}
+		}
+	}
+
+	func colorUserMarker(_ uiView: MKMapView, marker: MKUserLocation) {
+
+		if let myView = uiView.view(for: marker) {
+			 myView.tintColor = nil
+
+		 }
+
+		if let sp = startPin, marker.coordinate.isEqual(sp.coordinate) {
+			if let myView = uiView.view(for: marker) {
+				myView.tintColor = .systemGreen
+			}
+			return
+		}
+
+		if let ep = endPin, marker.coordinate.isEqual(ep.coordinate) {
+			if let myView = uiView.view(for: marker) {
+				myView.tintColor = .systemRed
+			}
+			return
+		}
+	}
+
 	final class Coordinator: NSObject, MKMapViewDelegate {
-		let locationManager = CLLocationManager()
 
 		@Binding var selectedPin: Place?
 		@Binding var highlighted: Place?
