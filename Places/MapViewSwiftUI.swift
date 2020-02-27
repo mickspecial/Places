@@ -51,40 +51,33 @@ struct MapViewSwiftUI: UIViewRepresentable {
 
 		uiView.annotations.forEach { annotation in
 
-			guard let placeAnnotation = annotation as? Place else { return }
-			// normal image
-			if let myView = uiView.view(for: annotation) {
-				myView.image = placeAnnotation.markerImage
-				myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
-//				myView.centerOffset = CGPoint(x: 0, y: 0)
-				print("normal pins")
-
-			}
-
-			if let startPin = self.startPin, startPin == placeAnnotation {
+			if let placeAnnotation = annotation as? Place {
+				// normal image
 				if let myView = uiView.view(for: annotation) {
-					myView.image = placeAnnotation.startImage
+					myView.image = placeAnnotation.markerImage
 					myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
-					myView.tintColor = .systemGreen
+					print("normal pins")
+				}
 
-//					myView.centerOffset = CGPoint(x: 0, y: -myView.frame.size.height / 2)
-					print("start pin")
+				if let startPin = self.startPin, startPin == placeAnnotation {
+					if let myView = uiView.view(for: annotation) {
+						myView.image = placeAnnotation.startImage
+						myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+						myView.tintColor = .systemGreen
+						print("start pin")
 
+					}
+				}
+
+				if let endPin = self.endPin, endPin == placeAnnotation {
+					if let myView = uiView.view(for: annotation) {
+						myView.image = placeAnnotation.endImage
+						myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
+						myView.tintColor = .systemRed
+						print("end pin")
+					}
 				}
 			}
-
-			if let endPin = self.endPin, endPin == placeAnnotation {
-				if let myView = uiView.view(for: annotation) {
-					myView.image = placeAnnotation.endImage
-					myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
-					myView.tintColor = .systemRed
-
-//					myView.centerOffset = CGPoint(x: 0, y: -myView.frame.size.height / 2)
-					print("end pin")
-
-				}
-			}
-
 		}
 
 		// check the start and end pins and change image as required
@@ -169,14 +162,20 @@ struct MapViewSwiftUI: UIViewRepresentable {
 		@Binding var endPin: Place?
 
 		func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-			guard let pin = view.annotation as? Place else {
+			if let pin = view.annotation as? Place {
+				DispatchQueue.main.async {
+					self.selectedPin = pin
+				}
 				return
 			}
 
-			DispatchQueue.main.async {
-				//	pin.action?()
-				self.selectedPin = pin
+			if let userLoc = view.annotation as? MKUserLocation {
+				DispatchQueue.main.async {
+					self.selectedPin = Place(currentLocation: userLoc.coordinate)
+				}
+				return
 			}
+
 		}
 
 		init(selectedPin: Binding<Place?>, highlighted: Binding<Place?>, startPin: Binding<Place?>, endPin: Binding<Place?>) {
@@ -207,17 +206,6 @@ struct MapViewSwiftUI: UIViewRepresentable {
 		}
 
 		func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-			print("DESELETED")
-
-//			for annotation in mapView.annotations {
-//				guard let placeAnnotation = annotation as? Place else { return }
-//
-//				if let myView = mapView.view(for: annotation) {
-//					myView.image = placeAnnotation.markerImage
-//					myView.centerOffset = CGPoint(x: 0, y: 0)
-//				}
-//			}
-
 			DispatchQueue.main.async {
 				self.selectedPin = nil
 				self.highlighted = nil
