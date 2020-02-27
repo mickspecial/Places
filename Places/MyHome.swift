@@ -29,9 +29,9 @@ struct MyHome: View {
 					.edgesIgnoringSafeArea(.top)
 			}
 
-//			if selected == 2 {
-//				PlaceSearchView()
-//			}
+			if self.appState.selected == 2 {
+				TagEditView().environmentObject(appState)
+			}
 
 			Spacer()
 

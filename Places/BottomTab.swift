@@ -28,12 +28,12 @@ struct BottomTab: View {
 					.foregroundColor(self.selected == 1 ? .blue : .gray)
 			}
 
-//			Spacer(minLength: 20)
-//
-//			Button(action: { self.selected = 2 }) {
-//				Image(systemName: "location")
-//					.foregroundColor(self.selected == 2 ? .red : .blue)
-//			}
+			Spacer(minLength: 20)
+
+			Button(action: { self.selected = 2 }) {
+				Image(systemName: "tag")
+					.foregroundColor(self.selected == 2 ? .blue : .gray)
+			}
 
 			Spacer(minLength: 20)
 		}

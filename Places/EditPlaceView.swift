@@ -19,6 +19,7 @@ struct EditPlaceView: View {
 	@State private var hasLoaded = false
 	@State private var userColorsMarkers: [UserMarker]
 	@State private var willDelete = false
+	@ObservedObject private var keyboard = KeyboardResponder()
 
 	init(place: Place) {
 		let cats = User.current.categories
@@ -33,7 +34,8 @@ struct EditPlaceView: View {
 		VStack(spacing: 0) {
 
 			DetailsViewMapViewSwiftUI(place: self.$place, marker: self.$marker)
-				.frame(height: 300)
+				.frame(height: keyboard.currentHeight == 0 ? 300 : 100)
+				.animation(.spring())
 
 			Form {
 				Section {
@@ -65,6 +67,8 @@ struct EditPlaceView: View {
 					.disabled(self.newName.isEmpty)
 				}
 			}
+			.animation(.spring())
+
 		}
 		.navigationViewStyle(StackNavigationViewStyle())
 		.navigationBarTitle(Text(self.place.name), displayMode: .inline)
@@ -111,4 +115,43 @@ extension EdgeInsets {
 	static func appDefault() -> EdgeInsets {
 		return .init(top: 0, leading: 16, bottom: 0, trailing: 16)
 	}
+}
+
+// rename cats
+
+// edit name keyboard ... need to move up the screen
+
+final class KeyboardResponder: ObservableObject {
+    private var notificationCenter: NotificationCenter
+    @Published private(set) var currentHeight: CGFloat = 0
+
+    init(center: NotificationCenter = .default) {
+        notificationCenter = center
+        notificationCenter.addObserver(self, selector: #selector(keyBoardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(keyBoardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    deinit {
+        notificationCenter.removeObserver(self)
+    }
+
+    @objc func keyBoardWillShow(notification: Notification) {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            currentHeight = keyboardSize.height
+        }
+    }
+
+    @objc func keyBoardWillHide(notification: Notification) {
+        currentHeight = 0
+    }
+}
+
+
+
+extension Animation {
+    static func ripple(index: Int) -> Animation {
+        Animation.spring(dampingFraction: 0.5)
+            .speed(2)
+            .delay(0.03 * Double(index))
+    }
 }
