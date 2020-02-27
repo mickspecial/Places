@@ -49,6 +49,7 @@ struct PlaceSearchView: View {
 				
 			.navigationBarTitle("Search")
 		}
+		.navigationViewStyle(StackNavigationViewStyle())
 	}
 
 	func fillCell(_ searchResult: MKLocalSearchCompletion) -> NSAttributedString {

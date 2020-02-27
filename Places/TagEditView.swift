@@ -63,8 +63,8 @@ struct TagEditView: View {
 
 			}
 			.navigationBarTitle("Tags")
-			.navigationViewStyle(StackNavigationViewStyle())
 		}
+		.navigationViewStyle(StackNavigationViewStyle())
 		.onDisappear {
 			self.saveTags()
 		}

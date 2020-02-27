@@ -49,12 +49,13 @@ struct PlacesListView: View {
 			}
 
 			.navigationBarTitle("Places")
-			.navigationViewStyle(StackNavigationViewStyle())
 			.onAppear {
 				print("remove any highlighted")
 				self.appState.highlighted = nil
 			}
 		}
+		.navigationViewStyle(StackNavigationViewStyle())
+
 	}
 }
 
