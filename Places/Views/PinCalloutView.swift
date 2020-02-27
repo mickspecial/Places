@@ -18,6 +18,8 @@ class PinCalloutView: UIView {
 		setupView()
 		titleLabel.text = place.name
 		subLabel.text = place.address
+		titleLabel.textColor = .label
+		subLabel.textColor = .label
 	}
 
 	override init(frame: CGRect) {
