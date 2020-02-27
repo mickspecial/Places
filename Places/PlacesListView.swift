@@ -35,7 +35,12 @@ struct PlacesListView: View {
 										self.appState.selected = 1
 									//}
 								}
-							Text(place.name)
+							VStack(alignment: .leading) {
+								Text(place.name)
+									.font(.headline)
+								Text(place.address)
+									.font(.subheadline)
+							}
 						}
 						}
 					}

@@ -18,6 +18,8 @@ struct TagEditView: View {
 	@State var cyan: String = ""
 	@State var orange: String = ""
 	@State var purple: String = ""
+	@ObservedObject private var keyboard = KeyboardResponder()
+
 
 	init() {
 		let cats = User.current.categories
@@ -60,6 +62,10 @@ struct TagEditView: View {
 				Section(header: Image("purple")) {
 					TextField("Purple", text: $purple)
 				}.listRowInsets(EdgeInsets.appDefault())
+
+				if keyboard.currentHeight != 0 {
+					Spacer(minLength: 300)
+				}
 
 			}
 			.navigationBarTitle("Tags")
