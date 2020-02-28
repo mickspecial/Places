@@ -20,6 +20,7 @@ struct CreatePlaceView: View {
 	@EnvironmentObject var appState: AppState
 	@State var selectedPlace: [Place] = []
 	@State private var userColorsMarkers: [UserMarker]
+	@ObservedObject private var keyboard = KeyboardResponder()
 
 	init(place: MKLocalSearchCompletion) {
 		self.place = place
@@ -34,6 +35,8 @@ struct CreatePlaceView: View {
 
 				if !selectedPlace.isEmpty {
 					ZoomMapViewSwiftUI(place: self.$selectedPlace).frame(height: 300)
+						.frame(height: keyboard.currentHeight == 0 ? 300 : 80)
+						.animation(.spring())
 				}
 
 				if selectedPlace.isEmpty {
@@ -46,6 +49,7 @@ struct CreatePlaceView: View {
 					.padding()
 					.font(.system(size: 22, weight: .black))
 					.multilineTextAlignment(.center)
+					.opacity(keyboard.currentHeight == 0 ? 1 : 0)
 
 				Form {
 					TextField("Place name", text: $newName)
@@ -64,14 +68,21 @@ struct CreatePlaceView: View {
 					.labelsHidden()
 
 					Section {
-						Button("Save") {
+						Button(action: {
 							self.savePlace()
 							self.presentationMode.wrappedValue.dismiss()
+						}) {
+							HStack {
+								Spacer()
+								Text("Save")
+								Spacer()
+							}
 						}
-						.font(.system(size: 22, weight: .bold))
-						.padding()
+						.foregroundColor(.red)
+						.font(.system(size: 18, weight: .medium))
 						.disabled(self.newName.isEmpty)
 					}
+
 				}
 			}
 			.navigationBarHidden(true)

@@ -57,13 +57,19 @@ struct EditPlaceView: View {
 				}
 
 				Section {
-					Button("Delete") {
+
+					Button(action: {
 						self.deletePlace()
 						self.presentationMode.wrappedValue.dismiss()
+					}) {
+						HStack {
+							Spacer()
+							Text("Delete")
+							Spacer()
+						}
 					}
 					.foregroundColor(.red)
-					.font(.system(size: 22, weight: .bold))
-					.padding()
+					.font(.system(size: 18, weight: .medium))
 					.disabled(self.newName.isEmpty)
 				}
 			}
