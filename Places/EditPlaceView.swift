@@ -20,6 +20,7 @@ struct EditPlaceView: View {
 	@State private var userColorsMarkers: [UserMarker]
 	@State private var willDelete = false
 	@ObservedObject private var keyboard = KeyboardResponder()
+	@State private var isActive = false
 
 	init(place: Place) {
 		let cats = User.current.categories
@@ -157,5 +158,18 @@ extension Animation {
         Animation.spring(dampingFraction: 0.5)
             .speed(2)
             .delay(0.03 * Double(index))
+    }
+}
+
+struct ResponderTextField: UIViewRepresentable {
+
+    typealias TheUIView = UITextField
+    var isFirstResponder: Bool
+    var configuration = { (view: TheUIView) in }
+
+    func makeUIView(context: UIViewRepresentableContext<Self>) -> TheUIView { TheUIView() }
+    func updateUIView(_ uiView: TheUIView, context: UIViewRepresentableContext<Self>) {
+        _ = isFirstResponder ? uiView.becomeFirstResponder() : uiView.resignFirstResponder()
+        configuration(uiView)
     }
 }

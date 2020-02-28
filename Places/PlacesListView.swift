@@ -40,7 +40,7 @@ struct PlacesListView: View {
 									.font(.headline)
 								Text(place.address)
 									.font(.subheadline)
-							}
+							}.padding(.vertical)
 						}
 						}
 					}
