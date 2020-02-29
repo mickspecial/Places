@@ -27,9 +27,6 @@ struct MapViewSwiftUI: UIViewRepresentable {
 	}
 
 	func updateUIView(_ uiView: MKMapView, context: Context) {
-
-		print("UPDATED")
-
 		uiView.addAnnotations(places)
 
 		if firstLoad {
@@ -136,7 +133,6 @@ struct MapViewSwiftUI: UIViewRepresentable {
 		if let myView = uiView.view(for: placeAnnotation) {
 			myView.image = placeAnnotation.markerImage
 			myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
-			print("normal pins")
 		}
 
 		if let startPin = self.startPin, startPin == placeAnnotation {
@@ -144,8 +140,6 @@ struct MapViewSwiftUI: UIViewRepresentable {
 				myView.image = placeAnnotation.startImage
 				myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
 				myView.tintColor = .systemGreen
-				print("start pin")
-
 			}
 		}
 
@@ -154,7 +148,6 @@ struct MapViewSwiftUI: UIViewRepresentable {
 				myView.image = placeAnnotation.endImage
 				myView.bounds = CGRect(origin: .zero, size: CGSize(width: 30, height: 30))
 				myView.tintColor = .systemRed
-				print("end pin")
 			}
 		}
 	}
