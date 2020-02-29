@@ -11,12 +11,33 @@ import Foundation
 class AppState: ObservableObject {
 
 	@Published var places: [Place]
+	@Published var placesFiltered: [Place] = [Place]()
 	@Published var highlighted: Place?
 	@Published var selected: Int
+	@Published var hideMarkers = Set<MarkerColor>() {
+		didSet {
+			updatedFilteredList()
+			//placesFiltered = places.filter({ $0.isDeleted == false && !hideMarkers.contains($0.category) })
+		}
+	}
+
+	private func updatedFilteredList() {
+		placesFiltered = places.filter({ $0.isDeleted == false && !hideMarkers.contains($0.category) })
+	}
 
 	init(user: User) {
 		self.selected = 0
 		self.places = user.places.filter({ $0.isDeleted == false })
+
+		//self.hideMarkers = [MarkerColor]()
+		//self.hideMarkers.append(.red)
+
+		// hide markers filter
+
+		// working...
+		//let testdata = [MarkerColor.red, MarkerColor.blue]
+		updatedFilteredList()
+		//self.placesFiltered = user.places.filter({ $0.isDeleted == false && !self.hideMarkers.contains($0.category) })
 
 //		self.places.first!.action = {
 //			print("TEST")

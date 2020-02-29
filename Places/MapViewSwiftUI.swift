@@ -29,6 +29,7 @@ struct MapViewSwiftUI: UIViewRepresentable {
 	func updateUIView(_ uiView: MKMapView, context: Context) {
 
 		print("UPDATED")
+
 		uiView.addAnnotations(places)
 
 		if firstLoad {

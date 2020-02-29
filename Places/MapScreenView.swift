@@ -18,7 +18,7 @@ struct MapScreenView: View {
 
     var body: some View {
 		ZStack(alignment: .bottom) {
-			MapViewSwiftUI(places: self.$appState.places, highlighted: self.$appState.highlighted, selectedPin: self.$selectedPin, startPin: self.$startPin, endPin: self.$endPin)
+			MapViewSwiftUI(places: self.$appState.placesFiltered, highlighted: self.$appState.highlighted, selectedPin: self.$selectedPin, startPin: self.$startPin, endPin: self.$endPin)
 
 			DestinationButtons(startPin: $startPin, endPin: $endPin, selectedPin: $selectedPin)
 

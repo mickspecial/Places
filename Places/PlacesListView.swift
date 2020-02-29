@@ -31,6 +31,8 @@ struct PlacesListView: View {
 								.onTapGesture {
 									print("TAP image")
 									//withAnimation {
+									// clear all filtered / hiden markers 
+										self.appState.hideMarkers.removeAll()
 										self.appState.highlighted = place
 										self.appState.selected = 1
 									//}
