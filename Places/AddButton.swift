@@ -22,8 +22,8 @@ struct AddButton: View {
 			Image(systemName: "plus.circle.fill")
 				.resizable()
 				.frame(width: size, height: size)
-				.foregroundColor(Color.green)
-				.background(Color.white)
+				.foregroundColor(.systemGreen)
+				.background(Color.systemBackground)
 				.clipShape(Circle())
 		}
 	}

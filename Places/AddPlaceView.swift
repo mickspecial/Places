@@ -15,7 +15,6 @@ struct AddPlaceView: View {
     var body: some View {
         VStack {
             Button(action: {
-                print("dismisses form")
                 self.presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Dismiss")

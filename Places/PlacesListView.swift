@@ -29,7 +29,6 @@ struct PlacesListView: View {
 								.scaledToFit()
 								.padding(.trailing, 4)
 								.onTapGesture {
-									print("TAP image")
 									//withAnimation {
 									// clear all filtered / hiden markers 
 										self.appState.hideMarkers.removeAll()
@@ -57,7 +56,6 @@ struct PlacesListView: View {
 
 			.navigationBarTitle("Places")
 			.onAppear {
-				print("remove any highlighted")
 				self.appState.highlighted = nil
 			}
 		}

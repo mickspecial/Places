@@ -54,4 +54,5 @@ extension Color {
 	static let systemGreen = Color(UIColor.systemGreen)
 	static let systemPink = Color(UIColor.systemPink)
 	static let systemPurple = Color(UIColor.systemPurple)
+	static let label = Color(UIColor.label)
 }

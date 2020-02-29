@@ -37,7 +37,7 @@ struct MapScreenView: View {
 				}) {
 					Image(systemName: "arrowshape.turn.up.right.circle.fill")
 						.font(.system(size: 42, weight: .regular))
-						.foregroundColor(.blue)
+						.foregroundColor(.systemBlue)
 				}
 				.padding(20)
 				.padding(.top, 30)
