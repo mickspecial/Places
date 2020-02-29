@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 /**
 Highlights the matching search strings with the results
@@ -38,4 +39,19 @@ extension UITextField {
 public func print(_ items: Any..., separator: String = " ", terminator: String = "\n") {
     let output = items.map { "* \($0)" }.joined(separator: separator)
     Swift.print(output, terminator: terminator)
+}
+
+extension Color {
+    static let systemRed = Color(UIColor.systemRed)
+	static let systemTeal = Color(UIColor.systemTeal)
+	static let systemBackground = Color(UIColor.systemBackground)
+	static let systemIndigo = Color(UIColor.systemIndigo)
+	static let systemOrange = Color(UIColor.systemOrange)
+	static let systemYellow = Color(UIColor.systemYellow)
+	static let secondarySystemBackground = Color(UIColor.secondarySystemBackground)
+	static let systemGray = Color(UIColor.systemGray)
+	static let systemBlue = Color(UIColor.systemBlue)
+	static let systemGreen = Color(UIColor.systemGreen)
+	static let systemPink = Color(UIColor.systemPink)
+	static let systemPurple = Color(UIColor.systemPurple)
 }

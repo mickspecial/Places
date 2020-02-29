@@ -20,14 +20,6 @@ struct TagEditView: View {
 	@State var purple: String = ""
 	@ObservedObject private var keyboard = KeyboardResponder()
 
-	@State var redMarkerIsOn: Bool = false
-	@State var greenMarkerIsOn: Bool = false
-	@State var blueMarkerIsOn: Bool = false
-	@State var whiteMarkerIsOn: Bool = false
-	@State var cyanMarkerIsOn: Bool = false
-	@State var orangeMarkerIsOn: Bool = false
-	@State var purpleMarkerIsOn: Bool = false
-
 	init() {
 		let cats = User.current.categories
 		_red = State(initialValue: cats[.red] ?? "")
@@ -42,32 +34,31 @@ struct TagEditView: View {
     var body: some View {
 		NavigationView {
 			Form {
-
-				ToggleRow(markerIsOn: $redMarkerIsOn, text: $red, marker: .red, title: "Red", image: "red") {
+				ToggleRow(text: $red, marker: .red, title: "Red") {
 					self.toggleMarker(marker: .red)
 				}
 
-				ToggleRow(markerIsOn: $greenMarkerIsOn, text: $green, marker: .green, title: "Green", image: "green") {
+				ToggleRow(text: $green, marker: .green, title: "Green") {
 					self.toggleMarker(marker: .green)
 				}
 
-				ToggleRow(markerIsOn: $blueMarkerIsOn, text: $blue, marker: .blue, title: "Blue", image: "blue") {
+				ToggleRow(text: $blue, marker: .blue, title: "Blue") {
 					self.toggleMarker(marker: .blue)
 				}
 
-				ToggleRow(markerIsOn: $whiteMarkerIsOn, text: $white, marker: .white, title: "White", image: "white") {
+				ToggleRow(text: $white, marker: .white, title: "White") {
 					self.toggleMarker(marker: .white)
 				}
 
-				ToggleRow(markerIsOn: $cyanMarkerIsOn, text: $cyan, marker: .cyan, title: "Cyan", image: "cyan") {
+				ToggleRow(text: $cyan, marker: .cyan, title: "Cyan") {
 					self.toggleMarker(marker: .cyan)
 				}
 
-				ToggleRow(markerIsOn: $orangeMarkerIsOn, text: $orange, marker: .orange, title: "Orange", image: "orange") {
+				ToggleRow(text: $orange, marker: .orange, title: "Orange") {
 					self.toggleMarker(marker: .orange)
 				}
 
-				ToggleRow(markerIsOn: $purpleMarkerIsOn, text: $purple, marker: .purple, title: "Purple", image: "purple") {
+				ToggleRow(text: $purple, marker: .purple, title: "Purple") {
 					self.toggleMarker(marker: .purple)
 				}
 
@@ -78,68 +69,17 @@ struct TagEditView: View {
 			}
 			.navigationBarTitle("Tags")
 		}
-		.onAppear {
-			self.setpUp()
-		}
 		.navigationViewStyle(StackNavigationViewStyle())
 		.onDisappear {
 			self.saveTags()
 		}
     }
 
-	func setpUp() {
-		self.redMarkerIsOn = !self.appState.hideMarkers.contains(.red)
-		self.greenMarkerIsOn = !self.appState.hideMarkers.contains(.green)
-		self.blueMarkerIsOn = !self.appState.hideMarkers.contains(.blue)
-		self.whiteMarkerIsOn = !self.appState.hideMarkers.contains(.white)
-		self.cyanMarkerIsOn = !self.appState.hideMarkers.contains(.cyan)
-		self.orangeMarkerIsOn = !self.appState.hideMarkers.contains(.orange)
-		self.purpleMarkerIsOn = !self.appState.hideMarkers.contains(.purple)
-	}
-
 	func toggleMarker(marker: MarkerColor) {
-		if marker == .red {
-			if redMarkerIsOn {
-				appState.hideMarkers.insert(marker)
-			} else {
-				appState.hideMarkers.remove(marker)
-			}
-		} else if marker == .green {
-			if greenMarkerIsOn {
-				appState.hideMarkers.insert(marker)
-			} else {
-				appState.hideMarkers.remove(marker)
-			}
-		} else if marker == .blue {
-			if blueMarkerIsOn {
-				appState.hideMarkers.insert(marker)
-			} else {
-				appState.hideMarkers.remove(marker)
-			}
-		} else if marker == .white {
-			if whiteMarkerIsOn {
-				appState.hideMarkers.insert(marker)
-			} else {
-				appState.hideMarkers.remove(marker)
-			}
-		} else if marker == .cyan {
-			if cyanMarkerIsOn {
-				appState.hideMarkers.insert(marker)
-			} else {
-				appState.hideMarkers.remove(marker)
-			}
-		} else if marker == .orange {
-			if orangeMarkerIsOn {
-				appState.hideMarkers.insert(marker)
-			} else {
-				appState.hideMarkers.remove(marker)
-			}
-		} else if marker == .purple {
-			if purpleMarkerIsOn {
-				appState.hideMarkers.insert(marker)
-			} else {
-				appState.hideMarkers.remove(marker)
-			}
+		if appState.hideMarkers.contains(marker) {
+			appState.hideMarkers.remove(marker)
+		} else {
+			appState.hideMarkers.insert(marker)
 		}
 	}
 
@@ -179,27 +119,41 @@ extension String {
 }
 
 struct ToggleRow: View {
+	@EnvironmentObject var appState: AppState
 
-	@Binding var markerIsOn: Bool
 	@Binding var text: String
 	var marker: MarkerColor
 	var title: String
 	var image: String
 	var action: (() -> Void)? = nil
 
+	init(text: Binding<String>, marker: MarkerColor, title: String, image: String = "", action: (() -> Void)?) {
+		_text = text
+		self.marker = marker
+		self.title = title
+		self.image = image.isEmpty ? title.lowercased() : image
+		self.action = action
+	}
+
 	var body: some View {
 		Section(header:
 			HStack {
 				Image(image)
 				Spacer()
-				Toggle(isOn: $markerIsOn) {
-					Text("")
-				}.onTapGesture {
+				Button(action: {
 					self.action?()
+				}) {
+					Image(systemName: isHiddenMarker ? "eye.slash.fill" : "eye")
+						.foregroundColor(isHiddenMarker ? .systemGray : .systemBlue)
+						.font(.system(size: 20, weight: .light))
 				}
 			}.padding(.vertical, 4)
 		) {
 			TextField(title, text: $text)
 		}.listRowInsets(EdgeInsets.appDefault())
+	}
+
+	var isHiddenMarker: Bool {
+		self.appState.hideMarkers.contains(marker)
 	}
 }
