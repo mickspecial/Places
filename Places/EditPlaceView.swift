@@ -56,29 +56,19 @@ struct EditPlaceView: View {
 					}
 					.labelsHidden()
 				}
-
-				Section {
-
-					Button(action: {
-						self.deletePlace()
-						self.presentationMode.wrappedValue.dismiss()
-					}) {
-						HStack {
-							Spacer()
-							Text("Delete")
-							Spacer()
-						}
-					}
-					.foregroundColor(.red)
-					.font(.system(size: 18, weight: .medium))
-					.disabled(self.newName.isEmpty)
-				}
 			}
 			.animation(.spring())
 
 		}
 		.navigationViewStyle(StackNavigationViewStyle())
 		.navigationBarTitle(Text(self.place.name), displayMode: .inline)
+		.navigationBarItems(trailing:
+			Button(action: {
+				self.deletePlace()
+				self.presentationMode.wrappedValue.dismiss()
+			}) {
+				Text("Delete").foregroundColor(.red)
+		})
 		.onDisappear {
 			#warning("fix")
 			print("Gone...when go to picker this is fired")
