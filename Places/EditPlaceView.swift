@@ -47,10 +47,18 @@ struct EditPlaceView: View {
 
 					Picker(selection: $selectedColor, label: Text("")) {
 						ForEach(0 ..< userColorsMarkers.count, id: \.self) { i in
-							Text(self.userColorsMarkers[i].customText)
-								.font(.body)
-								.padding()
-								.tag(i)
+							HStack {
+								Image(uiImage: self.userColorsMarkers[i].color.markerImage)
+									.renderingMode(.original)
+									.resizable()
+									.frame(width: 30, height: 30)
+									.scaledToFit()
+								Text(self.userColorsMarkers[i].customText)
+									.font(.body)
+									.padding()
+									.tag(i)
+							}
+							.padding(.leading)
 						}
 						.listRowInsets(EdgeInsets.appDefault())
 					}
