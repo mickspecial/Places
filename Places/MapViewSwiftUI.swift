@@ -18,6 +18,17 @@ struct MapViewSwiftUI: UIViewRepresentable {
 	@Binding var endPin: Place?
     @State var firstLoad: Bool = true
 
+	// markers for a bounding poly
+	@Binding var userPlacedPoints: Set<PolygonAnnotation>
+
+	// route between two pints with distance marker
+	@State var currentRouteShowing: MKPolyline?
+	@State var currentRouteDistance: MKAnnotation?
+	@Binding var dropPinMode: Bool
+	@State var directionRequest = MKDirections.Request()
+
+	let map = MKMapView()
+
 	var locationManager = CLLocationManager()
 
 	func setupManager() {
@@ -27,6 +38,9 @@ struct MapViewSwiftUI: UIViewRepresentable {
 	}
 
 	func updateUIView(_ uiView: MKMapView, context: Context) {
+
+		print("♻️")
+
 		uiView.addAnnotations(places)
 
 		if firstLoad {
@@ -60,16 +74,20 @@ struct MapViewSwiftUI: UIViewRepresentable {
 
 		drawRoute(map: uiView)
 
-		if self.endPin == nil || self.startPin == nil {
-			self.removeOverlays(from: uiView)
+		if userPlacedPoints.isEmpty {
+			removeCurrentShowingPolygon(from: uiView)
 		}
-
-		//assert(places.count == uiView.annotations.count)
 	}
 
 	func drawRoute(map: MKMapView) {
+
+		if self.endPin == nil || self.startPin == nil {
+			removeCurrentShowingRoute(from: map)
+		}
+
 		guard let start = startPin, let end = endPin else {
-			self.removeOverlays(from: map)
+			//self.removeOverlays(from: map)
+			removeCurrentShowingRoute(from: map)
 			return
 		}
 
@@ -77,7 +95,15 @@ struct MapViewSwiftUI: UIViewRepresentable {
 			return
 		}
 
-		let directionRequest = MKDirections.Request()
+		if let prevStart = directionRequest.source, let prevEnd = directionRequest.destination {
+			// check these not same as new route so not redrawn
+			// good for when have route and then drawing a polygon stops over refresh
+			if prevStart == start.placeMapItem && prevEnd == end.placeMapItem {
+				return
+			}
+		}
+
+//		let directionRequest = MKDirections.Request()
 		directionRequest.source = start.placeMapItem
 		directionRequest.destination = end.placeMapItem
 		directionRequest.transportType = .automobile
@@ -91,40 +117,69 @@ struct MapViewSwiftUI: UIViewRepresentable {
 		}
 	}
 
-	func addRoute(route: MKRoute, to mapView: MKMapView) {
-		self.removeOverlays(from: mapView)
+	func removeCurrentShowingPolygon(from mapView: MKMapView) {
+		// polygon removal
+		let poly = mapView.overlays.filter({ $0 is MKPolygon })
+		mapView.removeOverlays(poly)
 
-		print("ADD ROUTE")
-		let polyline = route.polyline
-		mapView.addOverlay(polyline, level: .aboveRoads)
+		mapView.annotations.forEach { an in
+			// polygon bound markers
+			if an is PolygonAnnotation {
+				mapView.removeAnnotation(an)
+			}
 
-		let routeInfo = RouteDetails(route: route)
-		mapView.addAnnotation(routeInfo)
-
-		// 	if want to zoom into route
-		//	let rect = route.polyline.boundingMapRect
-		//	self.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
-	}
-
-	func removeOverlays(from mapView: MKMapView) {
-		mapView.removeOverlays(mapView.overlays)
-		if let routeInfo = mapView.annotations.first(where: { $0 is RouteDetails }) {
-			mapView.removeAnnotation(routeInfo)
+			// polygon label removal
+			if an is PolyLabel {
+				mapView.removeAnnotation(an)
+			}
 		}
 	}
 
+	func removeCurrentShowingRoute(from mapView: MKMapView) {
+		if let current = currentRouteShowing {
+			mapView.removeOverlay(current)
+		}
+
+		if let currentDist = currentRouteDistance {
+			mapView.removeAnnotation(currentDist)
+		}
+	}
+
+	func addRoute(route: MKRoute, to mapView: MKMapView) {
+
+		removeCurrentShowingRoute(from: mapView)
+		print("ADD ROUTE")
+		let polyline = route.polyline
+		mapView.addOverlay(polyline, level: .aboveRoads)
+		// save in local var
+		currentRouteShowing = polyline
+
+		let routeInfo = RouteDetails(route: route)
+		mapView.addAnnotation(routeInfo)
+		// save in local var
+		currentRouteDistance = routeInfo
+
+		// 	if want to zoom into route
+		//let rect = route.polyline.boundingMapRect
+		//mapView.setRegion(MKCoordinateRegion(rect), animated: true)
+	}
+
 	func makeCoordinator() -> Coordinator {
-		Coordinator(selectedPin: $selectedPin, highlighted: $highlighted, startPin: $startPin, endPin: $endPin)
+		Coordinator(selectedPin: $selectedPin, highlighted: $highlighted, startPin: $startPin, endPin: $endPin, userPlacedPoints: $userPlacedPoints, map: map, dropPinMode: $dropPinMode)
 	}
 
 	func makeUIView(context: Context) -> MKMapView {
 		setupManager()
 
-		let map = MKMapView()
 		map.delegate = context.coordinator
 		map.isRotateEnabled = false
-
 		map.showsUserLocation = true
+		//map.do
+
+		let gRecognizer = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.triggerTouchAction(gestureReconizer:)))
+		gRecognizer.numberOfTapsRequired = 1
+		gRecognizer.numberOfTouchesRequired = 1
+		map.addGestureRecognizer(gRecognizer)
 		return map
 	}
 
@@ -180,6 +235,10 @@ struct MapViewSwiftUI: UIViewRepresentable {
 		@Binding var highlighted: Place?
 		@Binding var startPin: Place?
 		@Binding var endPin: Place?
+		@Binding var userPlacedPoints: Set<PolygonAnnotation>
+		@Binding var dropPinMode: Bool
+
+		var map: MKMapView
 
 		func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
 			if let pin = view.annotation as? Place {
@@ -196,30 +255,112 @@ struct MapViewSwiftUI: UIViewRepresentable {
 				return
 			}
 
+			if let userLoc = view.annotation as? PolygonAnnotation {
+				userPlacedPoints.insert(userLoc)
+				clearAndAddPoly(to: mapView)
+				return
+			}
+
 		}
 
-		init(selectedPin: Binding<Place?>, highlighted: Binding<Place?>, startPin: Binding<Place?>, endPin: Binding<Place?>) {
+		func clearAndAddPoly(to mapView: MKMapView) {
+			let poly = mapView.overlays.filter({ $0 is MKPolygon })
+			// clear any polygons that exist
+			mapView.removeOverlays(poly)
+
+			let polylabels = mapView.annotations.filter({ $0 is PolyLabel })
+			// clear any polygons labels that exist
+			mapView.removeAnnotations(polylabels)
+
+			if userPlacedPoints.count >= 3 {
+				let coordinates = userPlacedPoints.map { $0.coordinate }
+				var hull = coordinates.sortConvex()
+				let polygon = MKPolygon(coordinates: &hull, count: hull.count)
+				mapView.addOverlay(polygon)
+
+				let area = hull.regionArea()
+
+				let routeInfo = PolyLabel(lat: polygon.coordinate.latitude, long: polygon.coordinate.longitude, info: "", showArea: area)
+				mapView.addAnnotation(routeInfo)
+				// save in local var ??
+			}
+		}
+
+		@objc func triggerTouchAction(gestureReconizer: UITapGestureRecognizer) {
+
+			if !dropPinMode {
+				return
+			}
+			//if gestureReconizer.state == .began {
+				let locationInView = gestureReconizer.location(in: map)
+				let locationOnMap = map.convert(locationInView, toCoordinateFrom: map)
+
+				let new = PolygonAnnotation(coordinate: locationOnMap)
+				userPlacedPoints.insert(new)
+				// add new marker
+				map.addAnnotation(new)
+				clearAndAddPoly(to: map)
+			//}
+		}
+
+		init(selectedPin: Binding<Place?>, highlighted: Binding<Place?>, startPin: Binding<Place?>, endPin: Binding<Place?>, userPlacedPoints: Binding<Set<PolygonAnnotation>>, map: MKMapView, dropPinMode: Binding<Bool>) {
             _selectedPin = selectedPin
 			_highlighted = highlighted
 			_startPin = startPin
 			_endPin = endPin
+			_userPlacedPoints = userPlacedPoints
+			self.map = map
+			_dropPinMode = dropPinMode
         }
 
 		func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-			let renderer = MKPolylineRenderer(overlay: overlay)
-			renderer.strokeColor = UIColor.FlatColor.Red.Cinnabar
-			renderer.lineWidth = 3.0
-			return renderer
+
+			if overlay is MKCircle {
+				let renderer = MKCircleRenderer(overlay: overlay)
+				renderer.fillColor = UIColor.black.withAlphaComponent(0.5)
+				renderer.strokeColor = UIColor.blue
+				renderer.lineWidth = 2
+				return renderer
+
+			} else if overlay is MKPolyline {
+				let renderer = MKPolylineRenderer(overlay: overlay)
+				renderer.strokeColor = UIColor.FlatColor.Red.Cinnabar
+				renderer.lineWidth = 3
+				return renderer
+
+			} else if overlay is MKPolygon {
+				let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
+				renderer.fillColor = UIColor.black.withAlphaComponent(0.5)
+				renderer.strokeColor = UIColor.orange
+				renderer.lineWidth = 2
+				return renderer
+			}
+			return MKOverlayRenderer()
 		}
 
 		func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+
 			if let annotation = annotation as? RouteDetails {
+				return annotation.annotationView
+			}
+
+			if let annotation = annotation as? PolyLabel {
 				return annotation.annotationView
 			}
 
 			if annotation is Place {
 				let annotationView = placeAnnotationView(for: annotation, map: mapView)
 				return annotationView
+			}
+
+			if let annotation = annotation as? PolygonAnnotation {
+				let v = MKAnnotationView(annotation: annotation, reuseIdentifier: "poly")
+				v.image = annotation.markerImage
+				v.bounds = CGRect(origin: .zero, size: CGSize(width: 20, height: 20))
+
+				//let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "polyAnnotation")
+				v.isDraggable = true
+				return v
 			}
 
 			return nil

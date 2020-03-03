@@ -70,10 +70,10 @@ struct EditPlaceView: View {
 				Text("Delete").foregroundColor(.red)
 		})
 		.onDisappear {
-			#warning("fix")
-			print("Gone...when go to picker this is fired")
+			// #warning("fix")
+			//print("Gone...when go to picker this is fired")
 			if !self.willDelete {
-				print("qucik hack as to fix as changing color then delete wont actaully delete ")
+				// print("qucik hack as to fix as changing color then delete wont actaully delete ")
 				self.updatePlace(self.place, name: self.newName, category: self.userColorsMarkers[self.selectedColor].color)
 			}
 		}
